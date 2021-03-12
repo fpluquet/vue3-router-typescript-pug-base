@@ -30,7 +30,7 @@
         </Button>
       </div>
       <div v-show="accountType">
-        <AccountForm />
+        <AccountForm :accountType="accountType" />
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@ export default {
 
     const show = () => (showButton.value = !showButton.value);
     const setAccountType = (type) => {
-      console.log(type);
+      console.log({type});
       return (accountType.value = type);
     };
 

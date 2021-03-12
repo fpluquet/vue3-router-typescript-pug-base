@@ -32,9 +32,9 @@ export default {
 <style lang="scss" scoped>
 .box-section {
   // border: 1px solid gray;
-  margin-right: 70px;
+  // margin-right: 70px;
   height: 100px;
-  margin-top: 35px;
+  margin-top: 15px;
   display: flex;
   flex-direction: row;
   align-items: center;

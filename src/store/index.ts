@@ -3,7 +3,7 @@ import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants
 
 export default createStore({
   state: {
-    accountType: null,
+    // accountType: null,
     showSideBar: false,
     showPanelSections: true,
     sections: [

@@ -1,22 +1,16 @@
 <template>
   <div class="columns dashboard mt-6">
-    <div class="column is-two-thirds left-panel-dashboard">
-      is-three-quarters
-    </div>
+    <div class="column is-7 left-panel-dashboard">is-three-quarters</div>
     <div class="column right-panel-dashboard">
       <div v-show="showPanelSections">
         <div class="columns" v-for="section in getSections" :key="section.id">
-          <div
-            @click="openSideBar"
-            :style="{
-              display: 'flex',
-              flex: 1,
-              cursor: section.active ? 'pointer' : 'not-allowed',
-              'padding-left': '30px',
-              'padding-right': '30px',
-            }"
-          >
-            <router-link :to="{ name: section.routeName }">
+          <div class="column is-offset-1 is-10" @click="openSideBar">
+            <router-link
+              :to="{ name: section.routeName }"
+              :style="{
+                cursor: section.active ? 'pointer' : 'not-allowed',
+              }"
+            >
               <BoxSection
                 :title="section.name"
                 :class="{ desactive: !section.active }"
@@ -24,11 +18,22 @@
             </router-link>
           </div>
         </div>
-        <ProgressBar
-          class="mt-6"
-          :accountType="accountType"
-          :percentaje="'40'"
-        />
+        <div class="columns">
+          <div
+            class="column is-offset-1 is-10"
+            :style="{
+              justifyContent: 'center',
+              alignItems: 'center',
+              display: 'flex',
+            }"
+          >
+            <ProgressBar
+              class="mt-6 progress-bar"
+              :accountType="accountType"
+              :percentaje="'40'"
+            />
+          </div>
+        </div>
       </div>
       <SideBar>
         <router-view></router-view>
@@ -63,7 +68,9 @@ export default {
 
     onMounted(() => store.commit("setSectionActive", { id: SECTION_DM_ID }));
 
-    store.commit("setActiveSection", [{name: 'Datos demograficos', active:true}]);
+    store.commit("setSectionActive", [
+      { name: "Datos demograficos", active: true },
+    ]);
     const showPanelSections = computed(() => store.state.showPanelSections);
     const getSections = computed(() => store.state.sections);
     return { openSideBar, getSections, showPanelSections };
@@ -90,6 +97,10 @@ export default {
   .desactive {
     pointer-events: none;
     background: rgba(53, 53, 53, 0.1) !important;
+  }
+
+  .progress-bar {
+    width: 60%;
   }
 }
 </style>

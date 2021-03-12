@@ -63,7 +63,6 @@ export default {
     Button,
   },
   setup(props) {
-    let accountType = props.accountType;
     let formData = {};
     let formError = ref({});
     let messageError = ref("");
@@ -84,7 +83,7 @@ export default {
         await schemaForm.validate(formData, { abortEarly: false });
         router.push({
           name: "Dashboard",
-          params: { accountType },
+          params: { accountType: props.accountType },
         });
         // try {
         //   const result = await reauthenticate(formData.password);

@@ -4,7 +4,6 @@
       <div class="field">
         <div class="control has-icons-right">
           <input
-            @change="formError.email = null"
             class="input"
             type="email"
             placeholder="Email"
@@ -19,7 +18,6 @@
       <div class="field">
         <div class="control has-icons-right">
           <input
-            @change="formError.password = null"
             class="input"
             type="password"
             placeholder="Password"
@@ -34,7 +32,6 @@
       <div class="field">
         <div class="control has-icons-right">
           <input
-            @change="formError.rut = null"
             class="input"
             type="text"
             placeholder="RUT"
@@ -66,14 +63,13 @@ export default {
     Button,
   },
   setup(props) {
-    let accountType = props.accountType
+    let accountType = props.accountType;
     let formData = {};
     let formError = ref({});
     let messageError = ref("");
     let loading = ref(false);
     const router = useRouter();
 
-    onMounted(() => console.log("aca"));
     let schemaForm = Yup.object().shape({
       email: Yup.string().email().required(),
       password: Yup.string().required(),
@@ -115,10 +111,6 @@ export default {
       loading,
     };
   },
-
-  $route(to, from) {
-    console.log(to);
-  },
 };
 </script>
 
@@ -134,6 +126,7 @@ export default {
     background: #f0f0f0 !important;
     border-radius: 0px;
     min-height: 42px;
+    border: none;
   }
 }
 </style>

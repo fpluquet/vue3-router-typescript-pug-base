@@ -1,5 +1,5 @@
 <template>
-  <h1>datos demograficos</h1>
+  <h1>biometric validation</h1>
 </template>
 
 <script>

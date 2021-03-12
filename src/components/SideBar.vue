@@ -1,6 +1,6 @@
 <template>
   <div class="side-bar" :class="{ open: showSideBar }">
-    <div class="side-bar-header">
+    <div class="header">
       <fa
         @click="setCloseSideBar"
         icon="chevron-right"
@@ -9,7 +9,9 @@
         class="fa-chevron-down pull-right"
       ></fa>
     </div>
-    <div class="side-bar-content"></div>
+    <div class="side-bar-content">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -45,13 +47,15 @@ export default {
   .side-bar-content {
     display: flex;
     flex: 1;
+    padding-left: 80px;
+    padding-right: 80px;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
   }
-  .side-bar-header {
-    margin-top: 120px;
-    margin-left: 12px;
-    // margin-top: 120px;
+  .header {
+    position: absolute;
+    top: 100px;
+    left: 10px;
   }
 }
 </style>

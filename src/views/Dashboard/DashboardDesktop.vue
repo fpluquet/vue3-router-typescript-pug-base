@@ -4,50 +4,46 @@
       is-three-quarters
     </div>
     <div class="column right-panel-dashboard">
-      <div v-show="showSections">
+      <div v-show="showPanelSections">
         <div class="columns" v-for="section in getSections" :key="section.id">
           <div
             @click="openSideBar"
-            :style="{ display: 'flex', flex: 1, cursor: 'pointer' }"
+            :style="{
+              display: 'flex',
+              flex: 1,
+              cursor: section.active ? 'pointer' : 'not-allowed',
+              'padding-left': '30px',
+              'padding-right': '30px',
+            }"
           >
-            <BoxSection :title="section.name" />
+            <router-link :to="{ name: section.routeName }">
+              <BoxSection
+                :title="section.name"
+                :class="{ desactive: !section.active }"
+              />
+            </router-link>
           </div>
         </div>
-        <!-- <div class="columns">
-          <router-link
-            to="/datos-demograficos"
-            exact
-            :style="{ display: 'flex', flex: 1 }"
-          >
-            <BoxSection title="Validación biométrica" />
-          </router-link>
-        </div> -->
-        <!-- <div class="columns">
-          <router-link
-            to="/datos-demograficos"
-            exact
-            :style="{ display: 'flex', flex: 1 }"
-          >
-            <BoxSection title="Documentación" />
-          </router-link>
-        </div> -->
         <ProgressBar
           class="mt-6"
           :accountType="accountType"
           :percentaje="'40'"
         />
       </div>
-      <SideBar />
+      <SideBar>
+        <router-view></router-view>
+      </SideBar>
     </div>
   </div>
 </template>
 
 <script>
+import { onMounted, computed } from "vue";
+import { useStore } from "vuex";
 import ProgressBar from "../../components/ProgressBar";
 import BoxSection from "../../components/BoxSection";
 import SideBar from "../../components/SideBar";
-import { computed } from "vue";
-import { useStore } from "vuex";
+import { SECTION_DM_ID } from "../../utils/constants";
 
 export default {
   name: "DashboardDesktop",
@@ -61,11 +57,16 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const openSideBar = () => store.commit("setShowSideBar", true);
-    // store.commit("setActiveSection", [{name: 'Datos demograficos', active:true}]);
-    const showSections = computed(() => store.state.showSections);
+    const openSideBar = () => {
+      store.commit("setShowSideBar", true);
+    };
+
+    onMounted(() => store.commit("setSectionActive", { id: SECTION_DM_ID }));
+
+    store.commit("setActiveSection", [{name: 'Datos demograficos', active:true}]);
+    const showPanelSections = computed(() => store.state.showPanelSections);
     const getSections = computed(() => store.state.sections);
-    return { openSideBar, getSections, showSections };
+    return { openSideBar, getSections, showPanelSections };
   },
 };
 </script>
@@ -79,12 +80,16 @@ export default {
   }
 
   .right-panel-dashboard {
-    padding-left: 30px;
-    padding-right: 30px;
+    // padding-left: 30px;
+    // padding-right: 30px;
     display: flex;
     justify-content: center;
     flex: 1;
     flex-direction: column;
+  }
+  .desactive {
+    pointer-events: none;
+    background: rgba(53, 53, 53, 0.1) !important;
   }
 }
 </style>

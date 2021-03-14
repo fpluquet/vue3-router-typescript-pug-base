@@ -2,20 +2,19 @@
   <div class="column box-section">
     <div
       :style="{
-        flex: 3,
+        width: '75%',
         'text-align': 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: 'flex',
       }"
     >
-      <span class="title">{{ title }}</span>
+      <div :style="{ 'max-width': '60%' }">
+        <span class="title">{{ title }}</span>
+      </div>
     </div>
-    <div
-      :style="{
-        'background-color': 'green',
-        flex: 1,
-        'text-align': 'center',
-      }"
-    >
-      circular bar
+    <div :style="{}">
+      <img src="@/res/progreso-circular-seccion.svg" alt="circulo-progreso" />
     </div>
   </div>
 </template>
@@ -44,7 +43,7 @@ export default {
   border-radius: 20px;
 }
 .title {
-  font-family: Roboto;
+  font-family: "Roboto";
   font-style: normal;
   font-weight: bold;
   font-size: 20px;

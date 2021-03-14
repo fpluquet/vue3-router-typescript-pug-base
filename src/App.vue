@@ -4,6 +4,6 @@
 
 <style lang="scss">
 #app {
-  background: #e5e5e5;
+  background: #e5e5e5 !important;
 }
 </style>

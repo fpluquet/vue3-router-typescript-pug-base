@@ -1,8 +1,13 @@
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <nav
+    class="navbar"
+    role="navigation"
+    aria-label="main navigation"
+    :style="{ background: '#e5e5e5', zIndex: '0' }"
+  >
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
-        <img src="@/res/pago_facil.svg" width="252" height="62" />
+        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
       </a>
 
       <a
@@ -10,7 +15,7 @@
         class="navbar-burger"
         aria-label="menu"
         aria-expanded="false"
-        data-target="navbarBasicExample"
+        data-target="nav-bar-pago-facil"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -18,7 +23,7 @@
       </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div id="nav-bar-pago-facil" class="navbar-menu">
       <div class="navbar-end">
         <a class="custom-img-name">
           <img

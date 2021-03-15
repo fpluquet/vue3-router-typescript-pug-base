@@ -73,7 +73,7 @@ export default {
     const saveTel = () =>
       console.log("send to backend the value ===>> ", formData.telefono);
     return {
-      saveNF,
+      saveTel,
       formData,
       formError,
     };

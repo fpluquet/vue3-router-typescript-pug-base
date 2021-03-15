@@ -1,12 +1,27 @@
 <template>
   <div class="field">
+    <div class="field">
+      <div class="control has-icons-right">
+        <input
+          @onBlur="saveTel"
+          class="input"
+          type="text"
+          placeholder="Telefono"
+          v-model="formData.telefono"
+        />
+      </div>
+      <p v-show="formError.telefono" class="help is-danger">
+        {{ formError.telefono }}
+      </p>
+    </div>
+  </div>
+  <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="saveNF"
         class="input"
         type="text"
-        placeholder="Nombre fantasia"
-        v-model="formData.nombreFantasia"
+        placeholder="Calle"
+        v-model="formData.calle"
       />
     </div>
   </div>
@@ -15,48 +30,48 @@
       <input
         class="input"
         type="text"
-        placeholder="Razon social"
-        v-model="formData.razonSocial"
+        placeholder="Region"
+        v-model="formData.region"
       />
     </div>
+    <p v-show="formError.region" class="help is-danger">
+      {{ formError.region }}
+    </p>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
         class="input"
         type="text"
-        placeholder="Rubro"
-        v-model="formData.rubro"
+        placeholder="Local"
+        v-model="formData.local"
       />
     </div>
-    <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
   </div>
-  <div class="field">
+  <!-- <div class="field">
     <div class="control has-icons-right">
       <input
-        @change="formError.url = null"
         class="input"
         type="text"
-        placeholder="URL"
-        v-model="formData.url"
+        placeholder="region"
+        v-model="formData.region"
       />
     </div>
-    <p v-show="formError.url" class="help is-danger">{{ formError.url }}</p>
-  </div>
+  </div> -->
 </template>
 
 <script>
 import { ref } from "vue";
 export default {
-  name: "DemographicDataForm",
+  name: "DemographicDataFormTwo",
   components: {},
   setup() {
     let formData = {};
     let formError = ref({});
     let messageError = ref("");
     let loading = ref(false);
-    const saveNF = () =>
-      console.log("send to backend the value ===>> ", formData.nombreFantasia);
+    const saveTel = () =>
+      console.log("send to backend the value ===>> ", formData.telefono);
     return {
       saveNF,
       formData,

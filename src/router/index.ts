@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard/Dashboard.vue'
 
-import DemographicDataForm from '../views/DemographicDataForm.vue'
+import DemographicData from '../views/DemographicData/index.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import Documentation from '../views/Documentation.vue'
 
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         // when /user/:id/profile is matched
         path: 'datos-demograficos',
         name: 'datos-demograficos',
-        component: DemographicDataForm
+        component: DemographicData
       },
       {
         // UserProfile will be rendered inside User's <router-view>

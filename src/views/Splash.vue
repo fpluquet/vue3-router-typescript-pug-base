@@ -2,7 +2,7 @@
   <div class="splash">
     <div class="content-splash">
       <div class="img">
-        <img src="@/res/pago_facil.svg" width="252" height="62" />
+        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
       </div>
       <div v-show="!accountType" class="crear-cuenta are-normal">
         <Button @click="show" className="button is-fullwidth"

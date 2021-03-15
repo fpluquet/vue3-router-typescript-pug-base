@@ -1,15 +1,33 @@
 <template>
   <div class="columns dashboard mt-6">
-    <div class="column is-7 left-panel-dashboard">is-three-quarters</div>
+    <div
+      class="column is-offset-1 is-7 left-panel-dashboard"
+      :style="{
+        display: 'flex',
+        position: 'relative',
+      }"
+    >
+      <div
+        :style="{
+          display: 'flex',
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }"
+      >
+        <img
+          src="@/res/logo_central.svg"
+          alt="logo-pago-facil"
+        />
+      </div>
+    </div>
     <div class="column right-panel-dashboard">
       <div v-show="showPanelSections">
         <div class="columns" v-for="section in getSections" :key="section.id">
-          <div class="column is-offset-1 is-10" @click="openSideBar">
+          <div class="column is-10" @click="openSideBar">
             <router-link
+              :disabled="!section.active"
               :to="{ name: section.routeName }"
-              :style="{
-                cursor: section.active ? 'pointer' : 'not-allowed',
-              }"
             >
               <BoxSection
                 :title="section.name"
@@ -82,7 +100,6 @@ export default {
 .dashboard {
   .left-panel-dashboard {
     height: 500px;
-    border: 1px solid gray;
     margin-right: 20px;
   }
 
@@ -95,7 +112,7 @@ export default {
     flex-direction: column;
   }
   .desactive {
-    pointer-events: none;
+    // pointer-events: none;
     background: rgba(53, 53, 53, 0.1) !important;
   }
 

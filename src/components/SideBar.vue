@@ -18,12 +18,17 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   name: "SideBar",
   setup() {
     const store = useStore();
     const showSideBar = computed(() => store.state.showSideBar);
-    const setCloseSideBar = () => store.commit("setShowSideBar", false);
+    const router = useRouter();
+    const setCloseSideBar = () => {
+      store.commit("setShowSideBar", false);
+      router.go(-1);
+    };
     return { setCloseSideBar, showSideBar };
   },
 };

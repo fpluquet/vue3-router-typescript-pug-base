@@ -26,6 +26,6 @@ export default {
 
 <style lang="scss" scoped>
 .basic-layout {
-  height: 100%;
+  height: 100vh;
 }
 </style>

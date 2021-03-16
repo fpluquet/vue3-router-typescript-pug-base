@@ -21,7 +21,7 @@ export default createStore({
       state.sections = state.sections.map(({ id, ...rest }) => ({
         id,
         ...rest,
-        active: id === payload.id ? true : false
+        active: id === payload.id
       }));
     }
   },

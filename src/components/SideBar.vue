@@ -27,6 +27,7 @@ export default {
     const router = useRouter();
     const setCloseSideBar = () => {
       store.commit("setShowSideBar", false);
+      console.log(router);
       router.go(-1);
     };
     return { setCloseSideBar, showSideBar };
@@ -41,8 +42,8 @@ export default {
   box-shadow: 0px 10px 24px 9px rgba(0, 0, 0, 0.1);
   right: 0;
   top: 0;
-  height: 100vh;
   width: 30%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   transform: translateX(150%);
@@ -61,6 +62,17 @@ export default {
     position: absolute;
     top: 100px;
     left: 10px;
+  }
+}
+@media screen and (max-width:  1024px) {
+  .side-bar {
+    width: 90%;
+  }
+}
+// show desktop
+@media screen and (min-width:  1024px) {
+  .side-bar {
+    width: 30%;
   }
 }
 </style>

@@ -7,7 +7,11 @@
   >
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
-        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
+        <img
+          src="@/res/pago_facil_banner_gray_back.svg"
+          width="252"
+          height="62"
+        />
       </a>
 
       <a
@@ -50,6 +54,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (max-width: 1024px) {
+  .navbar {
+    display: none;
+  }
+}
+
 .custom-img {
   background: skyblue;
   border-radius: 50%;

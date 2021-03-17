@@ -1,17 +1,14 @@
-<template lang=pug>
-.home
-  img(alt="Vue logo", src="../assets/logo.png")
-  hello-world(msg="Welcome to Your Vue.js + TypeScript App")
+<template>
+  <Splash />
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-
-@Options({
+<script>
+import Splash from "../views/Splash.vue";
+export default {
+  name: "Home",
   components: {
-    HelloWorld,
+    Splash,
   },
-})
-export default class Home extends Vue {}
+  setup() {},
+};
 </script>

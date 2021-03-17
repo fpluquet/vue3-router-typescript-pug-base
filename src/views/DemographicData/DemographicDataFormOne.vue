@@ -56,7 +56,7 @@ export default {
     let messageError = ref("");
     let loading = ref(false);
 
-    const saveNF = () =>
+    const saveNF = () => {};
     return {
       saveNF,
       formData,

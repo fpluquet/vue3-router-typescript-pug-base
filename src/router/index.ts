@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
+import Dashboard from '../views/Dashboard/Dashboard.vue'
+
+import DemographicData from '../views/DemographicData/index.vue'
+import BiometricValidation from '../views/BiometricValidation.vue'
+import Documentation from '../views/Documentation.vue'
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -8,13 +14,37 @@ const routes: Array<RouteRecordRaw> = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/dashboard/:accountType',
+    name: 'Dashboard',
+    component: Dashboard,
+    children: [
+      {
+        // UserProfile will be rendered inside User's <router-view>
+        // when /user/:id/profile is matched
+        path: 'datos-demograficos',
+        name: 'datos-demograficos',
+        component: DemographicData
+      },
+      {
+        // UserProfile will be rendered inside User's <router-view>
+        // when /user/:id/profile is matched
+        path: 'validacion-biometrica',
+        name: 'validacion-biometrica',
+        component: BiometricValidation,
+      },
+      {
+        path: 'documentacion',
+        name: 'documentation',
+        component: Documentation,
+      },
+    ]
+  },
+
+  // {
+  //   path: "/:catchAll(.*)",
+  //   name: 'NotFound',
+  //   component: NotFound,
+  // },
 ]
 
 const router = createRouter({

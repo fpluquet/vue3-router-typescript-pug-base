@@ -26,11 +26,11 @@ export default {
 
 <style lang="scss" scoped>
 .basic-layout {
+  height: 100vh !important;
   display: flex;
   flex: 1;
   flex-direction: column;
   .custom-container {
-    height: 100vh !important;
     display: flex;
     flex: 1;
   }

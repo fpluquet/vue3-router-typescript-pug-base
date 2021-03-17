@@ -16,14 +16,17 @@
         </p>
       </div>
       <div class="field">
-        <div class="control has-icons-right">
+        <div class="control has-icons-right" :style="{ display: 'flex' }">
           <input
             class="input"
             type="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             v-model="formData.password"
             :class="{ 'is-danger': formError.password }"
           />
+          <div class="container-icon">
+            <fa icon="eye" width="20" type="fas" class="pull-right"></fa>
+          </div>
         </div>
         <p v-show="formError.password" class="help is-danger">
           {{ formError.password }}
@@ -34,10 +37,18 @@
           <input
             class="input"
             type="text"
-            placeholder="RUT"
+            placeholder="R.U.T"
             v-model="formData.rut"
             :class="{ 'is-danger': formError.rut }"
           />
+          <div class="container-icon">
+            <fa
+              icon="info-circle"
+              width="20"
+              type="fas"
+              class="pull-right"
+            ></fa>
+          </div>
         </div>
         <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
       </div>
@@ -45,12 +56,23 @@
         >Crear Cuenta</Button
       >
     </form>
+    <div
+      :style="{
+        display: 'flex',
+        justifyContent: 'center',
+        'margin-top': '20px',
+        cursor: 'pointer',
+      }"
+    >
+      <span @click="back" class="button-link">VOLVER</span>
+    </div>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import * as Yup from "yup";
 import Button from "@/components/Button";
 
@@ -68,12 +90,18 @@ export default {
     let messageError = ref("");
     let loading = ref(false);
     const router = useRouter();
+    const store = useStore();
 
     let schemaForm = Yup.object().shape({
       email: Yup.string().email().required(),
       password: Yup.string().required(),
       rut: Yup.string().required(),
     });
+
+    const back = () => {
+      store.commit("setAccountType", { accountType: null });
+      router.push({ name: "Home" });
+    };
 
     const onCreateAccount = async () => {
       formError.value = {};
@@ -107,6 +135,7 @@ export default {
       formData,
       formError,
       loading,
+      back,
     };
   },
 };
@@ -125,6 +154,21 @@ export default {
     border-radius: 0px;
     min-height: 42px;
     border: none;
+  }
+  .button-link {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    text-decoration-line: underline;
+  }
+  .container-icon {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    cursor: pointer;
   }
 }
 </style>

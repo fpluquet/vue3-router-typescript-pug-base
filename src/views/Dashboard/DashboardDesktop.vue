@@ -1,5 +1,5 @@
 <template>
-  <div class="columns dashboard mt-6">
+  <div class="columns dashboard">
     <div class="column is-offset-1 is-6 left-panel-dashboard">
       <div class="left-panel-content">
         <img src="@/res/logo_central.svg" alt="logo-pago-facil" />
@@ -36,9 +36,6 @@
           </div>
         </div>
       </div>
-      <!-- <SideBar>
-        <router-view></router-view>
-      </SideBar> -->
     </div>
   </div>
 </template>

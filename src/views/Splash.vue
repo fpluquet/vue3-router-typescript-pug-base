@@ -6,14 +6,22 @@
       </div>
       <div v-show="!accountType" class="crear-cuenta are-normal">
         <Button @click="show" className="button is-fullwidth"
-          >Crear Cuenta
+          >Seleccionar tipo de cuenta
           <fa
+            v-if="showButton"
             icon="chevron-down"
             width="12"
             type="fas"
-            class="fa-chevron-down pull-right"
-          ></fa
-        ></Button>
+            class="fa-chevron pull-right"
+          ></fa>
+          <fa
+            v-else
+            icon="chevron-up"
+            width="12"
+            type="fas"
+            class="fa-chevron pull-right"
+          ></fa>
+        </Button>
         <Button
           @click="setAccountType(PERSONA)"
           className="button is-fullwidth persona"
@@ -77,8 +85,11 @@ export default {
 
 <style lang="scss" scoped>
 .content-splash {
-  padding: 60px 60px;
-  background: white;
+  padding: 100px 40px;
+  background: #ffffff;
+  box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  width: 20%;
 }
 .splash {
   justify-content: center;
@@ -93,6 +104,7 @@ export default {
   .img {
     margin-bottom: 20%;
     display: flex;
+    justify-content: center;
   }
   .crear-cuenta {
     display: flex;
@@ -102,7 +114,7 @@ export default {
     flex: 1;
   }
 
-  .fa-chevron-down {
+  .fa-chevron {
     margin-left: 12px;
   }
   .hide {

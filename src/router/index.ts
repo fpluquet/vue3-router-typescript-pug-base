@@ -19,15 +19,11 @@ const routes: Array<RouteRecordRaw> = [
     component: Dashboard,
     children: [
       {
-        // UserProfile will be rendered inside User's <router-view>
-        // when /user/:id/profile is matched
         path: 'datos-demograficos',
         name: 'datos-demograficos',
         component: DemographicData
       },
       {
-        // UserProfile will be rendered inside User's <router-view>
-        // when /user/:id/profile is matched
         path: 'validacion-biometrica',
         name: 'validacion-biometrica',
         component: BiometricValidation,

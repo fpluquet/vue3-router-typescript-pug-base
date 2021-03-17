@@ -63,13 +63,13 @@ export default {
     left: 10px;
   }
 }
-@media screen and (max-width:  1024px) {
+@media screen and (max-width:  768px) {
   .side-bar {
     width: 90%;
   }
 }
 // show desktop
-@media screen and (min-width:  1024px) {
+@media screen and (min-width:  768px) {
   .side-bar {
     width: 30%;
   }

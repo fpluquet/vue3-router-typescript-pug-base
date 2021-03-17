@@ -8,7 +8,7 @@
 <template>
   <div class="basic-layout">
     <Menu />
-    <div class="container">
+    <div class="custom-container">
       <slot />
     </div>
   </div>
@@ -26,6 +26,20 @@ export default {
 
 <style lang="scss" scoped>
 .basic-layout {
-  height: 100vh;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  .custom-container {
+    height: 100vh !important;
+    display: flex;
+    flex: 1;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .basic-layout {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
 }
 </style>

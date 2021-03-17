@@ -1,6 +1,6 @@
 
 export const createAccount = async ({ email, password, rut, type }) =>
-    unAuthAxiosCall('/api/createAccount', {
+    axiosCall('/api/createAccount', {
         method: 'POST',
         body: JSON.stringify({
             email,

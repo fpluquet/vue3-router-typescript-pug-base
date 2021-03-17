@@ -1,11 +1,27 @@
 <template>
   <BasicLayout>
-    <template v-if="isDesktop">
-      <DashboardDesktop :accountType="type" />
-    </template>
-    <template v-else>
-      <DashboardMobile :accountType="type" />
-    </template>
+    <div class="show-desktop">
+      <DashboardDesktop
+        :getSections="getSections"
+        :showPanelSections="showPanelSections"
+        :openSideBar="openSideBar"
+        :accountType="accountType"
+      />
+    </div>
+    <div class="show-mobile">
+      <div class="banner-content">
+        <Banner />
+      </div>
+      <DashboardMobile
+        :getSections="getSections"
+        :showPanelSections="showPanelSections"
+        :openSideBar="openSideBar"
+        :accountType="accountType"
+      />
+    </div>
+    <SideBar>
+      <router-view></router-view>
+    </SideBar>
   </BasicLayout>
 </template>
 
@@ -13,8 +29,12 @@
 import BasicLayout from "../../layouts/BasicLayout.vue";
 import DashboardDesktop from "../Dashboard/DashboardDesktop";
 import DashboardMobile from "../Dashboard/DashboardMobile";
-import { ref, onMounted } from "vue";
+import Banner from "../../components/Banner";
+import SideBar from "../../components/SideBar";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { SECTION_DM_ID } from "../../utils/constants";
 
 export default {
   name: "Dashboard",
@@ -22,22 +42,63 @@ export default {
     BasicLayout,
     DashboardDesktop,
     DashboardMobile,
+    SideBar,
+    Banner,
   },
-  // props: {
-  //   accountType: String,
-  // },
-  setup(props) {
+  setup() {
     let type = ref(null);
-    let isDesktop = ref(null);
+    const store = useStore();
     const router = useRouter();
+
+    const openSideBar = () => {
+      store.commit("setShowSideBar", true);
+    };
+
     onMounted(() => {
-      isDesktop.value = true;
-      type.value = router.currentRoute.value.params.accountType;
+      // type.value = router.currentRoute.value.params.accountType;
+      store.commit("setSectionActive", { id: SECTION_DM_ID });
     });
-    return { isDesktop, type };
+
+    const showPanelSections = computed(() => store.state.showPanelSections);
+    const getSections = computed(() => store.state.sections);
+    const accountType = computed(() => store.state.accountType);
+    return {
+      openSideBar,
+      type,
+      getSections,
+      showPanelSections,
+      accountType,
+    };
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@media screen and (max-width: 1024px) {
+  .show-desktop {
+    display: none;
+  }
+  .show-mobile {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .banner-content {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .show-desktop {
+    flex: 1;
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+  }
+  .show-mobile {
+    display: none;
+  }
+}
 </style>

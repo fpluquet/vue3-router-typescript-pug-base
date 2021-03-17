@@ -38,7 +38,9 @@
 
 <script>
 import { ref } from "vue";
+
 import { PERSONA, EMPRESA } from "../utils/constants";
+import { useStore } from "vuex";
 import BasicLayout from "@/layouts/BasicLayout.vue";
 import AccountForm from "@/views/AccountForm";
 import Button from "@/components/Button";
@@ -53,9 +55,11 @@ export default {
   setup() {
     let showButton = ref(false);
     let accountType = ref(null);
+    const store = useStore();
 
     const show = () => (showButton.value = !showButton.value);
     const setAccountType = (type) => {
+      store.commit("setAccountType", { accountType: type });
       return (accountType.value = type);
     };
 

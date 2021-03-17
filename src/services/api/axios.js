@@ -47,21 +47,6 @@ const encodeQueryParams = (url, query) => {
   return encodeURL;
 };
 
-export const unAuthAxiosCall = (url, requestOptions) => {
+export const axiosCall = (url, requestOptions) => {
   return apiCall(url, requestOptions);
-};
-
-export const authAxiosCall = async (url, requestOptions) => {
-  const token = await getToken();
-  return manualAuthAxiosCall(token, url, requestOptions);
-};
-
-export const manualAuthAxiosCall = async (token, url, requestOptions) => {
-  return apiCall(url, {
-    ...requestOptions,
-    headers: {
-      ...requestOptions.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  });
 };

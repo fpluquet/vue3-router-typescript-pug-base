@@ -8,13 +8,24 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
+
 export default {
   name: "ProgressBar",
   props: {
     percentaje: String,
-    accountType: String,
+    width: String,
   },
-  setup(props) {},
+  setup(props) {
+    const store = useStore();
+
+    const accountType = computed(() => store.state.accountType);
+    console.log(store.state);
+    return {
+      accountType,
+    };
+  },
 };
 </script>
 

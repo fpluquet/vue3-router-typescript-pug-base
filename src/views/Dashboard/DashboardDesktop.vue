@@ -31,7 +31,6 @@
           >
             <ProgressBar
               class="mt-6 progress-bar"
-              :accountType="accountType"
               :percentaje="'40'"
             />
           </div>

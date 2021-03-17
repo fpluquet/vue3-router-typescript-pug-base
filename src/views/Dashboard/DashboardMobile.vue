@@ -1,18 +1,23 @@
 <template>
   <div class="dashboard-mobile" v-show="showPanelSections">
-    <div class="columns is-mobile custom-columns">
+    <!-- <div class="columns is-mobile custom-columns"> -->
+    <div
+      class="columns is-mobile custom-columns"
+      v-for="section in getSections"
+      :key="section.id"
+    >
       <div class="column section" @click="openSideBar">
         <router-link
-          :disabled="!getSections[0]?.active"
-          :to="{ name: getSections[0]?.routeName }"
+          :disabled="!section?.active"
+          :to="{ name: section?.routeName }"
         >
           <span class="text">
-            {{ getSections[0]?.name }}
+            {{ section?.name }}
           </span>
         </router-link>
       </div>
     </div>
-    <div
+    <!-- <div
       :style="{
         flex: 1,
         display: 'flex',
@@ -20,9 +25,9 @@
         justifyContent: 'center',
       }"
     >
-      <div class="custom-columns1">
-        <div class="section1 text">
-          <div class="section2 text" @click="openSideBar">
+      <div class="custom-columns-one">
+        <div class="section-one text">
+          <div class="section-two text" @click="openSideBar">
             <router-link
               :disabled="!getSections[1]?.active"
               :to="{ name: getSections[1]?.routeName }"
@@ -30,7 +35,7 @@
               <span class="text"> {{ getSections[1]?.name }} </span>
             </router-link>
           </div>
-          <div class="section3 text" @click="openSideBar">
+          <div class="section-three text" @click="openSideBar">
             <router-link
               :disabled="!getSections[2]?.active"
               :to="{ name: getSections[2]?.routeName }"
@@ -39,17 +44,35 @@
           </div>
         </div>
       </div>
+    </div> -->
+    <div
+      :style="{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }"
+    >
+      <ProgressBar
+        class="mt-6 progress-bar"
+        :percentaje="'40'"
+        :style="{
+          width: '80%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }"
+      />
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import ProgressBar from "../../components/ProgressBar";
-import Banner from "../../components/Banner";
+import Footer from "../../components/Footer";
 
 export default {
   name: "DashboardDesktop",
-  components: { ProgressBar, Banner },
+  components: { ProgressBar, Footer },
   props: {
     accountType: String,
     getSections: Array,
@@ -103,19 +126,19 @@ export default {
   align-items: center;
 }
 
-.custom-columns1 {
+.custom-columns-one {
   height: 115px;
   width: 80%;
   display: flex;
 }
 
-.section1 {
+.section-one {
   height: 115px;
   justify-content: space-between;
   width: 100%;
   display: flex;
 }
-.section2 {
+.section-two {
   height: 100%;
   width: 47%;
   display: flex;
@@ -123,7 +146,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.section3 {
+.section-three {
   height: 100%;
   width: 47%;
   display: flex;

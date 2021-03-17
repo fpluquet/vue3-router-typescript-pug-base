@@ -5,7 +5,7 @@
         :getSections="getSections"
         :showPanelSections="showPanelSections"
         :openSideBar="openSideBar"
-        :accountType="type"
+        :accountType="accountType"
       />
     </div>
     <div class="show-mobile">
@@ -16,7 +16,7 @@
         :getSections="getSections"
         :showPanelSections="showPanelSections"
         :openSideBar="openSideBar"
-        :accountType="type"
+        :accountType="accountType"
       />
     </div>
     <SideBar>
@@ -55,17 +55,20 @@ export default {
     };
 
     onMounted(() => {
-      type.value = router.currentRoute.value.params.accountType;
+      // type.value = router.currentRoute.value.params.accountType;
       store.commit("setSectionActive", { id: SECTION_DM_ID });
     });
 
-    // onMounted(() => store.commit("setSectionActive", { id: SECTION_DM_ID }));
-
     const showPanelSections = computed(() => store.state.showPanelSections);
     const getSections = computed(() => store.state.sections);
-    console.log(getSections, "getSections");
-
-    return { openSideBar, type, getSections, showPanelSections };
+    const accountType = computed(() => store.state.accountType);
+    return {
+      openSideBar,
+      type,
+      getSections,
+      showPanelSections,
+      accountType,
+    };
   },
 };
 </script>

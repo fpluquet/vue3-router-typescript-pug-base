@@ -1,11 +1,27 @@
 <template>
   <div>
-    <img src="@/res/pago_facil_banner_gray_back.svg" width="252" height="62" />
+    <img src="@/res/pago_facil_banner.svg" />
   </div>
 </template>
 
 <script>
-export default {};
+import { ref, onMounted } from "vue";
+export default {
+  props: {
+    name: String,
+    width: String,
+    height: String,
+    setup(props) {
+      let src = ref("");
+      onMounted(() => {
+        console.log("name");
+        src = `@/res/${props.name}.svg`;
+      });
+      console.log("aca");
+      return { src };
+    },
+  },
+};
 </script>
 
 <style>

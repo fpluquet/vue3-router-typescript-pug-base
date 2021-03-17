@@ -3,7 +3,7 @@ import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants
 
 export default createStore({
   state: {
-    // accountType: null,
+    accountType: null,
     showSideBar: false,
     showPanelSections: true,
     sections: [
@@ -13,6 +13,9 @@ export default createStore({
     ]
   },
   mutations: {
+    setAccountType(state, payload) {
+      state.accountType = payload.accountType;
+    },
     setShowSideBar(state, payload) {
       state.showSideBar = payload;
       state.showPanelSections = !payload

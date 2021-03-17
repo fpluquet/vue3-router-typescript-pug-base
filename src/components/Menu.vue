@@ -8,7 +8,7 @@
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
         <img
-          src="@/res/pago_facil_banner_gray_back.svg"
+          src="@/res/pago_facil_banner.svg"
           width="252"
           height="62"
         />

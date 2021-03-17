@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss">
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
   .show-desktop {
     display: none;
   }
@@ -90,7 +90,7 @@ export default {
     margin-bottom: 60px;
   }
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
   .show-desktop {
     flex: 1;
     /* width: 100%; */

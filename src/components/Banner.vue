@@ -14,10 +14,8 @@ export default {
     setup(props) {
       let src = ref("");
       onMounted(() => {
-        console.log("name");
         src = `@/res/${props.name}.svg`;
       });
-      console.log("aca");
       return { src };
     },
   },

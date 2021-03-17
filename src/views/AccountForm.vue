@@ -96,7 +96,6 @@ export default {
         //   messageError.value = error.message;
         // }
       } catch (error) {
-        console.log("e", error);
         error.inner.forEach((error) => {
           formError.value[error.path] = error.message;
         });

@@ -21,7 +21,6 @@ export default {
     const store = useStore();
 
     const accountType = computed(() => store.state.accountType);
-    console.log(store.state);
     return {
       accountType,
     };

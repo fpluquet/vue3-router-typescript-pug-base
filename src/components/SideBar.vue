@@ -27,7 +27,6 @@ export default {
     const router = useRouter();
     const setCloseSideBar = () => {
       store.commit("setShowSideBar", false);
-      console.log(router);
       router.go(-1);
     };
     return { setCloseSideBar, showSideBar };

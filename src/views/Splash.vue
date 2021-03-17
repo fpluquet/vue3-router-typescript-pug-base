@@ -4,7 +4,7 @@
       <div class="img">
         <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
       </div>
-      <div v-show="!accountType" class="crear-cuenta are-normal">
+      <div v-if="!accountType" class="crear-cuenta are-normal">
         <Button @click="show" className="button is-fullwidth"
           >Seleccionar tipo de cuenta
           <fa
@@ -37,18 +37,16 @@
           Empresa
         </Button>
       </div>
-      <div v-show="accountType">
-        <AccountForm :accountType="accountType" />
-      </div>
+      <router-view v-else></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-
+import { ref, computed } from "vue";
 import { PERSONA, EMPRESA } from "../utils/constants";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import BasicLayout from "@/layouts/BasicLayout.vue";
 import AccountForm from "@/views/AccountForm";
 import Button from "@/components/Button";
@@ -64,11 +62,15 @@ export default {
     let showButton = ref(false);
     let accountType = ref(null);
     const store = useStore();
+    const router = useRouter();
+
+    accountType = computed(() => store.state.accountType);
 
     const show = () => (showButton.value = !showButton.value);
+    
     const setAccountType = (type) => {
       store.commit("setAccountType", { accountType: type });
-      return (accountType.value = type);
+      router.push({ name: "create-account", params: { accountType: type } });
     };
 
     return {

@@ -12,7 +12,7 @@
           />
         </div>
         <p v-show="formError.email" class="help is-danger">
-          {{ formError.email }}
+          El campo E-mail no es correcto.
         </p>
       </div>
       <div class="field">
@@ -25,11 +25,11 @@
             :class="{ 'is-danger': formError.password }"
           />
           <div class="container-icon">
-            <fa icon="eye" width="20" type="fas" class="pull-right"></fa>
+            <fa icon="eye" width="18" type="fas" class="pull-right"></fa>
           </div>
         </div>
         <p v-show="formError.password" class="help is-danger">
-          {{ formError.password }}
+          El campo Contraseña no es correcto.
         </p>
       </div>
       <div class="field">
@@ -44,7 +44,7 @@
           <div class="container-icon">
             <fa
               icon="info-circle"
-              width="20"
+              width="18"
               type="fas"
               class="pull-right"
             ></fa>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import * as Yup from "yup";
@@ -78,25 +78,25 @@ import Button from "@/components/Button";
 
 export default {
   name: "AccountForm",
-  props: {
-    accountType: String,
-  },
   components: {
     Button,
   },
-  setup(props) {
+  setup() {
     let formData = {};
     let formError = ref({});
     let messageError = ref("");
     let loading = ref(false);
     const router = useRouter();
     const store = useStore();
+    let accountType = null;
 
     let schemaForm = Yup.object().shape({
       email: Yup.string().email().required(),
       password: Yup.string().required(),
       rut: Yup.string().required(),
     });
+
+    accountType = computed(() => store.state.accountType);
 
     const back = () => {
       store.commit("setAccountType", { accountType: null });
@@ -111,7 +111,7 @@ export default {
         await schemaForm.validate(formData, { abortEarly: false });
         router.push({
           name: "Dashboard",
-          params: { accountType: props.accountType },
+          params: { accountType },
         });
         // try {
         //   const result = await reauthenticate(formData.password);
@@ -167,7 +167,7 @@ export default {
   .container-icon {
     position: absolute;
     top: 10px;
-    right: 5px;
+    right: 10px;
     cursor: pointer;
   }
 }

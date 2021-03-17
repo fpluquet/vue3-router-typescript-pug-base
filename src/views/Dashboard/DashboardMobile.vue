@@ -17,34 +17,6 @@
         </router-link>
       </div>
     </div>
-    <!-- <div
-      :style="{
-        flex: 1,
-        display: 'flex',
-        height: '115px',
-        justifyContent: 'center',
-      }"
-    >
-      <div class="custom-columns-one">
-        <div class="section-one text">
-          <div class="section-two text" @click="openSideBar">
-            <router-link
-              :disabled="!getSections[1]?.active"
-              :to="{ name: getSections[1]?.routeName }"
-            >
-              <span class="text"> {{ getSections[1]?.name }} </span>
-            </router-link>
-          </div>
-          <div class="section-three text" @click="openSideBar">
-            <router-link
-              :disabled="!getSections[2]?.active"
-              :to="{ name: getSections[2]?.routeName }"
-              ><span class="text"> {{ getSections[2]?.name }} </span>
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div
       :style="{
         display: 'flex',

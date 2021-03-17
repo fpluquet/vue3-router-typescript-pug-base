@@ -90,7 +90,7 @@ export default {
     margin-bottom: 60px;
   }
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
   .show-desktop {
     flex: 1;
     /* width: 100%; */

@@ -32,7 +32,7 @@ export default {
 .box-section {
   // border: 1px solid gray;
   // margin-right: 70px;
-  height: 100px;
+  min-height: 143px;
   margin-top: 15px;
   display: flex;
   flex-direction: row;

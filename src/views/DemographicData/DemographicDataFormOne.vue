@@ -57,7 +57,6 @@ export default {
     let loading = ref(false);
 
     const saveNF = () =>
-      console.log("send to backend the value ===>> ", formData.nombreFantasia);
     return {
       saveNF,
       formData,

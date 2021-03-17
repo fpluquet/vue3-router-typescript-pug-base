@@ -56,7 +56,6 @@ export default {
 
     const show = () => (showButton.value = !showButton.value);
     const setAccountType = (type) => {
-      console.log({type});
       return (accountType.value = type);
     };
 

@@ -1,43 +1,65 @@
 <template>
   <div class="splash">
-    <div class="content-splash">
-      <div class="img">
-        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
+    <div class="columns is-centered">
+      <div
+        class="column is-6-desktop is-4-widescreen is-3-fullhd field mb-1 content-splash"
+      >
+        <div class="columns is-centered">
+          <div class="column img">
+            <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-10 field mb-1 custom-column">
+            <template v-if="!accountType">
+              <div class="columns">
+                <div class="column">
+                  <Button @click="show" className="button is-fullwidth"
+                    >Seleccionar tipo de cuenta
+                    <fa
+                      v-if="showButton"
+                      icon="chevron-down"
+                      width="20"
+                      type="fas"
+                      class="fa-chevron"
+                    ></fa>
+                    <fa
+                      v-else
+                      icon="chevron-up"
+                      width="20"
+                      type="fas"
+                      class="fa-chevron"
+                    ></fa>
+                  </Button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <Button
+                    @click="setAccountType(PERSONA)"
+                    className="button is-fullwidth persona"
+                    :class="{ hide: showButton }"
+                  >
+                    Persona
+                  </Button>
+                </div>
+              </div>
+              <div class="columns">
+                <div class="column">
+                  <Button
+                    @click="setAccountType(EMPRESA)"
+                    className="button is-fullwidth empresa"
+                    :class="{ hide: showButton }"
+                  >
+                    Empresa
+                  </Button>
+                </div>
+              </div>
+            </template>
+            <router-view v-else></router-view>
+          </div>
+        </div>
       </div>
-      <div v-if="!accountType" class="crear-cuenta are-normal">
-        <Button @click="show" className="button is-fullwidth"
-          >Seleccionar tipo de cuenta
-          <fa
-            v-if="showButton"
-            icon="chevron-down"
-            width="12"
-            type="fas"
-            class="fa-chevron pull-right"
-          ></fa>
-          <fa
-            v-else
-            icon="chevron-up"
-            width="12"
-            type="fas"
-            class="fa-chevron pull-right"
-          ></fa>
-        </Button>
-        <Button
-          @click="setAccountType(PERSONA)"
-          className="button is-fullwidth persona"
-          :class="{ hide: showButton }"
-        >
-          Persona
-        </Button>
-        <Button
-          @click="setAccountType(EMPRESA)"
-          className="button is-fullwidth empresa"
-          :class="{ hide: showButton }"
-        >
-          Empresa
-        </Button>
-      </div>
-      <router-view v-else></router-view>
     </div>
   </div>
 </template>
@@ -87,24 +109,37 @@ export default {
 
 <style lang="scss" scoped>
 .content-splash {
-  padding: 100px 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: center;
   background: #ffffff;
   box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
-  width: 20%;
+  height: 600px;
+  padding-left: 50px;
+  padding-right: 50px;
+  max-width: 500px;
 }
 .splash {
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  // width: 500px;
-  margin: auto;
   display: flex;
-  flex-direction: column;
   flex: 1;
+  min-width: 300px;
+  justify-content: center;
+  flex-direction: column;
+  background: #00378f;
+
+  .field {
+    margin-bottom: 0px;
+  }
+  .custom-column {
+    .column {
+      padding: 1px !important;
+    }
+  }
 
   .img {
-    margin-bottom: 20%;
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
   }
@@ -117,7 +152,9 @@ export default {
   }
 
   .fa-chevron {
-    margin-left: 12px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
   .hide {
     display: none;

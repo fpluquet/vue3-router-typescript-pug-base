@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { FontAwesomeIcon } from "@/plugins/font-awesome";
-import { VTooltip } from 'v-tooltip'
 require('@/assets/main.scss');
 
 

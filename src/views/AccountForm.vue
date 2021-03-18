@@ -19,12 +19,12 @@
         <div class="control has-icons-right" :style="{ display: 'flex' }">
           <input
             class="input"
-            type="password"
+            :type="inputType ? 'password' : 'text'"
             placeholder="Contraseña"
             v-model="formData.password"
             :class="{ 'is-danger': formError.password }"
           />
-          <div class="container-icon">
+          <div class="container-icon" @click="inputType = !inputType">
             <fa icon="eye" width="18" type="fas" class="pull-right"></fa>
           </div>
         </div>
@@ -42,12 +42,19 @@
             :class="{ 'is-danger': formError.rut }"
           />
           <div class="container-icon">
-            <fa
-              icon="info-circle"
-              width="18"
-              type="fas"
-              class="pull-right"
-            ></fa>
+            <a
+              class="has-tooltip-right"
+              data-tooltip="Ingrese el RUT de la persona que registrará la empresa."
+              :style="{ color: 'rgb(74,74,74)' }"
+            >
+              <fa
+                data-tooltip="Tooltip Text"
+                icon="info-circle"
+                width="18"
+                type="fas"
+                class="pull-right"
+              ></fa>
+            </a>
           </div>
         </div>
         <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
@@ -89,6 +96,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     let accountType = null;
+    let inputType = ref(true);
 
     let schemaForm = Yup.object().shape({
       email: Yup.string().email().required(),
@@ -136,6 +144,7 @@ export default {
       formError,
       loading,
       back,
+      inputType,
     };
   },
 };

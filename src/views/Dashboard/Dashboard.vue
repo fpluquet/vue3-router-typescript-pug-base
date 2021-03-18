@@ -61,7 +61,7 @@ export default {
 
     const showPanelSections = computed(() => store.state.showPanelSections);
     const getSections = computed(() => store.state.sections);
-    const accountType = computed(() => store.state.accountType);
+    const accountType = computed(() => store.state.account.type);
     return {
       openSideBar,
       type,

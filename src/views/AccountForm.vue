@@ -37,7 +37,7 @@
           <input
             class="input"
             type="text"
-            placeholder="R.U.T"
+            :placeholder="accountType === EMPRESA ? 'R.U.T Persona' : 'R.U.T'"
             v-model="formData.rut"
             :class="{ 'is-danger': formError.rut }"
           />
@@ -59,8 +59,43 @@
         </div>
         <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
       </div>
-      <Button :type="'submit'" :className="'button is-fullwidth mt-5'"
-        >Crear Cuenta</Button
+      <div v-if="accountType === EMPRESA" class="field">
+        <div class="control has-icons-right">
+          <input
+            class="input"
+            type="text"
+            placeholder="R.U.T Empresa"
+            v-model="formData.rut"
+            :class="{
+              'is-danger': formError.rut,
+            }"
+          />
+          <div class="container-icon">
+            <a
+              class="has-tooltip-right"
+              data-tooltip="Ingrese el RUT de la Empresa."
+              :style="{ color: 'rgb(74,74,74)' }"
+            >
+              <fa
+                data-tooltip="Tooltip Text"
+                icon="info-circle"
+                width="18"
+                type="fas"
+                class="pull-right"
+              ></fa>
+            </a>
+          </div>
+        </div>
+        <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
+      </div>
+      <!-- <ButtonColor
+        :type="'submit'"
+        :className="'button is-fullwidth mt-5'"
+        :style="{ color: accountType === EMPRESA ? '#6AC24B' : '#1D9ADD' }"
+        >Crear Cuenta</ButtonColor
+      > -->
+      <ButtonColor :type="'submit'" :class="'button is-fullwidth mt-5'"
+        >Crear Cuenta</ButtonColor
       >
     </form>
     <div
@@ -82,11 +117,14 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import Button from "@/components/Button";
+import ButtonColor from "@/components/ButtonColor";
+import { PERSONA, EMPRESA } from "../utils/constants";
 
 export default {
   name: "AccountForm",
   components: {
     Button,
+    ButtonColor,
   },
   setup() {
     let formData = {};
@@ -95,7 +133,7 @@ export default {
     let loading = ref(false);
     const router = useRouter();
     const store = useStore();
-    let accountType = null;
+    let accountType = ref(null);
     let inputType = ref(true);
 
     let schemaForm = Yup.object().shape({
@@ -104,7 +142,7 @@ export default {
       rut: Yup.string().required(),
     });
 
-    accountType = computed(() => store.state.accountType);
+    accountType = computed(() => store.state.account.type);
 
     const back = () => {
       store.commit("setAccountType", { accountType: null });
@@ -145,6 +183,9 @@ export default {
       loading,
       back,
       inputType,
+      accountType,
+      PERSONA,
+      EMPRESA,
     };
   },
 };

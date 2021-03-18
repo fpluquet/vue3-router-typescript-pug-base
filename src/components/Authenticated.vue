@@ -12,7 +12,7 @@ export default {
     const router = useRouter();
     let cognitoId = ref(false);
     onMounted(() => {
-      cognitoId = Boolean(store.state.hasCognitoId);
+      cognitoId = Boolean(store.state.account.cognitoId);
       if (cognitoId) {
         router.push({
           name: "Dashboard",

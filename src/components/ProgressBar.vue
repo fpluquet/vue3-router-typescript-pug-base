@@ -20,7 +20,7 @@ export default {
   setup(props) {
     const store = useStore();
 
-    const accountType = computed(() => store.state.accountType);
+    const accountType = computed(() => store.state.account.type);
     return {
       accountType,
     };

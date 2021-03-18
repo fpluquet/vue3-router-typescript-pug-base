@@ -64,10 +64,10 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    accountType = computed(() => store.state.accountType);
+    accountType = computed(() => store.state.account.type);
 
     const show = () => (showButton.value = !showButton.value);
-    
+
     const setAccountType = (type) => {
       store.commit("setAccountType", { accountType: type });
       router.push({ name: "create-account", params: { accountType: type } });

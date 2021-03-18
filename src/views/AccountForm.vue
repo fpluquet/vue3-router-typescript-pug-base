@@ -57,7 +57,9 @@
             </a>
           </div>
         </div>
-        <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
+        <p v-show="formError.rut" class="help is-danger">
+          El campo RUT no es correcto.
+        </p>
       </div>
       <div v-if="accountType === EMPRESA" class="field">
         <div class="control has-icons-right">

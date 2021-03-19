@@ -27,7 +27,7 @@ export default {
     const router = useRouter();
     const setCloseSideBar = () => {
       store.commit("setShowSideBar", false);
-      router.go(-1);
+      router.push({ name: 'Dashboard' });
     };
     return { setCloseSideBar, showSideBar };
   },
@@ -63,13 +63,13 @@ export default {
     left: 10px;
   }
 }
-@media screen and (max-width:  768px) {
+@media screen and (max-width: 768px) {
   .side-bar {
     width: 90%;
   }
 }
 // show desktop
-@media screen and (min-width:  769px) {
+@media screen and (min-width: 769px) {
   .side-bar {
     width: 30%;
   }

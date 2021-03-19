@@ -6,16 +6,17 @@
       v-for="section in getSections"
       :key="section.id"
     >
-      <div class="column section" @click="openSideBar">
-        <router-link
-          :disabled="!section?.active"
-          :to="{ name: section?.routeName }"
-        >
+      <router-link
+        :disabled="!section?.active"
+        :to="{ name: section?.routeName }"
+        class="router-link"
+      >
+        <div class="column section" @click="openSideBar">
           <span class="text">
             {{ section?.name }}
           </span>
-        </router-link>
-      </div>
+        </div>
+      </router-link>
     </div>
     <div
       :style="{
@@ -71,6 +72,11 @@ export default {
     text-align: center;
     color: #ffffff;
   }
+}
+.router-link {
+  display: flex;
+  flex: 1;
+  height: 100%;
 }
 .content-banner {
   display: flex;

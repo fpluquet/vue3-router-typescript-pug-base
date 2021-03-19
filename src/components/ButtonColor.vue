@@ -1,11 +1,11 @@
 <template>
-  <button :type="type" class="button custom-button" :class="accountType">
+  <button :type="type" class="button custom-button" :class="account">
     <slot />
   </button>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -13,12 +13,10 @@ export default {
   props: {
     type: String,
     className: String,
+    account: String,
   },
   setup() {
-    let accountType = ref(null);
     const store = useStore();
-    accountType = computed(() => store.state.account.type);
-    return { accountType };
   },
 };
 </script>

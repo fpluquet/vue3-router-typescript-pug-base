@@ -94,7 +94,10 @@
             El RUT de las empresa no es correcto
           </p>
         </div>
-        <ButtonColor :type="'submit'" :class="'button is-fullwidth mt-5'"
+        <ButtonColor
+          :account="accountType"
+          :type="'submit'"
+          :class="'button is-fullwidth mt-5'"
           >Crear Cuenta</ButtonColor
         >
       </form>
@@ -142,12 +145,11 @@ export default {
       password: Yup.string().required(),
       rut: Yup.string().required(),
     });
-
-    accountType = computed(() => store.state.account.type);
+    accountType = computed(() => router.currentRoute.value.params.accountType);
 
     const back = () => {
       store.commit("setAccountType", { accountType: null });
-      router.push({ name: "Home" });
+      router.push({ name: "select-account-type" });
     };
 
     const onCreateAccount = async () => {

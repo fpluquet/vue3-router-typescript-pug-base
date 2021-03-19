@@ -3,6 +3,7 @@ import Authenticated from '../components/Authenticated.vue'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard/Dashboard.vue'
 import AccountForm from '../views/AccountForm.vue'
+import SelectAccountType from '../views/SelectAccountType.vue'
 import DemographicData from '../views/DemographicData/index.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import Documentation from '../views/Documentation.vue'
@@ -21,11 +22,17 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home,
+    redirect: { name: 'select-account-type' },
     children: [
       {
-        path: 'create-account/:accountType',
+        path: 'select-account-type',
+        name: 'select-account-type',
+        component: SelectAccountType
+      },
+      {
+        path: 'create-account/:accountType(persona|empresa)',
         name: 'create-account',
-        component: AccountForm
+        component: AccountForm,
       },
     ]
   },

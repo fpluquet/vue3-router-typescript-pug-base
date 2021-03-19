@@ -34,17 +34,15 @@
         }"
       />
     </div>
-    <Footer />
   </div>
 </template>
 
 <script>
 import ProgressBar from "../../components/ProgressBar";
-import Footer from "../../components/Footer";
 
 export default {
   name: "DashboardDesktop",
-  components: { ProgressBar, Footer },
+  components: { ProgressBar },
   props: {
     accountType: String,
     getSections: Array,

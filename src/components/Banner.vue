@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <img src="@/res/pago_facil_banner.svg" />
-  </div>
+  <img src="@/res/pago_facil_banner.svg"  />
 </template>
 
 <script>
@@ -13,9 +11,7 @@ export default {
     height: String,
     setup(props) {
       let src = ref("");
-      onMounted(() => {
-        src = `@/res/${props.name}.svg`;
-      });
+      onMounted(() => (src = console.log("@/res/pago_facil_banner.svg")));
       return { src };
     },
   },

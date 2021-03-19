@@ -10,7 +10,7 @@
     </div>
     <div class="show-mobile">
       <div class="banner-content">
-        <Banner />
+        <Banner name="pago_facil_banner" :style="{ width: '70%' }" />
       </div>
       <DashboardMobile
         :getSections="getSections"
@@ -81,13 +81,13 @@ export default {
   .show-mobile {
     display: flex;
     flex: 1;
-    justify-content: center;
     flex-direction: column;
   }
   .banner-content {
     display: flex;
     justify-content: center;
     margin-bottom: 60px;
+    margin-top: 60px;
   }
 }
 @media screen and (min-width: 769px) {

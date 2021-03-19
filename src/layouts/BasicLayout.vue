@@ -11,6 +11,7 @@
     <div class="custom-container">
       <slot />
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -18,9 +19,11 @@
 <script>
 import Menu from "../components/Menu";
 import SideBar from "../components/SideBar";
+import Footer from "../components/Footer/Footer";
+
 export default {
   name: "BasicLayout",
-  components: { Menu, SideBar },
+  components: { Menu, SideBar, Footer },
 };
 </script>
 
@@ -39,7 +42,6 @@ export default {
   .basic-layout {
     display: flex;
     flex: 1;
-    flex-direction: row;
   }
 }
 </style>

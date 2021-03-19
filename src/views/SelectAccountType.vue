@@ -42,6 +42,13 @@
       </Button>
     </div>
   </div>
+  <div class="columns">
+    <div class="column custom-column">
+      <router-link :to="{ name: 'continue-register' }">
+        <span>Continua con tu proceso de registro</span>
+      </router-link>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -62,11 +69,8 @@ export default {
   },
   setup() {
     let showButton = ref(false);
-    let accountType = ref(null);
     const store = useStore();
     const router = useRouter();
-
-    accountType = computed(() => store.state.account.type);
 
     const show = () => (showButton.value = !showButton.value);
 

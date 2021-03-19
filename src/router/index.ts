@@ -3,6 +3,7 @@ import Authenticated from '../components/Authenticated.vue'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard/Dashboard.vue'
 import AccountForm from '../views/AccountForm.vue'
+import ContinueRegister from '../views/Account/ContinueRegister.vue'
 import SelectAccountType from '../views/SelectAccountType.vue'
 import DemographicData from '../views/DemographicData/index.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
@@ -33,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'create-account/:accountType(persona|empresa)',
         name: 'create-account',
         component: AccountForm,
+      },
+      {
+        path: '/continue-register',
+        name: 'continue-register',
+        component: ContinueRegister,
       },
     ]
   },

@@ -120,6 +120,7 @@ export default {
   padding-left: 50px;
   padding-right: 50px;
   max-width: 500px;
+  margin: auto;
 }
 .splash {
   display: flex;

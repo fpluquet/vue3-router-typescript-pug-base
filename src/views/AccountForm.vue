@@ -101,16 +101,7 @@
           >Crear Cuenta</ButtonColor
         >
       </form>
-      <div
-        :style="{
-          display: 'flex',
-          justifyContent: 'center',
-          'margin-top': '20px',
-          cursor: 'pointer',
-        }"
-      >
-        <span @click="back" class="button-link">VOLVER</span>
-      </div>
+      <ButtonLink :handleClick="goBack">VOLVER</ButtonLink>
     </div>
   </div>
 </template>
@@ -120,15 +111,15 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import * as Yup from "yup";
-import Button from "@/components/Button";
+import ButtonLink from "@/components/ButtonLink";
 import ButtonColor from "@/components/ButtonColor";
 import { PERSONA, EMPRESA } from "../utils/constants";
 
 export default {
   name: "AccountForm",
   components: {
-    Button,
     ButtonColor,
+    ButtonLink,
   },
   setup() {
     let formData = {};
@@ -147,7 +138,7 @@ export default {
     });
     accountType = computed(() => router.currentRoute.value.params.accountType);
 
-    const back = () => {
+    const goBack = () => {
       store.commit("setAccountType", { accountType: null });
       router.push({ name: "select-account-type" });
     };
@@ -162,16 +153,12 @@ export default {
           name: "Dashboard",
           params: { accountType },
         });
-        // try {
-        //   const result = await reauthenticate(formData.password);
-        //   if (result) {
-        //     auth.currentUser.updateEmail(formData.email);
-        //     auth.signOut();
-        //   }
-        // } catch (error) {
-        //   console.log(error);
-        //   messageError.value = error.message;
-        // }
+        try {
+          createAccount(formData.value);
+        } catch (error) {
+          console.log(error);
+          messageError.value = error.message;
+        }
       } catch (error) {
         error.inner.forEach((error) => {
           formError.value[error.path] = error.message;
@@ -184,7 +171,7 @@ export default {
       formData,
       formError,
       loading,
-      back,
+      goBack,
       inputType,
       accountType,
       PERSONA,
@@ -206,15 +193,6 @@ export default {
   border-radius: 0px;
   min-height: 42px;
   border: none;
-}
-.button-link {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  text-align: center;
-  text-decoration-line: underline;
 }
 
 .container-icon {

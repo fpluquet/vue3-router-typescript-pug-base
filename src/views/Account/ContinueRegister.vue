@@ -20,6 +20,7 @@
           >Continuar</Button
         >
       </form>
+      <ButtonLink :handleClick="goBack">VOLVER</ButtonLink>
     </div>
   </div>
 </template>
@@ -28,15 +29,23 @@
 import { ref } from "vue";
 import * as Yup from "yup";
 import Button from "../../components/Button";
+import ButtonLink from "../../components/ButtonLink";
+import { useRouter } from "vue-router";
 export default {
   name: "ContinueRegister",
-  components: { Button },
+  components: { Button, ButtonLink },
   setup() {
     let formData = {};
     let formError = ref({});
+    let router = useRouter();
+
     let schemaForm = Yup.object().shape({
       email: Yup.string().email().required(),
     });
+
+    const goBack = () => {
+      router.go(-1);
+    };
     const continueRegister = async () => {
       try {
         await schemaForm.validate(formData, { abortEarly: false });
@@ -55,6 +64,7 @@ export default {
       formData,
       formError,
       continueRegister,
+      goBack,
     };
   },
 };

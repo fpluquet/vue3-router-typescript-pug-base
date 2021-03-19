@@ -43,10 +43,13 @@
     </div>
   </div>
   <div class="columns">
-    <div class="column custom-column">
-      <router-link :to="{ name: 'continue-register' }">
-        <span>Continua con tu proceso de registro</span>
-      </router-link>
+    <div class="column custom-column has-text-centered mt-4">
+      <span class="text"
+        >Continua con tu proceso de registro
+        <router-link :to="{ name: 'continue-register' }"
+          >aquí</router-link
+        ></span
+      >
     </div>
   </div>
 </template>
@@ -127,5 +130,15 @@ export default {
 input.error {
   color: #faa;
   background: #ffeded;
+}
+
+.text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #000000;
 }
 </style>

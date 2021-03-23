@@ -30,6 +30,12 @@ export default createStore({
         type: payload.accountType,
       }
     },
+    setUserEmail(state, payload) {
+      state.account = {
+        ...state.account,
+        userEmail: payload.userEmail,
+      }
+    },
     setShowSideBar(state, payload) {
       state.showSideBar = payload;
       state.showPanelSections = !payload

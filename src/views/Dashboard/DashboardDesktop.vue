@@ -9,7 +9,11 @@
     </div>
     <div class="column right-panel-dashboard">
       <div v-show="showPanelSections">
-        <div class="columns" v-for="section in getSections" :key="section.id">
+        <div
+          class="columns mt-6"
+          v-for="section in getSections"
+          :key="section.id"
+        >
           <div class="column is-7-fullhd" @click="openSideBar">
             <router-link
               :disabled="!section.active"

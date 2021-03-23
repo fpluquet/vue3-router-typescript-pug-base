@@ -177,8 +177,8 @@ export default {
           if (accountType === EMPRESA) {
             formData.isCompany = true;
           }
-          const cognitoId = await services.createAccount(formData);
-
+          // const cognitoId = await services.createAccount(formData);
+          store.commit("setUserEmail", { userEmail: 'formData.email' });
           router.push({
             name: "code-input",
             params: { cognitoId: "80f20faa-bc1e-4c39-962f-be23b5451778" },

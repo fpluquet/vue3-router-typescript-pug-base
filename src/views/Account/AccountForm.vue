@@ -115,6 +115,7 @@ import ButtonLink from "@/components/ButtonLink";
 import ButtonColor from "@/components/ButtonColor";
 import { PERSONA, EMPRESA } from "../../utils/constants";
 import * as services from "../../services/api/account.service";
+import { validateRut } from "@/utils/validations";
 
 export default {
   name: "AccountForm",
@@ -143,7 +144,15 @@ export default {
           "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
           "La contraseña debe contener al menos 8 caracteres,uno en mayúsculas, uno en minúsculas, un numero y un carácter especial."
         ),
-      userRut: Yup.string().required("Por favor ingresa el Rut de la persona."),
+      userRut: Yup.string()
+        .required("Por favor ingresa el Rut de la persona.")
+        .test(
+          "is-valid-rut",
+          "El formato del rut no es válido",
+          function (value) {
+            return validateRut(value);
+          }
+        ),
       companyRut:
         accountType === EMPRESA
           ? Yup.string().required("Por favor ingresa el Rut de la empresa.")
@@ -168,7 +177,7 @@ export default {
           if (accountType === EMPRESA) {
             formData.isCompany = true;
           }
-          // const cognitoId = await services.createAccount(formData);
+          const cognitoId = await services.createAccount(formData);
 
           router.push({
             name: "code-input",

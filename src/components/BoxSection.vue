@@ -1,5 +1,5 @@
 <template>
-  <div class="column box-section">
+  <div class="column box-section" :class="{ desactive: !active }">
     <div
       :style="{
         width: '75%',
@@ -10,10 +10,16 @@
       }"
     >
       <div :style="{ 'max-width': '60%' }">
-        <span class="title">{{ title }}</span>
+        <span
+          class="title"
+          :style="{
+            color: active ? '#3d90e0' : '#8E8E8E',
+          }"
+          >{{ title }}</span
+        >
       </div>
     </div>
-    <div :style="{}">
+    <div>
       <img src="@/res/progreso-circular-seccion.svg" alt="circulo-progreso" />
     </div>
   </div>
@@ -21,9 +27,10 @@
 
 <script>
 export default {
-  name: "SectionBox",
+  name: "BoxSection",
   props: {
     title: String,
+    active: Boolean,
   },
 };
 </script>
@@ -40,7 +47,9 @@ export default {
   justify-content: space-around;
   background: #ffffff;
   box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.12);
-  border-radius: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 1px #464646;
 }
 .title {
   font-family: "Roboto";
@@ -49,6 +58,10 @@ export default {
   font-size: 20px;
   line-height: 23px;
   text-align: center;
-  color: #3d90e0;
+}
+.desactive {
+  // pointer-events: none;
+  background: #cfcfcf !important;
+  box-shadow: 0px 0px 0px 0px;
 }
 </style>

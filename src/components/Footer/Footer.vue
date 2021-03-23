@@ -2,9 +2,9 @@
   <template class="show-mobile">
     <FooterMobile />
   </template>
-   <!-- <template class="show-desktop">
-    <FooterDesktop :class="show - desktop" />
-  </template> -->
+  <template class="show-desktop">
+    <FooterDesktop />
+  </template>
 </template>
 
 <script>

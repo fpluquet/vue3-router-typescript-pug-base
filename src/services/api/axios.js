@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = process.env.API_URL
-const API_PORT = process.env.API_PORT
+const API_URL = process.env.VUE_APP_API_URL
+const API_PORT = process.env.VUE_APP_API_PORT
 
 const API_URL_PORT = `${API_URL}:${API_PORT}`;
 const axiosInstance = axios.create({

@@ -5,7 +5,8 @@ import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants
 export default createStore({
   state: {
     account: {
-      cognitoId: true,
+      userEmail: null,
+      cognitoId: null,
       type: null,
     },
     showSideBar: false,
@@ -18,10 +19,16 @@ export default createStore({
   },
   mutations: {
     setCognitoId(state, payload) {
-      state.account.cognitoId = payload.cognitoId;
+      state.account = {
+        ...state.account,
+        cognitoId: payload.cognitoId
+      }
     },
     setAccountType(state, payload) {
-      state.account.type = payload.accountType;
+      state.account = {
+        ...state.account,
+        type: payload.accountType,
+      }
     },
     setShowSideBar(state, payload) {
       state.showSideBar = payload;

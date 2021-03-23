@@ -37,14 +37,14 @@ const routes: Array<RouteRecordRaw> = [
         component: AccountForm,
       },
       {
+        path: '/account-section/code-input/:accountType/:cognitoId',
+        name: 'code-input',
+        component: CodeInput,
+      },
+      {
         path: '/account-section/continue-register',
         name: 'continue-register',
         component: ContinueRegister,
-      },
-      {
-        path: '/account-section/code-input',
-        name: 'code-input',
-        component: CodeInput,
       },
     ]
   },

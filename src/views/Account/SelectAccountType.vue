@@ -56,11 +56,11 @@
 
 <script>
 import { ref, computed } from "vue";
-import { PERSONA, EMPRESA } from "../utils/constants";
+import { PERSONA, EMPRESA } from "../../utils/constants";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import BasicLayout from "@/layouts/BasicLayout.vue";
-import AccountForm from "@/views/AccountForm";
+import AccountForm from "@/views//Account/AccountForm";
 import Button from "@/components/Button";
 
 export default {

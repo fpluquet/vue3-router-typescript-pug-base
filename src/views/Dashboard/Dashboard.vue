@@ -55,7 +55,6 @@ export default {
     };
 
     onMounted(() => {
-      // type.value = router.currentRoute.value.params.accountType;
       store.commit("setSectionActive", { id: SECTION_DM_ID });
     });
 
@@ -90,6 +89,9 @@ export default {
     margin-top: 60px;
   }
 }
+// .content-img {
+//   display: none;
+// }
 @media screen and (min-width: 769px) {
   .show-desktop {
     flex: 1;

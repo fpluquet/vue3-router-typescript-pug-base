@@ -10,14 +10,15 @@
           </div>
         </div>
         <div class="columns is-centered is-mobile">
-          <div class="is-10-mobile is-8-tablet column is-8 field mb-1 custom-column">
+          <div
+            class="is-10-mobile is-8-tablet column is-8 field mb-1 custom-column"
+          >
             <router-view></router-view>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -35,7 +36,7 @@ export default {
   background: #ffffff;
   box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
-  height: 450px;
+  height: 500px;
   padding-left: 20px;
   padding-right: 20px;
   max-width: 500px;
@@ -48,6 +49,7 @@ export default {
   min-width: 300px;
   justify-content: center;
   flex-direction: column;
+  background: #00378f;
 
   .field {
     margin-bottom: 0px;

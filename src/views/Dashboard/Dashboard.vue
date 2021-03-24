@@ -34,7 +34,7 @@ import SideBar from "../../components/SideBar";
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { SECTION_DM_ID } from "../../utils/constants";
+import { SECTION_DM_ID, PERSONA } from "../../utils/constants";
 
 export default {
   name: "Dashboard",
@@ -56,10 +56,13 @@ export default {
 
     onMounted(() => {
       store.commit("setSectionActive", { id: SECTION_DM_ID });
+      if (accountType.value === PERSONA) {
+        getSections.value.splice(-1, 1);
+      }
     });
 
     const showPanelSections = computed(() => store.state.showPanelSections);
-    const getSections = computed(() => store.state.sections);
+    let getSections = computed(() => store.state.sections);
     const accountType = computed(() => store.state.account.type);
     return {
       openSideBar,
@@ -89,9 +92,6 @@ export default {
     margin-top: 60px;
   }
 }
-// .content-img {
-//   display: none;
-// }
 @media screen and (min-width: 769px) {
   .show-desktop {
     flex: 1;
@@ -102,5 +102,8 @@ export default {
   .show-mobile {
     display: none;
   }
+}
+.content-img {
+  display: none;
 }
 </style>

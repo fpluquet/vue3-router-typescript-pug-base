@@ -13,7 +13,7 @@
 }
 
 .content-img {
-  display: none;
+  // display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -26,5 +26,11 @@
   top: 0;
   right: 0;
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .content-img {
+    display: none;
+  }
 }
 </style>

@@ -66,4 +66,9 @@ export default {
     justify-content: center;
   }
 }
+@media screen and (max-width: 768px) {
+  .splash {
+    background: #ffffff !important;
+  }
+}
 </style>

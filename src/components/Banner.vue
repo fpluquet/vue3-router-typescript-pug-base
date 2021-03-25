@@ -1,19 +1,18 @@
 <template>
-  <img src="@/res/pago_facil_banner.svg"  />
+  <img :src="src" />
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 export default {
   props: {
     name: String,
     width: String,
     height: String,
-    setup(props) {
-      let src = ref("");
-      onMounted(() => (src = console.log("@/res/pago_facil_banner.svg")));
-      return { src };
-    },
+  },
+  setup(props) {
+    let src = computed(() => `/${props.name}.svg`);
+    return { src };
   },
 };
 </script>

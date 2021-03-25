@@ -6,10 +6,7 @@
     :style="{ background: '#e5e5e5', zIndex: '0' }"
   >
     <div class="navbar-brand nav-brand-custom">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
-      </a>
-
+      <Banner :name="'pago_facil_banner'" :style="{ width: 252, height: 62 }" />
       <a
         role="button"
         class="navbar-burger"
@@ -37,8 +34,12 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
+import Banner from "../components/Banner.vue";
 export default {
   name: "Menu",
+  components:{
+    Banner
+  },
   setup() {
     const store = useStore();
     let userEmail = computed(() => store.state.account.userEmail);

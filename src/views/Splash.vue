@@ -6,7 +6,10 @@
       >
         <div class="columns is-centered">
           <div class="column img">
-            <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
+            <Banner
+              :name="'pago_facil_banner'"
+              :style="{ width: 252, height: 62 }"
+            />
           </div>
         </div>
         <div class="columns is-centered is-mobile">
@@ -22,8 +25,12 @@
 </template>
 
 <script>
+import Banner from "../components/Banner.vue";
 export default {
   name: "crearCuenta",
+  components: {
+    Banner,
+  },
 };
 </script>
 

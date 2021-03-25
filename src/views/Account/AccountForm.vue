@@ -142,7 +142,7 @@ export default {
         .required("Por favor ingresa la contraseña.")
         .matches(
           "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-          "La contraseña debe contener al menos 8 caracteres,uno en mayúsculas, uno en minúsculas, un numero y un carácter especial."
+          "La contraseña debe contener al menos 8 caracteres,uno en mayúsculas, uno en minúsculas, un número y un carácter especial."
         ),
       userRut: Yup.string()
         .required("Por favor ingresa el Rut de la persona.")

@@ -22,6 +22,7 @@
       </div>
     </div>
   </div>
+  <div class="img-bg"></div>
 </template>
 
 <script>
@@ -76,6 +77,33 @@ export default {
 @media screen and (max-width: 768px) {
   .splash {
     background: #ffffff !important;
+  }
+}
+
+// .content-img {
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   /* height: 100vh; */
+//   width: 50%;
+//   height: 100%;
+//   margin-bottom: 10px;
+//   border: 1px solid black;
+// }
+
+.img-bg {
+  background-image: url("/layout.svg");
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .img-bg {
+    display: none;
   }
 }
 </style>

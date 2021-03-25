@@ -8,11 +8,11 @@
           class="delete"
         ></button>
         <div class="content-text">
-          <span v-show="sentCodeMessage" class="text"
+          <span v-if="sentCodeMessage" class="text"
             >Se ha enviado un mail de verificación de la cuenta con un
             código.</span
           >
-          <span v-show="!sentCodeMessage" class="text"
+          <span v-else class="text"
             >Se ha reenviado un mail de verificación de la cuenta con un
             código.</span
           >
@@ -81,9 +81,9 @@ export default {
       try {
         formData.email = userEmail.value;
         formData.cognitoId = cognitoId.value;
-        await services.resendCode(formData);
-        // removeNotif = false;
-        // sentCodeMessage = false;
+        // await services.resendCode(formData);
+        removeNotif.value = false;
+        sentCodeMessage.value = false;
       } catch (error) {
         console.log(error);
       }

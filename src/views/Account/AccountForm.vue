@@ -97,7 +97,8 @@
         <ButtonColor
           :account="accountType"
           :type="'submit'"
-          :class="'button is-fullwidth mt-5'"
+          class="'button is-fullwidth mt-5'"
+          :loading="loading"
           >Crear Cuenta</ButtonColor
         >
       </form>

@@ -44,7 +44,6 @@ export default {
   background: #e5e5e5;
   flex: 1;
   // flex: 1;
-  // width: 40%;
   .text {
     font-family: Roboto;
     font-style: normal;

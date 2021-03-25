@@ -3,10 +3,9 @@
     <div class="header">
       <fa
         @click="setCloseSideBar"
-        icon="chevron-right"
+        icon="times"
         width="12"
         type="fas"
-        class="fa-chevron-down pull-right"
       ></fa>
     </div>
     <div class="side-bar-content">

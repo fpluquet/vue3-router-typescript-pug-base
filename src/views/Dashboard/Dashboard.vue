@@ -10,7 +10,7 @@
     </div>
     <div class="show-mobile">
       <div class="banner-content">
-        <Banner name="pago_facil_banner" :style="{ width: '70%' }" />
+        <Banner :name="'pago_facil_banner'" :style="{ width: '70%' }" />
       </div>
       <DashboardMobile
         :getSections="getSections"

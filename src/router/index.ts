@@ -9,17 +9,11 @@ import SelectAccountType from '../views/Account/SelectAccountType.vue'
 import DemographicData from '../views/DemographicData/index.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import Documentation from '../views/Documentation.vue'
+import NotFound from '../views/NotFound.vue'
+NotFound
 
 
 const routes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/needAuth',
-  //   component: NonAuthenticated,
-  //   children: [
-  //     { path: '/login', component: Login },
-  //     { path: '/register', component: Register },
-  //   ],
-  // },
   {
     path: '/',
     name: 'Home',
@@ -78,11 +72,11 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
 
-  // {
-  //   path: "/:catchAll(.*)",
-  //   name: 'NotFound',
-  //   component: NotFound,
-  // },
+  {
+    path: "/:catchAll(.*)",
+    name: 'NotFound',
+    component: NotFound,
+  },
 ]
 
 const router = createRouter({

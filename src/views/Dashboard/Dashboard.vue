@@ -103,7 +103,7 @@ export default {
     display: none;
   }
 }
-.content-img {
-  display: none;
-}
+// .content-img {
+//   display: none;
+// }
 </style>

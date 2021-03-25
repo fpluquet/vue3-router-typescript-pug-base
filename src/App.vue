@@ -30,7 +30,7 @@
 
 @media screen and (max-width: 768px) {
   .content-img {
-    display: none;
+    // display: none;
   }
 }
 </style>

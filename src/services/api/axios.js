@@ -46,6 +46,21 @@ const encodeQueryParams = (url, query) => {
   return encodeURL;
 };
 
-export const axiosCall = (url, requestOptions) => {
+export const unAxiosCall = (url, requestOptions) => {
   return apiCall(url, requestOptions);
+};
+
+export const authAxiosCall = async (url, requestOptions) => {
+  const cognitoId = await getCognitoId();
+  return manualAuthAxiosCall(cognitoId, url, requestOptions);
+};
+
+export const manualAuthAxiosCall = async (cognitoId, url, requestOptions) => {
+  return apiCall(url, {
+    ...requestOptions,
+    headers: {
+      ...requestOptions.headers,
+      'X-Cognito-Id': cognitoId
+    },
+  });
 };

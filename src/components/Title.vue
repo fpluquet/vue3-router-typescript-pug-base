@@ -18,12 +18,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content-title {
-  margin: auto;
-}
-.content-title {
-  width: 50%;
-}
 .title {
   font-family: Roboto;
   font-style: normal;

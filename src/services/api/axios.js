@@ -27,6 +27,8 @@ const apiCall = async (...args) => {
     const response = await _axiosCall(axiosInstance, ...args);
     if (response.status >= 200 && response.status < 400) {
       return response;
+    } else {
+      return
     }
     return null;
   } catch (error) {

@@ -22,7 +22,13 @@
       </div>
     </div>
   </div>
-  <div class="img-bg"></div>
+  <div class="img-bg">
+  </div>
+    <div class="arc">
+      <div class="content-arc">
+        <img src="/arco.svg" >
+      </div>
+    </div>
 </template>
 
 <script>
@@ -80,21 +86,10 @@ export default {
   }
 }
 
-// .content-img {
-//   position: fixed;
-//   top: 0;
-//   right: 0;
-//   /* height: 100vh; */
-//   width: 50%;
-//   height: 100%;
-//   margin-bottom: 10px;
-//   border: 1px solid black;
-// }
-
 .img-bg {
   background-image: url("/layout.svg");
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   width: 50%;
   height: 100%;
@@ -105,5 +100,22 @@ export default {
   .img-bg {
     display: none;
   }
+  .arc{
+    display: none;
+  }
+}
+
+.arc {
+  width: 50%;
+  height: 30%;
+  bottom:0;
+  left:0;
+  position: fixed;
+}
+
+.content-arc {
+  display:flex;
+  justify-content: flex-end;
+  margin-right: 60px;
 }
 </style>

@@ -7,15 +7,21 @@
       cursor: 'pointer',
     }"
   >
-    <span @click="handleClick" class="button-link"><slot /></span>
+    <span
+      @click="handleClick"
+      class="button-link"
+      :class="{'is-loading': loading}"
+      ><slot
+    /></span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ButtonLink",
+  name: 'ButtonLink',
   props: {
     handleClick: Function,
+    loading: Boolean,
   },
 };
 </script>

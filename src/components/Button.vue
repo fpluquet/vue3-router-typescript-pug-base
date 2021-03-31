@@ -1,15 +1,20 @@
 <template>
-  <button :type="type" :class="className" class="button custom-button">
+  <button
+    :type="type"
+    :class="[className, {'is-loading': loading}]"
+    class="button custom-button"
+  >
     <slot />
   </button>
 </template>
 
 <script>
 export default {
-  name: "Button",
+  name: 'Button',
   props: {
     type: String,
     className: String,
+    loading: Boolean,
   },
   setup() {},
 };

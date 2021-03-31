@@ -1,12 +1,7 @@
 <template>
   <div class="side-bar" :class="{ open: showSideBar }">
     <div class="header">
-      <fa
-        @click="setCloseSideBar"
-        icon="times"
-        width="12"
-        type="fas"
-      ></fa>
+      <fa @click="setCloseSideBar" icon="times" width="12" type="fas"></fa>
     </div>
     <div class="side-bar-content">
       <slot />
@@ -26,7 +21,7 @@ export default {
     const router = useRouter();
     const setCloseSideBar = () => {
       store.commit("setShowSideBar", false);
-      router.push({ name: 'Dashboard' });
+      router.push({ name: "Dashboard" });
     };
     return { setCloseSideBar, showSideBar };
   },
@@ -60,6 +55,7 @@ export default {
     position: absolute;
     top: 100px;
     left: 10px;
+    cursor: pointer;
   }
 }
 @media screen and (max-width: 768px) {

@@ -8,11 +8,11 @@
           class="delete"
         ></button>
         <div class="content-text">
-          <span v-show="sentCodeMessage" class="text"
+          <span v-if="sentCodeMessage" class="text"
             >Se ha enviado un mail de verificación de la cuenta con un
             código.</span
           >
-          <span v-show="!sentCodeMessage" class="text"
+          <span v-else class="text"
             >Se ha reenviado un mail de verificación de la cuenta con un
             código.</span
           >
@@ -65,27 +65,25 @@ export default {
     let schemaForm = Yup.object().shape({
       code: Yup.string()
         .required("El código es requerido.")
-        .length(4, "El código debe contenter 4 caracteres."),
+        .length(6, "El código debe contenter 6 caracteres."),
     });
 
     let accountType = computed(
       () => router.currentRoute.value.params.accountType
     );
 
-    let userEmail = computed(() => store.state.accountType.userEmail);
+    let userEmail = computed(() => store.state.account.userEmail);
 
     let cognitoId = computed(() => router.currentRoute.value.params.cognitoId);
 
-// Request to api
+    // Request to api
     const resendCode = async () => {
       try {
-        formData.email = userEmail;
+        formData.email = userEmail.value;
         formData.cognitoId = cognitoId.value;
-        console.log(accountType.value);
-        console.log(cognitoId.value);
         // await services.resendCode(formData);
-        // removeNotif = false;
-        // sentCodeMessage = false;
+        removeNotif.value = false;
+        sentCodeMessage.value = false;
       } catch (error) {
         console.log(error);
       }
@@ -96,9 +94,7 @@ export default {
       try {
         await schemaForm.validate(formData, { abortEarly: false });
         try {
-          formData.email = userEmail;
-          formData.cognitoId = cognitoId.value;
-          // await services.confirmCode(formData);
+          await services.confirmCode(formData, cognitoId.value);
           store.commit("setCognitoId", { cognitoId: cognitoId.value });
 
           router.push({

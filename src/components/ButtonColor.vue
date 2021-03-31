@@ -1,5 +1,9 @@
 <template>
-  <button :type="type" class="button custom-button" :class="account">
+  <button
+    :type="type"
+    class="button custom-button"
+    :class="[account, { 'is-loading': loading }]"
+  >
     <slot />
   </button>
 </template>
@@ -14,6 +18,7 @@ export default {
     type: String,
     className: String,
     account: String,
+    loading: Boolean,
   },
   setup() {
     const store = useStore();

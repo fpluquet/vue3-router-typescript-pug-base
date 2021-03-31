@@ -64,7 +64,7 @@
             {{ formError.userRut }}
           </p>
         </div>
-        <div v-if="accountType === EMPRESA" class="field">
+        <div v-show="accountType === EMPRESA" class="field">
           <div class="control has-icons-right">
             <input
               class="input"
@@ -97,7 +97,8 @@
         <ButtonColor
           :account="accountType"
           :type="'submit'"
-          :class="'button is-fullwidth mt-5'"
+          class="'button is-fullwidth mt-5'"
+          :loading="loading"
           >Crear Cuenta</ButtonColor
         >
       </form>
@@ -176,12 +177,15 @@ export default {
           formData.isCompany = false;
           if (accountType === EMPRESA) {
             formData.isCompany = true;
+          } else {
+            // ToDO remove this part. for now is a backend requirenement
+            formData.companyRut = "";
           }
-          // const cognitoId = await services.createAccount(formData);
-          store.commit("setUserEmail", { userEmail: 'formData.email' });
+          const resp = await services.createAccount(formData);
+          store.commit("setUserEmail", { userEmail: formData.email });
           router.push({
             name: "code-input",
-            params: { cognitoId: "80f20faa-bc1e-4c39-962f-be23b5451778" },
+            params: { cognitoId: resp.data.cognitoId },
           });
         } catch (error) {
           console.log(error);

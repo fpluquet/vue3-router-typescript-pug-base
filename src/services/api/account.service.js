@@ -1,22 +1,25 @@
-import { axiosCall } from './axios'
+import { unAxiosCall, authAxiosCall } from './axios'
 
 
 export const createAccount = async (data) =>
-    axiosCall('/auth/signup', {
+    unAxiosCall('/dev/auth/signup', {
         method: 'POST',
         body: JSON.stringify(data),
     })
 
 
 
-export const sendCode = async (data) =>
-    axiosCall('/verify/email', {
+export const confirmCode = async (data, cognitoId) =>
+    unAxiosCall('/dev/verify/email', {
         method: 'POST',
         body: data,
+        headers: {
+            'X-Cognito-Id': cognitoId
+        }
     })
 
 export const resendCode = async (data) =>
-    axiosCall('/verify/email/resend', {
+    authAxiosCall('/dev/verify/email/resend', {
         method: 'POST',
         body: data,
     })

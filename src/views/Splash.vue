@@ -14,7 +14,7 @@
         </div>
         <div class="columns is-centered is-mobile">
           <div
-            class="is-10-mobile is-8-tablet column is-8 field mb-1 custom-column"
+            class="is-10-mobile is-8-tablet column is-10-fullhd field mb-1 custom-column"
           >
             <router-view></router-view>
           </div>
@@ -22,6 +22,13 @@
       </div>
     </div>
   </div>
+  <div class="img-bg">
+  </div>
+    <div class="arc">
+      <div class="content-arc">
+        <img src="/arco.svg" >
+      </div>
+    </div>
 </template>
 
 <script>
@@ -77,5 +84,38 @@ export default {
   .splash {
     background: #ffffff !important;
   }
+}
+
+.img-bg {
+  background-image: url("/layout.svg");
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .img-bg {
+    display: none;
+  }
+  .arc{
+    display: none;
+  }
+}
+
+.arc {
+  width: 50%;
+  height: 30%;
+  bottom:0;
+  left:0;
+  position: fixed;
+}
+
+.content-arc {
+  display:flex;
+  justify-content: flex-end;
+  margin-right: 60px;
 }
 </style>

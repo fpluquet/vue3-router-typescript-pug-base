@@ -2,23 +2,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Authenticated from '../components/Authenticated.vue'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard/Dashboard.vue'
-import AccountForm from '../views/AccountForm.vue'
+import AccountForm from '../views/Account/AccountForm.vue'
 import ContinueRegister from '../views/Account/ContinueRegister.vue'
-import SelectAccountType from '../views/SelectAccountType.vue'
+import CodeInput from '../views/Account/CodeInput.vue'
+import SelectAccountType from '../views/Account/SelectAccountType.vue'
 import DemographicData from '../views/DemographicData/index.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import Documentation from '../views/Documentation.vue'
+import NotFound from '../views/NotFound.vue'
+NotFound
 
 
 const routes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/needAuth',
-  //   component: NonAuthenticated,
-  //   children: [
-  //     { path: '/login', component: Login },
-  //     { path: '/register', component: Register },
-  //   ],
-  // },
   {
     path: '/',
     name: 'Home',
@@ -26,17 +21,22 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: 'select-account-type' },
     children: [
       {
-        path: 'select-account-type',
+        path: 'account-section/select-account-type',
         name: 'select-account-type',
         component: SelectAccountType
       },
       {
-        path: 'create-account/:accountType(persona|empresa)',
+        path: '/account-section/create-account/:accountType(persona|empresa)',
         name: 'create-account',
         component: AccountForm,
       },
       {
-        path: '/continue-register',
+        path: '/account-section/code-input/:accountType/:cognitoId',
+        name: 'code-input',
+        component: CodeInput,
+      },
+      {
+        path: '/account-section/continue-register',
         name: 'continue-register',
         component: ContinueRegister,
       },
@@ -72,11 +72,11 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
 
-  // {
-  //   path: "/:catchAll(.*)",
-  //   name: 'NotFound',
-  //   component: NotFound,
-  // },
+  {
+    path: "/:catchAll(.*)",
+    name: 'NotFound',
+    component: NotFound,
+  },
 ]
 
 const router = createRouter({

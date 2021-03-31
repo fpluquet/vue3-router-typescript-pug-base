@@ -8,17 +8,17 @@
       </div>
     </div>
     <div class="column right-panel-dashboard">
-      <div v-show="showPanelSections">
+      <div v-show="showPanelSections" class="mt-6">
         <div class="columns" v-for="section in getSections" :key="section.id">
-          <div class="column is-7-fullhd" @click="openSideBar">
+          <div
+            class="column is-7-fullhd"
+            @click="section.active ? openSideBar() : null"
+          >
             <router-link
               :disabled="!section.active"
               :to="{ name: section.routeName }"
             >
-              <BoxSection
-                :title="section.name"
-                :class="{ desactive: !section.active }"
-              />
+              <BoxSection :title="section.name" :active="section.active" />
             </router-link>
           </div>
         </div>
@@ -89,10 +89,10 @@ export default {
     // align-items: center;
   }
 
-  .desactive {
-    // pointer-events: none;
-    background: rgba(53, 53, 53, 0.1) !important;
-  }
+  // .desactive {
+  //   // pointer-events: none;
+  //   background: #cfcfcf !important;
+  // }
 
   .progress-bar {
     width: 60%;

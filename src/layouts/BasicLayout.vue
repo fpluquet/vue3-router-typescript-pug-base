@@ -35,13 +35,20 @@ export default {
   flex-direction: column;
   .custom-container {
     display: flex;
+    height: 75vh !important;
     flex: 1;
+    background: #e5e5e5;
   }
 }
 @media screen and (max-width: 768px) {
   .basic-layout {
     display: flex;
     flex: 1;
+  }
+  .custom-container {
+    display: flex;
+    flex: 1;
+    background: white !important;
   }
 }
 </style>

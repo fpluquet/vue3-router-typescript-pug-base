@@ -3,6 +3,7 @@
     <!-- <div class="columns is-mobile custom-columns"> -->
     <div
       class="columns is-mobile custom-columns"
+      :class="[{ desactive: !section.active }, accountType]"
       v-for="section in getSections"
       :key="section.id"
     >
@@ -12,7 +13,7 @@
         class="router-link"
       >
         <div class="column section" @click="openSideBar">
-          <span class="text">
+          <span class="text" :class="{ 'text-desactive': !section.active }">
             {{ section?.name }}
           </span>
         </div>
@@ -39,6 +40,8 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
 import ProgressBar from "../../components/ProgressBar";
 
 export default {
@@ -51,7 +54,11 @@ export default {
     openSideBar: Function,
   },
   setup(props) {
-    return {};
+    const store = useStore();
+    const accountType = computed(() => store.state.account.type);
+    return {
+      accountType,
+    };
   },
 };
 </script>
@@ -66,9 +73,9 @@ export default {
   .text {
     font-family: Roboto;
     font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
     text-align: center;
     color: #ffffff;
   }
@@ -86,12 +93,19 @@ export default {
 }
 .custom-columns {
   height: 115px;
-  background: #19c37f;
+  // background: #19c37f;
   justify-content: center;
   align-items: center;
   width: 80%;
   margin: auto;
   display: flex;
+}
+.persona {
+  background-color: #1d9add;
+}
+
+.empresa {
+  background-color: #19c37f;
 }
 
 .section {
@@ -102,32 +116,10 @@ export default {
   align-items: center;
 }
 
-.custom-columns-one {
-  height: 115px;
-  width: 80%;
-  display: flex;
+.desactive {
+  background: #d6d6d6;
 }
-
-.section-one {
-  height: 115px;
-  justify-content: space-between;
-  width: 100%;
-  display: flex;
-}
-.section-two {
-  height: 100%;
-  width: 47%;
-  display: flex;
-  background: #19c37f;
-  justify-content: center;
-  align-items: center;
-}
-.section-three {
-  height: 100%;
-  width: 47%;
-  display: flex;
-  background: #19c37f;
-  justify-content: center;
-  align-items: center;
+.text-desactive {
+  color: #707070 !important;
 }
 </style>

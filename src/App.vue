@@ -1,5 +1,8 @@
 <template>
   <router-view />
+  <div class="content-img">
+    <img class="img-bg" src="../src/res/layout.svg" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -7,10 +10,27 @@
   // height: 100vh;
   display: flex;
   flex: 1;
-  @media screen and (max-width: 768px) {
-    .container-app {
-      background: #e5e5e5 !important;
-    }
+}
+
+.content-img {
+  // display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  /* height: 100vh; */
+  width: 50%;
+}
+
+.img-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .content-img {
+    display: none;
   }
 }
 </style>

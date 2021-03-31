@@ -10,7 +10,7 @@
     </div>
     <div class="show-mobile">
       <div class="banner-content">
-        <Banner name="pago_facil_banner" :style="{ width: '70%' }" />
+        <Banner :name="'pago_facil_banner'" :style="{ width: '70%' }" />
       </div>
       <DashboardMobile
         :getSections="getSections"
@@ -34,7 +34,7 @@ import SideBar from "../../components/SideBar";
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { SECTION_DM_ID } from "../../utils/constants";
+import { SECTION_DM_ID, PERSONA } from "../../utils/constants";
 
 export default {
   name: "Dashboard",
@@ -55,12 +55,14 @@ export default {
     };
 
     onMounted(() => {
-      // type.value = router.currentRoute.value.params.accountType;
       store.commit("setSectionActive", { id: SECTION_DM_ID });
+      if (accountType.value === PERSONA) {
+        getSections.value.splice(-1, 1);
+      }
     });
 
     const showPanelSections = computed(() => store.state.showPanelSections);
-    const getSections = computed(() => store.state.sections);
+    let getSections = computed(() => store.state.sections);
     const accountType = computed(() => store.state.account.type);
     return {
       openSideBar,
@@ -100,5 +102,8 @@ export default {
   .show-mobile {
     display: none;
   }
+}
+.content-img {
+  display: none;
 }
 </style>

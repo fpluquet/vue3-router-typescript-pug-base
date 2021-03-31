@@ -13,7 +13,7 @@
             />
           </div>
           <p v-show="formError.email" class="help is-danger">
-            El campo E-mail no es correcto.
+            {{ formError.email }}
           </p>
         </div>
         <div class="field">
@@ -30,7 +30,7 @@
             </div>
           </div>
           <p v-show="formError.password" class="help is-danger">
-            El campo Contraseña no es correcto.
+            {{ formError.password }}
           </p>
         </div>
         <div class="field">
@@ -39,8 +39,8 @@
               class="input"
               type="text"
               :placeholder="accountType === EMPRESA ? 'R.U.T Persona' : 'R.U.T'"
-              v-model="formData.rut"
-              :class="{ 'is-danger': formError.rut }"
+              v-model="formData.userRut"
+              :class="{ 'is-danger': formError.userRut }"
             />
             <div class="container-icon">
               <div
@@ -60,8 +60,8 @@
               </div>
             </div>
           </div>
-          <p v-show="formError.rut" class="help is-danger">
-            El campo RUT no es correcto.
+          <p v-show="formError.userRut" class="help is-danger">
+            {{ formError.userRut }}
           </p>
         </div>
         <div v-if="accountType === EMPRESA" class="field">
@@ -70,9 +70,9 @@
               class="input"
               type="text"
               placeholder="R.U.T Empresa"
-              v-model="formData.rut"
+              v-model="formData.companyRut"
               :class="{
-                'is-danger': formError.rut,
+                'is-danger': formError.companyRut,
               }"
             />
             <div class="container-icon">
@@ -90,8 +90,8 @@
               </a>
             </div>
           </div>
-          <p v-show="formError.rut" class="help is-danger">
-            El RUT de las empresa no es correcto
+          <p v-show="formError.companyRut" class="help is-danger">
+            {{ formError.companyRut }}
           </p>
         </div>
         <ButtonColor
@@ -113,7 +113,9 @@ import { useStore } from "vuex";
 import * as Yup from "yup";
 import ButtonLink from "@/components/ButtonLink";
 import ButtonColor from "@/components/ButtonColor";
-import { PERSONA, EMPRESA } from "../utils/constants";
+import { PERSONA, EMPRESA } from "../../utils/constants";
+import * as services from "../../services/api/account.service";
+import { validateRut } from "@/utils/validations";
 
 export default {
   name: "AccountForm",
@@ -131,11 +133,32 @@ export default {
     let accountType = ref(null);
     let inputType = ref(true);
 
+    //Validation inputs
     let schemaForm = Yup.object().shape({
-      email: Yup.string().email().required(),
-      password: Yup.string().required(),
-      rut: Yup.string().required(),
+      email: Yup.string()
+        .email("El campo e-mail no es correcto.")
+        .required("Por favor ingresa el email."),
+      password: Yup.string()
+        .required("Por favor ingresa la contraseña.")
+        .matches(
+          "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+          "La contraseña debe contener al menos 8 caracteres,uno en mayúsculas, uno en minúsculas, un número y un carácter especial."
+        ),
+      userRut: Yup.string()
+        .required("Por favor ingresa el Rut de la persona.")
+        .test(
+          "is-valid-rut",
+          "El formato del rut no es válido",
+          function (value) {
+            return validateRut(value);
+          }
+        ),
+      companyRut:
+        accountType === EMPRESA
+          ? Yup.string().required("Por favor ingresa el Rut de la empresa.")
+          : "",
     });
+
     accountType = computed(() => router.currentRoute.value.params.accountType);
 
     const goBack = () => {
@@ -149,18 +172,24 @@ export default {
       messageError.value = "";
       try {
         await schemaForm.validate(formData, { abortEarly: false });
-        router.push({
-          name: "Dashboard",
-          params: { accountType },
-        });
         try {
-          createAccount(formData.value);
+          formData.isCompany = false;
+          if (accountType === EMPRESA) {
+            formData.isCompany = true;
+          }
+          // const cognitoId = await services.createAccount(formData);
+          store.commit("setUserEmail", { userEmail: 'formData.email' });
+          router.push({
+            name: "code-input",
+            params: { cognitoId: "80f20faa-bc1e-4c39-962f-be23b5451778" },
+          });
         } catch (error) {
           console.log(error);
           messageError.value = error.message;
         }
       } catch (error) {
         error.inner.forEach((error) => {
+          console.log(error.message);
           formError.value[error.path] = error.message;
         });
       }

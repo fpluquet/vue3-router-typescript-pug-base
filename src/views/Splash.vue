@@ -14,7 +14,7 @@
         </div>
         <div class="columns is-centered is-mobile">
           <div
-            class="is-10-mobile is-8-tablet column is-8 field mb-1 custom-column"
+            class="is-10-mobile is-8-tablet column is-10-fullhd field mb-1 custom-column"
           >
             <router-view></router-view>
           </div>

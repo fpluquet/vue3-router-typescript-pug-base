@@ -9,6 +9,7 @@ export default createStore({
       cognitoId: null,
       type: null,
     },
+    globalPercentCompleted: 0,
     showSideBar: false,
     showPanelSections: true,
     sections: [

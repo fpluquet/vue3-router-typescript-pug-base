@@ -6,6 +6,14 @@
       <div class="left-panel-content">
         <img src="@/res/logo_central.svg" alt="logo-pago-facil" />
       </div>
+      <!-- <div>
+        <ProgressCircle
+          class="global-progress-circle"
+          width="400"
+          :global="true"
+          :percentaje="40"
+        />
+      </div> -->
     </div>
     <div class="column right-panel-dashboard">
       <div v-show="showPanelSections" class="mt-6">
@@ -45,14 +53,15 @@
 
 <script>
 import ProgressBar from '../../components/ProgressBar';
+import ProgressCircle from '../../components/ProgressCircle';
 import BoxSection from '../../components/BoxSection';
-// import SideBar from "../../components/SideBar";
 
 export default {
   name: 'DashboardDesktop',
   components: {
     ProgressBar,
     BoxSection,
+    ProgressCircle,
   },
   props: {
     accountType: String,
@@ -100,6 +109,12 @@ export default {
 
   .progress-bar {
     width: 60%;
+  }
+
+  .global-progress-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
 </style>

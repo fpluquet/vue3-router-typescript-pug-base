@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {ClientError} from '../../utils/exceptions';
+import { ClientError } from '../../utils/exceptions';
+import { getCognitoId } from '../../utils/auth';
 
 const API_URL = process.env.VUE_APP_API_URL;
 const API_PORT = process.env.VUE_APP_API_PORT;
@@ -11,10 +12,10 @@ const axiosInstance = axios.create({
     Accept: 'application/json',
   },
   timeout: 5000,
-  validateStatus: status => status < 400,
+  validateStatus: (status) => status < 400,
 });
 
-const _axiosCall = async (axiosInst, url, {query, ...requestOptions}) =>
+const _axiosCall = async (axiosInst, url, { query, ...requestOptions }) =>
   axiosInst({
     method: requestOptions.method,
     url: encodeQueryParams(`${API_URL_PORT}${url}`, query).toString(),
@@ -69,12 +70,11 @@ export const authAxiosCall = async (url, requestOptions) => {
   return manualAuthAxiosCall(cognitoId, url, requestOptions);
 };
 
-export const manualAuthAxiosCall = async (cognitoId, url, requestOptions) => {
-  return apiCall(url, {
+export const manualAuthAxiosCall = async (cognitoId, url, requestOptions) =>
+  apiCall(url, {
     ...requestOptions,
     headers: {
       ...requestOptions.headers,
       'X-Cognito-Id': cognitoId,
     },
   });
-};

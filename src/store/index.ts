@@ -12,9 +12,9 @@ export default createStore({
     showSideBar: false,
     showPanelSections: true,
     sections: [
-      { id: SECTION_DM_ID, name: 'Datos demográficos', active: false, completed: false, routeName: 'datos-demograficos' },
-      { id: SECTION_VB_ID, name: 'Validación biométrica', active: false, completed: false, routeName: 'validacion-biometrica' },
-      { id: SECTION_DOC_ID, name: 'Documentación', active: false, completed: false, routeName: 'documentation' }
+      { id: SECTION_DM_ID, name: 'Datos demográficos', active: false, completed: false, routeName: 'datos-demograficos', percentCompleted: 35 },
+      { id: SECTION_VB_ID, name: 'Validación biométrica', active: false, completed: false, routeName: 'validacion-biometrica', percentCompleted: 0 },
+      { id: SECTION_DOC_ID, name: 'Documentación', active: false, completed: false, routeName: 'documentation', percentCompleted: 0 }
     ]
   },
   mutations: {

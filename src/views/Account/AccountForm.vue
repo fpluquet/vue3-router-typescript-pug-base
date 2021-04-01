@@ -136,7 +136,6 @@ import {
 import * as services from '../../services/api/account.service';
 import { validateRut } from '@/utils/validations';
 import { ClientError } from '@/utils/exceptions';
-
 import { errorCodes } from '@/utils/errorCodes';
 
 export default {

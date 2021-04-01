@@ -26,7 +26,7 @@
               type="code"
               placeholder="Codigo"
               v-model="formData.code"
-              :class="{'is-danger': formError.code}"
+              :class="{ 'is-danger': formError.code }"
             />
           </div>
           <p v-show="formError.code" class="help is-danger">
@@ -48,46 +48,47 @@
 </template>
 
 <script>
-import {ref, computed} from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 import * as Yup from 'yup';
-import Button from '../../components/Button';
-import ButtonLink from '../../components/ButtonLink';
-import {useRouter} from 'vue-router';
-import {useStore} from 'vuex';
+import { useRouter } from 'vue-router';
 import * as services from '@/services/api/account.service';
+import Button from '../../components/Button.vue';
+import ButtonLink from '../../components/ButtonLink.vue';
+
 export default {
   name: 'CodeInput',
-  components: {Button, ButtonLink},
+  components: { Button, ButtonLink },
   setup() {
-    let store = useStore();
-    let formData = {};
-    let formError = ref({});
-    let router = useRouter();
-    let removeNotif = ref(false);
-    let sentCodeMessage = ref(true);
-    let loading = ref(false);
+    const store = useStore();
+    const formData = {};
+    const formError = ref({});
+    const router = useRouter();
+    const removeNotif = ref(false);
+    const sentCodeMessage = ref(true);
+    const loading = ref(false);
 
     // validation inputs.
-    let schemaForm = Yup.object().shape({
+    const schemaForm = Yup.object().shape({
       code: Yup.string()
         .required('El código es requerido.')
         .length(6, 'El código debe contenter 6 caracteres.'),
     });
 
-    let accountType = computed(
+    const accountType = computed(
       () => router.currentRoute.value.params.accountType,
     );
 
-    let userEmail = computed(() => store.state.account.userEmail);
+    const userEmail = computed(() => store.state.account.userEmail);
 
-    let cognitoId = computed(() => router.currentRoute.value.params.cognitoId);
+    const cognitoId = computed(
+      () => router.currentRoute.value.params.cognitoId,
+    );
 
     // Request to api
     const resendCode = async () => {
       try {
-        formData.email = userEmail.value;
-        formData.cognitoId = cognitoId.value;
-        // await services.resendCode(formData);
+        await services.resendCode(userEmail.value, cognitoId.value);
         removeNotif.value = false;
         sentCodeMessage.value = false;
       } catch (error) {
@@ -98,15 +99,15 @@ export default {
     // Request to api
     const confirmCode = async () => {
       try {
-        await schemaForm.validate(formData, {abortEarly: false});
+        await schemaForm.validate(formData, { abortEarly: false });
         try {
           loading.value = true;
           await services.confirmCode(formData, cognitoId.value);
-          store.commit('setCognitoId', {cognitoId: cognitoId.value});
+          store.commit('setCognitoId', { cognitoId: cognitoId.value });
 
           router.push({
             name: 'Dashboard',
-            params: {accountType: accountType},
+            params: { accountType },
           });
         } catch (error) {
           console.log(error);
@@ -114,8 +115,8 @@ export default {
         loading.value = false;
       } catch (error) {
         console.log(error);
-        error.inner.forEach(error => {
-          formError.value[error.path] = error.message;
+        error.inner.forEach((err) => {
+          formError.value[err.path] = err.message;
         });
       }
     };

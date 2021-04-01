@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref } from 'vue';
 export default {
-  name: "DemographicDataFormOne",
+  name: 'DemographicDataFormOne',
   components: {},
   setup() {
     let formData = {};
     let formError = ref({});
-    let messageError = ref("");
+    let messageError = ref('');
     let loading = ref(false);
 
     const saveNF = () => {};

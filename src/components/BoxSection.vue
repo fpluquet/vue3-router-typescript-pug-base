@@ -19,18 +19,21 @@
         >
       </div>
     </div>
-    <div>
-      <img src="@/res/progreso-circular-seccion.svg" alt="circulo-progreso" />
-    </div>
+    <ProgressCircle :percent="percent" />
   </div>
 </template>
 
 <script>
+import ProgressCircle from './ProgressCircle';
 export default {
-  name: "BoxSection",
+  name: 'BoxSection',
+  components: {
+    ProgressCircle,
+  },
   props: {
     title: String,
     active: Boolean,
+    percent: Number,
   },
 };
 </script>
@@ -52,7 +55,7 @@ export default {
   border: 1px #464646;
 }
 .title {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: bold;
   font-size: 20px;

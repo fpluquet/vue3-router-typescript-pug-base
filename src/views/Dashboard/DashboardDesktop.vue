@@ -18,7 +18,11 @@
               :disabled="!section.active"
               :to="{ name: section.routeName }"
             >
-              <BoxSection :title="section.name" :active="section.active" />
+              <BoxSection
+                :title="section.name"
+                :active="section.active"
+                :percent="section.percentCompleted"
+              />
             </router-link>
           </div>
         </div>
@@ -40,12 +44,12 @@
 </template>
 
 <script>
-import ProgressBar from "../../components/ProgressBar";
-import BoxSection from "../../components/BoxSection";
+import ProgressBar from '../../components/ProgressBar';
+import BoxSection from '../../components/BoxSection';
 // import SideBar from "../../components/SideBar";
 
 export default {
-  name: "DashboardDesktop",
+  name: 'DashboardDesktop',
   components: {
     ProgressBar,
     BoxSection,

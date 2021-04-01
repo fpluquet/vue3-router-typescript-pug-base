@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from "vue";
+import { computed } from 'vue';
+
 export default {
   props: {
     name: String,
@@ -11,11 +12,10 @@ export default {
     height: String,
   },
   setup(props) {
-    let src = computed(() => `/${props.name}.svg`);
+    const src = computed(() => `/${props.name}.svg`);
     return { src };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

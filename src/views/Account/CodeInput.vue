@@ -26,33 +26,38 @@
               type="code"
               placeholder="Codigo"
               v-model="formData.code"
-              :class="{ 'is-danger': formError.code }"
+              :class="{'is-danger': formError.code}"
             />
           </div>
           <p v-show="formError.code" class="help is-danger">
             {{ formError.code }}
           </p>
         </div>
-        <Button :type="'submit'" :class="'button is-fullwidth mt-5'"
+        <Button
+          :type="'submit'"
+          :class="'button is-fullwidth mt-5'"
+          :loading="loading"
           >Confirmar</Button
         >
       </form>
-      <ButtonLink :handleClick="resendCode">Reenviar Codigo</ButtonLink>
+      <ButtonLink :handleClick="resendCode" :loading="loading"
+        >Reenviar Codigo</ButtonLink
+      >
     </div>
   </div>
 </template>
 
 <script>
-import { ref, computed } from "vue";
-import * as Yup from "yup";
-import Button from "../../components/Button";
-import ButtonLink from "../../components/ButtonLink";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import * as services from "@/services/api/account.service";
+import {ref, computed} from 'vue';
+import * as Yup from 'yup';
+import Button from '../../components/Button';
+import ButtonLink from '../../components/ButtonLink';
+import {useRouter} from 'vue-router';
+import {useStore} from 'vuex';
+import * as services from '@/services/api/account.service';
 export default {
-  name: "CodeInput",
-  components: { Button, ButtonLink },
+  name: 'CodeInput',
+  components: {Button, ButtonLink},
   setup() {
     let store = useStore();
     let formData = {};
@@ -60,16 +65,17 @@ export default {
     let router = useRouter();
     let removeNotif = ref(false);
     let sentCodeMessage = ref(true);
+    let loading = ref(false);
 
     // validation inputs.
     let schemaForm = Yup.object().shape({
       code: Yup.string()
-        .required("El código es requerido.")
-        .length(6, "El código debe contenter 6 caracteres."),
+        .required('El código es requerido.')
+        .length(6, 'El código debe contenter 6 caracteres.'),
     });
 
     let accountType = computed(
-      () => router.currentRoute.value.params.accountType
+      () => router.currentRoute.value.params.accountType,
     );
 
     let userEmail = computed(() => store.state.account.userEmail);
@@ -92,26 +98,29 @@ export default {
     // Request to api
     const confirmCode = async () => {
       try {
-        await schemaForm.validate(formData, { abortEarly: false });
+        await schemaForm.validate(formData, {abortEarly: false});
         try {
+          loading.value = true;
           await services.confirmCode(formData, cognitoId.value);
-          store.commit("setCognitoId", { cognitoId: cognitoId.value });
+          store.commit('setCognitoId', {cognitoId: cognitoId.value});
 
           router.push({
-            name: "Dashboard",
-            params: { accountType: accountType },
+            name: 'Dashboard',
+            params: {accountType: accountType},
           });
         } catch (error) {
           console.log(error);
         }
+        loading.value = false;
       } catch (error) {
         console.log(error);
-        error.inner.forEach((error) => {
+        error.inner.forEach(error => {
           formError.value[error.path] = error.message;
         });
       }
     };
     return {
+      loading,
       formData,
       formError,
       confirmCode,

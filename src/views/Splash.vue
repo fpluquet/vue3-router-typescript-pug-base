@@ -8,7 +8,7 @@
           <div class="column img">
             <Banner
               :name="'pago_facil_banner'"
-              :style="{ width: 252, height: 62 }"
+              :style="{width: 252, height: 62}"
             />
           </div>
         </div>
@@ -22,19 +22,18 @@
       </div>
     </div>
   </div>
-  <div class="img-bg">
-  </div>
-    <div class="arc">
-      <div class="content-arc">
-        <img src="/arco.svg" >
-      </div>
+  <div class="img-bg"></div>
+  <div class="arc">
+    <div class="content-arc">
+      <img src="/arco.svg" />
     </div>
+  </div>
 </template>
 
 <script>
-import Banner from "../components/Banner.vue";
+import Banner from '../components/Banner.vue';
 export default {
-  name: "crearCuenta",
+  name: 'crearCuenta',
   components: {
     Banner,
   },
@@ -87,7 +86,7 @@ export default {
 }
 
 .img-bg {
-  background-image: url("/layout.svg");
+  background-image: url('/layout.svg');
   position: absolute;
   bottom: 0;
   right: 0;
@@ -100,7 +99,7 @@ export default {
   .img-bg {
     display: none;
   }
-  .arc{
+  .arc {
     display: none;
   }
 }
@@ -108,13 +107,13 @@ export default {
 .arc {
   width: 50%;
   height: 30%;
-  bottom:0;
-  left:0;
+  bottom: 0;
+  left: 0;
   position: fixed;
 }
 
 .content-arc {
-  display:flex;
+  display: flex;
   justify-content: flex-end;
   margin-right: 60px;
 }

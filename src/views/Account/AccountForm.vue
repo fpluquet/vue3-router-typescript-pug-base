@@ -1,4 +1,14 @@
 <template>
+  <div
+    v-show="formErrorsAPI.length"
+    v-for="errorApi in formErrorsAPI"
+    :key="errorApi.field"
+    class="content-error"
+  >
+    <div class="help is-danger">
+      {{ errorApi.field + ': ' + errorApi.error }}
+    </div>
+  </div>
   <div class="columns">
     <div class="column">
       <form @submit.prevent="onCreateAccount">
@@ -9,11 +19,14 @@
               type="email"
               placeholder="Email"
               v-model="formData.email"
-              :class="{ 'is-danger': formError.email }"
+              :class="{'is-danger': formError.email}"
             />
           </div>
           <p v-show="formError.email" class="help is-danger">
             {{ formError.email }}
+          </p>
+          <p v-show="messageError" class="help is-danger">
+            {{ messageError }}
           </p>
         </div>
         <div class="field">
@@ -23,7 +36,7 @@
               :type="inputType ? 'password' : 'text'"
               placeholder="Contraseña"
               v-model="formData.password"
-              :class="{ 'is-danger': formError.password }"
+              :class="{'is-danger': formError.password}"
             />
             <div class="container-icon" @click="inputType = !inputType">
               <fa icon="eye" width="18" type="fas" class="pull-right"></fa>
@@ -40,7 +53,7 @@
               type="text"
               :placeholder="accountType === EMPRESA ? 'R.U.T Persona' : 'R.U.T'"
               v-model="formData.userRut"
-              :class="{ 'is-danger': formError.userRut }"
+              :class="{'is-danger': formError.userRut}"
             />
             <div class="container-icon">
               <div
@@ -49,7 +62,7 @@
                     ? 'Ingrese el RUT de la Persona que registrara la empresa.'
                     : 'Ingrese el RUT de la persona'
                 "
-                :style="{ color: 'rgb(74,74,74)' }"
+                :style="{color: 'rgb(74,74,74)'}"
               >
                 <fa
                   icon="info-circle"
@@ -78,7 +91,7 @@
             <div class="container-icon">
               <a
                 data-tooltip="Ingrese el RUT de la Empresa."
-                :style="{ color: 'rgb(74,74,74)' }"
+                :style="{color: 'rgb(74,74,74)'}"
               >
                 <fa
                   data-tooltip="Tooltip Text"
@@ -108,18 +121,26 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import * as Yup from "yup";
-import ButtonLink from "@/components/ButtonLink";
-import ButtonColor from "@/components/ButtonColor";
-import { PERSONA, EMPRESA } from "../../utils/constants";
-import * as services from "../../services/api/account.service";
-import { validateRut } from "@/utils/validations";
+import {ref, computed} from 'vue';
+import {useRouter} from 'vue-router';
+import {useStore} from 'vuex';
+import * as Yup from 'yup';
+import ButtonLink from '@/components/ButtonLink';
+import ButtonColor from '@/components/ButtonColor';
+import {
+  PERSONA,
+  EMPRESA,
+  EMAIL_ALREADY_EXIST,
+  INVALID_RUT,
+} from '../../utils/constants';
+import * as services from '../../services/api/account.service';
+import {validateRut} from '@/utils/validations';
+import {ClientError} from '@/utils/exceptions';
+
+import {errorCodes} from '@/utils/errorCodes';
 
 export default {
-  name: "AccountForm",
+  name: 'AccountForm',
   components: {
     ButtonColor,
     ButtonLink,
@@ -127,7 +148,8 @@ export default {
   setup() {
     let formData = {};
     let formError = ref({});
-    let messageError = ref("");
+    let formErrorsAPI = ref([]);
+    let messageError = ref('');
     let loading = ref(false);
     const router = useRouter();
     const store = useStore();
@@ -137,63 +159,72 @@ export default {
     //Validation inputs
     let schemaForm = Yup.object().shape({
       email: Yup.string()
-        .email("El campo e-mail no es correcto.")
-        .required("Por favor ingresa el email."),
+        .email('El campo e-mail no es correcto.')
+        .required('Por favor ingresa el email.'),
       password: Yup.string()
-        .required("Por favor ingresa la contraseña.")
+        .required('Por favor ingresa la contraseña.')
         .matches(
-          "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-          "La contraseña debe contener al menos 8 caracteres,uno en mayúsculas, uno en minúsculas, un número y un carácter especial."
+          '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$',
+          'La contraseña debe contener al menos 8 caracteres,uno en mayúsculas, uno en minúsculas, un número y un carácter especial.',
         ),
       userRut: Yup.string()
-        .required("Por favor ingresa el Rut de la persona.")
+        .required('Por favor ingresa el rut de la persona.')
         .test(
-          "is-valid-rut",
-          "El formato del rut no es válido",
-          function (value) {
+          'is-valid-rut',
+          'El formato del rut de usuario no es válido',
+          function(value) {
             return validateRut(value);
-          }
+          },
         ),
       companyRut:
         accountType === EMPRESA
-          ? Yup.string().required("Por favor ingresa el Rut de la empresa.")
-          : "",
+          ? Yup.string().required('Por favor ingresa el rut de la empresa.')
+          : '',
     });
 
     accountType = computed(() => router.currentRoute.value.params.accountType);
 
     const goBack = () => {
-      store.commit("setAccountType", { accountType: null });
-      router.push({ name: "select-account-type" });
+      store.commit('setAccountType', {accountType: null});
+      router.push({name: 'select-account-type'});
     };
 
     const onCreateAccount = async () => {
       formError.value = {};
+      formErrorsAPI.value = [];
       loading.value = true;
-      messageError.value = "";
+      messageError.value = '';
       try {
-        await schemaForm.validate(formData, { abortEarly: false });
+        await schemaForm.validate(formData, {abortEarly: false});
         try {
           formData.isCompany = false;
           if (accountType === EMPRESA) {
             formData.isCompany = true;
           } else {
             // ToDO remove this part. for now is a backend requirenement
-            formData.companyRut = "";
+            formData.companyRut = '';
           }
           const resp = await services.createAccount(formData);
-          store.commit("setUserEmail", { userEmail: formData.email });
+          store.commit('setUserEmail', {userEmail: formData.email});
           router.push({
-            name: "code-input",
-            params: { cognitoId: resp.data.cognitoId },
+            name: 'code-input',
+            params: {cognitoId: resp.data.cognitoId},
           });
         } catch (error) {
-          console.log(error);
-          messageError.value = error.message;
+          if (error instanceof ClientError) {
+            if (error.code === EMAIL_ALREADY_EXIST) {
+              messageError.value = errorCodes.get(EMAIL_ALREADY_EXIST);
+            }
+            if (error.args) {
+              error.args.forEach(error => {
+                formErrorsAPI.value.push(error);
+              });
+            }
+          }
         }
       } catch (error) {
-        error.inner.forEach((error) => {
-          console.log(error.message);
+        console.log(error.message);
+        error.inner.forEach(error => {
           formError.value[error.path] = error.message;
         });
       }
@@ -203,12 +234,14 @@ export default {
       onCreateAccount,
       formData,
       formError,
+      formErrorsAPI,
       loading,
       goBack,
       inputType,
       accountType,
       PERSONA,
       EMPRESA,
+      messageError,
     };
   },
 };
@@ -233,5 +266,12 @@ export default {
   top: 10px;
   right: 10px;
   cursor: pointer;
+}
+.content-error {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
 }
 </style>

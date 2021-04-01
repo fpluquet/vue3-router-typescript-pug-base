@@ -19,7 +19,7 @@
               type="email"
               placeholder="Email"
               v-model="formData.email"
-              :class="{'is-danger': formError.email}"
+              :class="{ 'is-danger': formError.email }"
             />
           </div>
           <p v-show="formError.email" class="help is-danger">
@@ -36,7 +36,7 @@
               :type="inputType ? 'password' : 'text'"
               placeholder="Contraseña"
               v-model="formData.password"
-              :class="{'is-danger': formError.password}"
+              :class="{ 'is-danger': formError.password }"
             />
             <div class="container-icon" @click="inputType = !inputType">
               <fa icon="eye" width="18" type="fas" class="pull-right"></fa>
@@ -53,7 +53,7 @@
               type="text"
               :placeholder="accountType === EMPRESA ? 'R.U.T Persona' : 'R.U.T'"
               v-model="formData.userRut"
-              :class="{'is-danger': formError.userRut}"
+              :class="{ 'is-danger': formError.userRut }"
             />
             <div class="container-icon">
               <div
@@ -62,7 +62,7 @@
                     ? 'Ingrese el RUT de la Persona que registrara la empresa.'
                     : 'Ingrese el RUT de la persona'
                 "
-                :style="{color: 'rgb(74,74,74)'}"
+                :style="{ color: 'rgb(74,74,74)' }"
               >
                 <fa
                   icon="info-circle"
@@ -91,7 +91,7 @@
             <div class="container-icon">
               <a
                 data-tooltip="Ingrese el RUT de la Empresa."
-                :style="{color: 'rgb(74,74,74)'}"
+                :style="{ color: 'rgb(74,74,74)' }"
               >
                 <fa
                   data-tooltip="Tooltip Text"
@@ -121,9 +121,9 @@
 </template>
 
 <script>
-import {ref, computed} from 'vue';
-import {useRouter} from 'vue-router';
-import {useStore} from 'vuex';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import * as Yup from 'yup';
 import ButtonLink from '@/components/ButtonLink';
 import ButtonColor from '@/components/ButtonColor';
@@ -134,10 +134,10 @@ import {
   INVALID_RUT,
 } from '../../utils/constants';
 import * as services from '../../services/api/account.service';
-import {validateRut} from '@/utils/validations';
-import {ClientError} from '@/utils/exceptions';
+import { validateRut } from '@/utils/validations';
+import { ClientError } from '@/utils/exceptions';
 
-import {errorCodes} from '@/utils/errorCodes';
+import { errorCodes } from '@/utils/errorCodes';
 
 export default {
   name: 'AccountForm',
@@ -185,8 +185,8 @@ export default {
     accountType = computed(() => router.currentRoute.value.params.accountType);
 
     const goBack = () => {
-      store.commit('setAccountType', {accountType: null});
-      router.push({name: 'select-account-type'});
+      store.commit('setAccountType', { accountType: null });
+      router.push({ name: 'select-account-type' });
     };
 
     const onCreateAccount = async () => {
@@ -195,7 +195,7 @@ export default {
       loading.value = true;
       messageError.value = '';
       try {
-        await schemaForm.validate(formData, {abortEarly: false});
+        await schemaForm.validate(formData, { abortEarly: false });
         try {
           formData.isCompany = false;
           if (accountType === EMPRESA) {
@@ -205,18 +205,22 @@ export default {
             formData.companyRut = '';
           }
           const resp = await services.createAccount(formData);
-          store.commit('setUserEmail', {userEmail: formData.email});
+          store.commit('setUserEmail', { userEmail: formData.email });
           router.push({
             name: 'code-input',
-            params: {cognitoId: resp.data.cognitoId},
+            params: { cognitoId: resp.data.cognitoId },
           });
         } catch (error) {
           if (error instanceof ClientError) {
             if (error.code === EMAIL_ALREADY_EXIST) {
-              messageError.value = errorCodes.get(EMAIL_ALREADY_EXIST);
+              messageError.value = errorCodes.get(error.code);
             }
             if (error.args) {
-              error.args.forEach(error => {
+              error.args.forEach((error) => {
+                //ToDO sync with backend.
+                // formErrorsAPI.value.push(
+                //   errorCodes.get(error.code, 'Ha ocurrido un error.'),
+                // );
                 formErrorsAPI.value.push(error);
               });
             }
@@ -224,7 +228,7 @@ export default {
         }
       } catch (error) {
         console.log(error.message);
-        error.inner.forEach(error => {
+        error.inner.forEach((error) => {
           formError.value[error.path] = error.message;
         });
       }

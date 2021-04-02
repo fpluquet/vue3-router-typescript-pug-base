@@ -6,11 +6,12 @@
       'margin-top': '20px',
       cursor: 'pointer',
     }"
+    :class="{ 'is-loading': loading }"
   >
     <span
       @click="handleClick"
-      class="button-link"
-      :class="{'is-loading': loading}"
+      :class="{ 'is-loading': loading }"
+      class="button button-link"
       ><slot
     /></span>
   </div>
@@ -35,5 +36,10 @@ export default {
   line-height: 16px;
   text-align: center;
   text-decoration-line: underline;
+}
+.button {
+  & {
+    border: none;
+  }
 }
 </style>

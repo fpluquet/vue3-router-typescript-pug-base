@@ -15,10 +15,9 @@ export const confirmCode = async (data, cognitoId) =>
     },
   });
 
-export const resendCode = async (data, cognitoId) =>
+export const resendCode = async (cognitoId) =>
   unAxiosCall('/dev/verify/email/resend', {
     method: 'POST',
-    body: data,
     headers: {
       'X-Cognito-Id': cognitoId,
     },

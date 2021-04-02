@@ -40,7 +40,7 @@
           >Confirmar</Button
         >
       </form>
-      <ButtonLink :handleClick="resendCode" :loading="loading"
+      <ButtonLink :handleClick="resendCode" :loading="loadingResendCode"
         >Reenviar Codigo</ButtonLink
       >
     </div>
@@ -67,6 +67,7 @@ export default {
     const removeNotif = ref(false);
     const sentCodeMessage = ref(true);
     const loading = ref(false);
+    const loadingResendCode = ref(false);
 
     // validation inputs.
     const schemaForm = Yup.object().shape({
@@ -88,12 +89,14 @@ export default {
     // Request to api
     const resendCode = async () => {
       try {
-        await services.resendCode(userEmail.value, cognitoId.value);
+        loadingResendCode.value = true;
+        await services.resendCode(cognitoId.value);
         removeNotif.value = false;
         sentCodeMessage.value = false;
       } catch (error) {
         console.log(error);
       }
+      loadingResendCode.value = false;
     };
 
     // Request to api
@@ -122,6 +125,7 @@ export default {
     };
     return {
       loading,
+      loadingResendCode,
       formData,
       formError,
       confirmCode,

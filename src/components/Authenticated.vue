@@ -3,23 +3,24 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { ref, onMounted, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 export default {
-  name: "Authenticated",
+  name: 'Authenticated',
   setup() {
     const store = useStore();
     const router = useRouter();
+
     onMounted(() => {
-      let cognitoId = Boolean(store.state.account.cognitoId);
+      let cognitoId = Boolean(router.currentRoute.value.params.cognitoId);
       if (cognitoId) {
         router.push({
-          name: "Dashboard",
-          params: { accountType: "persona" },
+          name: 'Dashboard',
+          params: { accountType: 'persona' },
         });
       } else {
-        router.push({ name: "Home" });
+        router.push({ name: 'Home' });
       }
     });
 
@@ -28,5 +29,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

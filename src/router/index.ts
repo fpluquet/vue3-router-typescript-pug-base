@@ -43,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/auth',
+    path: '/auth/:cognitoId',
     name: 'Auth',
     component: Authenticated,
     children: [

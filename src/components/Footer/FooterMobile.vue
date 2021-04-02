@@ -1,6 +1,8 @@
 <template>
   <div class="footer">
-    <div class="column"><span class="text"> Eliminar Cuenta</span></div>
+    <div class="column">
+      <span class="text"> Reiniciar proceso de registro</span>
+    </div>
     <div class="column"><span class="text">Ayuda</span></div>
     <div class="column"><span class="text">Términos y condiciones</span></div>
   </div>
@@ -8,7 +10,7 @@
 
 <script>
 export default {
-  name: "Footer",
+  name: 'Footer',
 };
 </script>
 

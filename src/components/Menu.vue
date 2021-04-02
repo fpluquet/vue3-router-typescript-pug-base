@@ -23,22 +23,22 @@
     <div id="nav-bar-pago-facil" class="navbar-menu navbar-menu-custom">
       <div class="navbar-end">
         <span class="custom-text mr-1">Hola, {{ userEmail }}</span>
-        <a class="navbar-item">
+        <!-- <a class="navbar-item">
           <fa icon="bell" width="18" type="far"></fa>
-        </a>
+        </a> -->
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
-import { useStore } from "vuex";
-import Banner from "../components/Banner.vue";
+import { ref, onMounted, computed } from 'vue';
+import { useStore } from 'vuex';
+import Banner from '../components/Banner.vue';
 export default {
-  name: "Menu",
-  components:{
-    Banner
+  name: 'Menu',
+  components: {
+    Banner,
   },
   setup() {
     const store = useStore();

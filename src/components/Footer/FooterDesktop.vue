@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="col">
         <ButtonLink :style="{ 'margin-top': '0px' }"
-          ><span class="text">Eliminar Cuenta</span></ButtonLink
+          ><span class="text">Reiniciar proceso de registro</span></ButtonLink
         >
       </div>
       <div class="col">
@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import ButtonLink from "@/components/ButtonLink";
+import ButtonLink from '@/components/ButtonLink';
 export default {
-  name: "Footer",
+  name: 'Footer',
   components: {
     ButtonLink,
   },

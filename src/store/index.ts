@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants'
 
 export default createStore({
@@ -52,4 +53,7 @@ export default createStore({
   },
   modules: {
   },
+  plugins: [createPersistedState({
+    paths: ['account.userEmail', 'account.type']
+  })],
 })

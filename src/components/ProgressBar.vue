@@ -2,27 +2,25 @@
   <progress
     class="progress is-small"
     :class="accountType"
-    :value="percentaje"
+    :value="globalPercentage"
     max="100"
   ></progress>
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
-  name: "ProgressBar",
-  props: {
-    percentaje: String,
-    width: String,
-  },
-  setup(props) {
+  name: 'ProgressBar',
+  props: {},
+  setup() {
     const store = useStore();
-
     const accountType = computed(() => store.state.account.type);
+    const globalPercentage = computed(() => store.state.globalPercentage);
     return {
       accountType,
+      globalPercentage,
     };
   },
 };

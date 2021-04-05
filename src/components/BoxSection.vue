@@ -35,6 +35,8 @@ export default {
     active: Boolean,
     percent: Number,
   },
+  setup(props) {
+  },
 };
 </script>
 

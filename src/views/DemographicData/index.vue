@@ -11,20 +11,22 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import DemographicDataFormOne from './DemographicDataFormOne';
 import DemographicDataFormTwo from './DemographicDataFormTwo';
 import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
-import { SECTION_DM_ID } from '../../utils/constants';
+import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
 
 export default {
   name: 'DemographicData',
   components: { DemographicDataFormOne, DemographicDataFormTwo, Button, Title },
+
   setup() {
     const store = useStore();
     let stepOne = ref(true);
+    let percentCompleted = ref(0);
     let formData = ref({
       fantasyName: '',
       socialReason: '',
@@ -35,7 +37,7 @@ export default {
       region: '',
       local: '',
     });
-    const checkPercentageCompleted = () => {
+    const storeSectionPercentageCompleted = () => {
       const quantitiFields = Object.keys(formData.value).length;
       let completedFields = 0;
       Object.entries(formData.value).forEach((value) => {
@@ -44,23 +46,34 @@ export default {
         }
       });
 
-      const percentCompleted = Math.round(
+      percentCompleted.value = Math.round(
         (completedFields / quantitiFields) * 100,
         2,
       );
-      console.log(percentCompleted, 'completed');
+
       store.commit('setSectionPercentage', {
         id: SECTION_DM_ID,
-        percentCompleted: percentCompleted,
+        percentCompleted: percentCompleted.value,
       });
     };
 
     const closeSection = () => {
-      checkPercentageCompleted();
-      console.log('close');
-    };
+      storeSectionPercentageCompleted();
+      store.commit('setShowSideBar', false);
 
-    return { stepOne, formData, closeSection, checkPercentageCompleted };
+      const quantitySections = computed(() =>
+        store.state.account.type === PERSONA ? 2 : 3,
+      );
+
+      const globalPercentage = Math.round(
+        (store.state.globalPercentage + percentCompleted.value) /
+          quantitySections.value,
+        2,
+      );
+
+      store.commit('setGlobalPercent', globalPercentage);
+    };
+    return { stepOne, formData, closeSection, storeSectionPercentageCompleted };
   },
 };
 </script>

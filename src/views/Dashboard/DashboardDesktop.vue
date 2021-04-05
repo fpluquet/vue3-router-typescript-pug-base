@@ -43,7 +43,7 @@
               display: 'flex',
             }"
           >
-            <ProgressBar class="mt-6 progress-bar" :percentaje="'40'" />
+            <ProgressBar class="mt-6 progress-bar" />
           </div>
         </div>
       </div>

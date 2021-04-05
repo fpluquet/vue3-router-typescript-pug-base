@@ -9,13 +9,13 @@ export default createStore({
       cognitoId: null,
       type: null,
     },
-    globalPercentCompleted: 0,
+    globalPercentage: 0,
     showSideBar: false,
     showPanelSections: true,
     sections: [
-      { id: SECTION_DM_ID, name: 'Datos demográficos', active: false, completed: false, routeName: 'datos-demograficos', percentCompleted: 35 },
-      { id: SECTION_VB_ID, name: 'Validación biométrica', active: false, completed: false, routeName: 'validacion-biometrica', percentCompleted: 0 },
-      { id: SECTION_DOC_ID, name: 'Documentación', active: false, completed: false, routeName: 'documentation', percentCompleted: 0 }
+      { id: SECTION_DM_ID, name: 'Datos demográficos', active: true, routeName: 'datos-demograficos', percentCompleted: 0 },
+      { id: SECTION_VB_ID, name: 'Validación biométrica', active: false, routeName: 'validacion-biometrica', percentCompleted: 0 },
+      { id: SECTION_DOC_ID, name: 'Documentación', active: false, routeName: 'documentation', percentCompleted: 0 }
     ]
   },
   mutations: {
@@ -52,8 +52,11 @@ export default createStore({
       state.sections = state.sections.map(({ id, percentCompleted, ...rest }) => ({
         id,
         ...rest,
-        percentCompleted: id === payload.id ? payload.percentajeCompleted : percentCompleted,
+        percentCompleted: id === payload.id ? payload.percentCompleted : percentCompleted,
       }));
+    },
+    setGlobalPercent(state, payload) {
+      state.globalPercentage = payload
     }
 
   },

@@ -6,7 +6,7 @@
         class="input"
         type="text"
         placeholder="Nombre fantasia"
-        v-model="formData.nombreFantasia"
+        v-model="formData.fantasyName"
       />
     </div>
   </div>
@@ -16,7 +16,7 @@
         class="input"
         type="text"
         placeholder="Razon social"
-        v-model="formData.razonSocial"
+        v-model="formData.socialReason"
       />
     </div>
   </div>
@@ -29,7 +29,6 @@
         v-model="formData.rubro"
       />
     </div>
-    <p v-show="formError.rut" class="help is-danger">{{ formError.rut }}</p>
   </div>
   <div class="field">
     <div class="control has-icons-right">
@@ -49,9 +48,11 @@
 import { ref } from 'vue';
 export default {
   name: 'DemographicDataFormOne',
+  props: {
+    formData: Object,
+  },
   components: {},
   setup() {
-    let formData = {};
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
@@ -59,7 +60,6 @@ export default {
     const saveNF = () => {};
     return {
       saveNF,
-      formData,
       formError,
     };
   },

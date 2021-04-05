@@ -7,11 +7,11 @@
           class="input"
           type="text"
           placeholder="Telefono"
-          v-model="formData.telefono"
+          v-model="formData.tel"
         />
       </div>
-      <p v-show="formError.telefono" class="help is-danger">
-        {{ formError.telefono }}
+      <p v-show="formError.tel" class="help is-danger">
+        {{ formError.tel }}
       </p>
     </div>
   </div>
@@ -21,7 +21,7 @@
         class="input"
         type="text"
         placeholder="Calle"
-        v-model="formData.calle"
+        v-model="formData.street"
       />
     </div>
   </div>
@@ -61,20 +61,21 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref } from 'vue';
 export default {
-  name: "DemographicDataFormTwo",
+  name: 'DemographicDataFormTwo',
+  props: {
+    formData: Object,
+  },
   components: {},
   setup() {
-    let formData = {};
     let formError = ref({});
-    let messageError = ref("");
+    let messageError = ref('');
     let loading = ref(false);
-    const saveTel = () =>
-      console.log("send to backend the value ===>> ", formData.telefono);
+    const saveTel = (props) =>
+      console.log('send to backend the value ===>> ', props.formData.tel);
     return {
       saveTel,
-      formData,
       formError,
     };
   },

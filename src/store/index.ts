@@ -47,7 +47,15 @@ export default createStore({
         ...rest,
         active: id === payload.id
       }));
+    },
+    setSectionPercentage(state, payload) {
+      state.sections = state.sections.map(({ id, percentCompleted, ...rest }) => ({
+        id,
+        ...rest,
+        percentCompleted: id === payload.id ? payload.percentajeCompleted : percentCompleted,
+      }));
     }
+
   },
   actions: {
   },

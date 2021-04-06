@@ -4,7 +4,7 @@
       class="column is-offset-1-fullhd is-8-desktop is-8-widescreen is-6-fullhd left-panel-dashboard"
     >
       <div class="left-panel-content">
-        <img src="@/res/logo_central.svg" alt="logo-pago-facil" />
+        <img :src="src" alt="logo-pago-facil" />
       </div>
       <!-- <div>
         <ProgressCircle
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue';
 import ProgressBar from '../../components/ProgressBar';
 import ProgressCircle from '../../components/ProgressCircle';
 import BoxSection from '../../components/BoxSection';
@@ -69,7 +70,10 @@ export default {
     showPanelSections: Boolean,
     openSideBar: Function,
   },
-  setup(props) {},
+  setup(props) {
+    const src = computed(() => `/logo_central_${props.accountType}.svg`);
+    return { src };
+  },
 };
 </script>
 

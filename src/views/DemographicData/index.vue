@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import DemographicDataFormOne from './DemographicDataFormOne';
 import DemographicDataFormTwo from './DemographicDataFormTwo';
@@ -25,6 +25,7 @@ export default {
 
   setup() {
     const store = useStore();
+    const emitter = inject('emitter');
     let stepOne = ref(true);
     let percentCompleted = ref(0);
     let formData = ref({
@@ -72,7 +73,11 @@ export default {
       );
 
       store.commit('setGlobalPercent', globalPercentage);
+      console.log('aaaa');
     };
+
+    emitter.emit('myevent', closeSection);
+
     return { stepOne, formData, closeSection, storeSectionPercentageCompleted };
   },
 };

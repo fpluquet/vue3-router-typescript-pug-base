@@ -3,11 +3,16 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { FontAwesomeIcon } from "@/plugins/font-awesome";
+import mitt from 'mitt';
+
 require('@/assets/main.scss');
 
+const emitter = mitt();
 
-createApp(App)
+const app = createApp(App)
   .use(store)
   .use(router)
   .component("fa", FontAwesomeIcon)
-  .mount("#app");
+
+app.provide('emitter', emitter);
+app.mount("#app");

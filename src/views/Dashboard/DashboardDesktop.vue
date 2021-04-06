@@ -43,7 +43,7 @@
               display: 'flex',
             }"
           >
-            <ProgressBar class="mt-6 progress-bar" />
+            <ProgressBar class="mt-6" />
           </div>
         </div>
       </div>

@@ -1,24 +1,35 @@
 <template>
-  <progress
+  <!-- <progress
     class="progress is-small"
     :class="accountType"
     :value="globalPercentage"
     max="100"
-  ></progress>
+  ></progress> -->
+  <img :src="src" />
 </template>
 
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { svgProgressBar } from '@/utils/svgGenerator';
+import { PERSONA } from '@/utils/constants';
 
 export default {
   name: 'ProgressBar',
-  props: {},
   setup() {
     const store = useStore();
     const accountType = computed(() => store.state.account.type);
     const globalPercentage = computed(() => store.state.globalPercentage);
+
+    const src = computed(() => {
+      const color = accountType.value === PERSONA ? '#3D90E0' : '#6AC24B';
+      return `data:image/svg+xml;base64,${svgProgressBar(
+        20,
+        color,
+      )}`;
+    });
     return {
+      src,
       accountType,
       globalPercentage,
     };

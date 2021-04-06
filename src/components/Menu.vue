@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Banner from '../components/Banner.vue';
 export default {

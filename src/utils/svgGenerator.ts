@@ -35,7 +35,7 @@ export function svgOfArc(percent: number) {
 
 export function svgProgressBar(percent: number, color: String) {
 	return btoa(
-		`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 16" fill="none" style="&#10;    width: 200px;&#10;">
+		`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 6" fill="none" style="&#10;    width: 200px;&#10;">
     <g filter="url(#filter0_i)">
         <rect width="104" height="6" rx="3" fill="#E7E7E7"/>
     </g>

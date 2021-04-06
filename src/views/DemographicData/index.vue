@@ -11,13 +11,14 @@
 </template>
 
 <script>
-import { ref, computed, inject } from 'vue';
+import { ref, watchEffect, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import DemographicDataFormOne from './DemographicDataFormOne';
 import DemographicDataFormTwo from './DemographicDataFormTwo';
 import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
 import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
+import { useGlobalPercentaje } from '../../hooks/useGlobalPercent';
 
 export default {
   name: 'DemographicData',
@@ -25,9 +26,7 @@ export default {
 
   setup() {
     const store = useStore();
-    const emitter = inject('emitter');
     let stepOne = ref(true);
-    let percentCompleted = ref(0);
     let formData = ref({
       fantasyName: '',
       socialReason: '',
@@ -38,7 +37,8 @@ export default {
       region: '',
       local: '',
     });
-    const storeSectionPercentageCompleted = () => {
+
+    const calculateSectionPercent = () => {
       const quantitiFields = Object.keys(formData.value).length;
       let completedFields = 0;
       Object.entries(formData.value).forEach((value) => {
@@ -47,38 +47,32 @@ export default {
         }
       });
 
-      percentCompleted.value = Math.round(
+      const percentCompleted = Math.round(
         (completedFields / quantitiFields) * 100,
         2,
       );
-
-      store.commit('setSectionPercentage', {
-        id: SECTION_DM_ID,
-        percentCompleted: percentCompleted.value,
-      });
+      return percentCompleted;
     };
+
+    const globalPercentaje = useGlobalPercentaje(calculateSectionPercent());
+    watch(
+      () => store.state.showSideBar,
+      (showSideBar, prevShowSideBar) => {
+        if (prevShowSideBar) {
+          store.commit('setSectionPercentage', {
+            id: SECTION_DM_ID,
+            percentCompleted: calculateSectionPercent(),
+          });
+          store.commit('setGlobalPercent', globalPercentaje);
+        }
+      },
+    );
 
     const closeSection = () => {
-      storeSectionPercentageCompleted();
       store.commit('setShowSideBar', false);
-
-      const quantitySections = computed(() =>
-        store.state.account.type === PERSONA ? 2 : 3,
-      );
-
-      const globalPercentage = Math.round(
-        (store.state.globalPercentage + percentCompleted.value) /
-          quantitySections.value,
-        2,
-      );
-
-      store.commit('setGlobalPercent', globalPercentage);
-      console.log('aaaa');
     };
 
-    emitter.emit('myevent', closeSection);
-
-    return { stepOne, formData, closeSection, storeSectionPercentageCompleted };
+    return { stepOne, formData, closeSection };
   },
 };
 </script>

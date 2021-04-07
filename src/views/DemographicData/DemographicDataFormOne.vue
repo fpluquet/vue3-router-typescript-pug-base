@@ -2,7 +2,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="saveNF"
+        @blur="saveData({ fantasyName: formData.fantasyName })"
         class="input"
         type="text"
         placeholder="Nombre fantasia"
@@ -13,6 +13,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
+        @blur="saveData({ socialReason: formData.socialReason })"
         class="input"
         type="text"
         placeholder="Razon social"
@@ -23,17 +24,18 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
+        @blur="saveData({ heading: formData.heading })"
         class="input"
         type="text"
         placeholder="Rubro"
-        v-model="formData.rubro"
+        v-model="formData.heading"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @change="formError.url = null"
+        @blur="saveData({ url: formData.url })"
         class="input"
         type="text"
         placeholder="URL"
@@ -46,20 +48,28 @@
 
 <script>
 import { ref } from 'vue';
+import { saveProfile } from '@/services/api/demographicData.service';
 export default {
   name: 'DemographicDataFormOne',
   props: {
     formData: Object,
+    cognitoId: String,
   },
   components: {},
-  setup() {
+  setup(props) {
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
 
-    const saveNF = () => {};
+    const saveData = async (data) => {
+      try {
+        await saveProfile(props.cognitoId, data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     return {
-      saveNF,
+      saveData,
       formError,
     };
   },

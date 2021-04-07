@@ -3,21 +3,23 @@
     <div class="field">
       <div class="control has-icons-right">
         <input
-          @onBlur="saveTel"
+          @blur="saveData({ phone: formData.phone })"
+          @onBlur="saveData"
           class="input"
           type="text"
           placeholder="Telefono"
-          v-model="formData.tel"
+          v-model="formData.phone"
         />
       </div>
       <p v-show="formError.tel" class="help is-danger">
-        {{ formError.tel }}
+        {{ formError.phone }}
       </p>
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
+        @blur="saveData({ street: formData.street })"
         class="input"
         type="text"
         placeholder="Calle"
@@ -28,6 +30,18 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
+        @blur="saveData({ local: formData.local })"
+        class="input"
+        type="text"
+        placeholder="Local"
+        v-model="formData.local"
+      />
+    </div>
+  </div>
+  <div class="field">
+    <div class="control has-icons-right">
+      <input
+        @blur="saveData({ region: formData.region })"
         class="input"
         type="text"
         placeholder="Region"
@@ -38,26 +52,7 @@
       {{ formError.region }}
     </p>
   </div>
-  <div class="field">
-    <div class="control has-icons-right">
-      <input
-        class="input"
-        type="text"
-        placeholder="Local"
-        v-model="formData.local"
-      />
-    </div>
-  </div>
-  <!-- <div class="field">
-    <div class="control has-icons-right">
-      <input
-        class="input"
-        type="text"
-        placeholder="region"
-        v-model="formData.region"
-      />
-    </div>
-  </div> -->
+ 
 </template>
 
 <script>

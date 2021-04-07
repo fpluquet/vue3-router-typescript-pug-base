@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { ClientError } from '../../utils/exceptions';
-import { getCognitoId } from '../../utils/auth';
 
 const API_URL = process.env.VUE_APP_API_URL;
 const API_PORT = process.env.VUE_APP_API_PORT;
@@ -65,16 +64,12 @@ const encodeQueryParams = (url, query) => {
 export const unAxiosCall = (url, requestOptions) =>
   apiCall(url, requestOptions);
 
-export const authAxiosCall = async (url, requestOptions) => {
-  const cognitoId = await getCognitoId();
-  return manualAuthAxiosCall(cognitoId, url, requestOptions);
-};
-
-export const manualAuthAxiosCall = async (cognitoId, url, requestOptions) =>
-  apiCall(url, {
+export const authAxiosCall = async (cognitoId, url, requestOptions) => {
+  return apiCall(url, {
     ...requestOptions,
     headers: {
       ...requestOptions.headers,
       'X-Cognito-Id': cognitoId,
     },
   });
+};

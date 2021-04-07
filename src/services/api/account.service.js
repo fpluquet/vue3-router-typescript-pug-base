@@ -1,4 +1,4 @@
-import { unAxiosCall, authAxiosCall } from './axios';
+import { unAxiosCall } from './axios';
 
 export const createAccount = async (data) =>
   unAxiosCall('/dev/auth/signup', {

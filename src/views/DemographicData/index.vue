@@ -11,31 +11,44 @@
 </template>
 
 <script>
-import { ref, watchEffect, computed, watch } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import DemographicDataFormOne from './DemographicDataFormOne';
 import DemographicDataFormTwo from './DemographicDataFormTwo';
 import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
 import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
 import { useGlobalPercentage } from '../../hooks/useGlobalPercent';
+import { getProfile } from '@/services/api/demographicData.service';
 
 export default {
   name: 'DemographicData',
   components: { DemographicDataFormOne, DemographicDataFormTwo, Button, Title },
 
-  setup() {
+  setup(props) {
     const store = useStore();
+    const router = useRouter();
+
     let stepOne = ref(true);
     let formData = ref({
       fantasyName: '',
       socialReason: '',
-      rubro: '',
+      heading: '',
       url: '',
-      tel: '',
+      phone: '',
       street: '',
       region: '',
       local: '',
+    });
+
+    const cognitoId = computed(
+      () => router.currentRoute.value.params.cognitoId,
+    );
+
+    onMounted(async () => {
+      const profile = await getProfile(cognitoId.value);
+      formData.value.fantasyName = profile.fantasyName;
     });
 
     const calculateSectionPercent = () => {

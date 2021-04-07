@@ -10,22 +10,16 @@
 </template>
 
 <script>
-import { computed, inject, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 export default {
   name: 'SideBar',
   setup() {
     const store = useStore();
-    const emitter = inject('emitter');
     const showSideBar = computed(() => store.state.showSideBar);
     const router = useRouter();
 
-    // onMounted(() => {
-    const closeSection = () => {
-      emitter.on('myevent', (e) => e());
-    };
-    // });
     const setCloseSideBar = () => {
       store.commit('setShowSideBar', false);
       router.push({ name: 'Dashboard' });

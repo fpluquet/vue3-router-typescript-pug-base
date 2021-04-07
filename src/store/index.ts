@@ -56,7 +56,7 @@ export default createStore({
       }));
     },
     setGlobalPercent(state, payload) {
-      state.globalPercentage = payload
+      state.globalPercentage = payload.globalPercentage
     }
 
   },

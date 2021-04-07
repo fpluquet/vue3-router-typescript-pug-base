@@ -18,7 +18,7 @@ import DemographicDataFormTwo from './DemographicDataFormTwo';
 import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
 import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
-import { useGlobalPercentaje } from '../../hooks/useGlobalPercent';
+import { useGlobalPercentage } from '../../hooks/useGlobalPercent';
 
 export default {
   name: 'DemographicData',
@@ -46,7 +46,6 @@ export default {
           completedFields++;
         }
       });
-
       const percentCompleted = Math.round(
         (completedFields / quantitiFields) * 100,
         2,
@@ -54,16 +53,19 @@ export default {
       return percentCompleted;
     };
 
-    const globalPercentaje = useGlobalPercentaje(calculateSectionPercent());
     watch(
       () => store.state.showSideBar,
       (showSideBar, prevShowSideBar) => {
         if (prevShowSideBar) {
+          const percentCompleted = calculateSectionPercent();
           store.commit('setSectionPercentage', {
             id: SECTION_DM_ID,
-            percentCompleted: calculateSectionPercent(),
+            percentCompleted,
           });
-          store.commit('setGlobalPercent', globalPercentaje);
+          const globalPercentage = useGlobalPercentage(store);
+          store.commit('setGlobalPercent', {
+            globalPercentage,
+          });
         }
       },
     );

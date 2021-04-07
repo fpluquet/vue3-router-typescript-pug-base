@@ -26,26 +26,18 @@
         alignItems: 'center',
       }"
     >
-      <ProgressBar
-        class="mt-6 progress-bar"
-        :percentaje="'40'"
-        :style="{
-          width: '80%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }"
-      />
+      <ProgressBar class="mt-6" />
     </div>
   </div>
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { computed } from "vue";
-import ProgressBar from "../../components/ProgressBar";
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import ProgressBar from '../../components/ProgressBar';
 
 export default {
-  name: "DashboardDesktop",
+  name: 'DashboardDesktop',
   components: { ProgressBar },
   props: {
     accountType: String,

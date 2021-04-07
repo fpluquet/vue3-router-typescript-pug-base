@@ -25,7 +25,7 @@ export default {
       router.push({ name: 'Dashboard' });
     };
 
-    return { setCloseSideBar, showSideBar, closeSection };
+    return { setCloseSideBar, showSideBar };
   },
 };
 </script>

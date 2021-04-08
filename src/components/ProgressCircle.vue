@@ -10,10 +10,11 @@ export default {
   name: 'ProgressCircle',
   props: {
     percent: Number,
+    color: String,
   },
   setup(props) {
     const src = computed(
-      () => `data:image/svg+xml;base64,${svgOfArc(props.percent)}`,
+      () => `data:image/svg+xml;base64,${svgOfArc(props.percent, props.color)}`,
     );
 
     return { src };

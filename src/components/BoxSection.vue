@@ -13,18 +13,23 @@
         <span
           class="title"
           :style="{
-            color: active ? '#3d90e0' : '#8E8E8E',
+            color: active ? getColorByAccount(accountType) : '#8E8E8E',
           }"
           >{{ title }}</span
         >
       </div>
     </div>
-    <ProgressCircle :percent="percent" />
+    <ProgressCircle
+      :percent="percent"
+      :color="getColorByAccount(accountType)"
+    />
   </div>
 </template>
 
 <script>
 import ProgressCircle from './ProgressCircle';
+import { PERSONA } from '@/utils/constants';
+import { getColorByAccount } from '@/utils/tools';
 export default {
   name: 'BoxSection',
   components: {
@@ -34,8 +39,13 @@ export default {
     title: String,
     active: Boolean,
     percent: Number,
+    accountType: String,
   },
   setup(props) {
+    return {
+      PERSONA,
+      getColorByAccount,
+    };
   },
 };
 </script>

@@ -12,15 +12,15 @@ function percentToRads(percentIn: number) {
 	return percentIn * (2 / 100) * Math.PI;
 }
 
-export function svgOfArc(percent: number) {
+export function svgOfArc(percent: number, color: String) {
 	let path;
-	if (40 >= 100) {
-		path = '<circle mask="url(#maskCircle)" cx="0" cy="0" r="1" stroke="black" fill="#6AC24B" stroke-width="0" transform="scale(1,-1) rotate(-90 0 0)" />';
+	if (percent >= 100) {
+		path = `<circle mask="url(#maskCircle)" cx="0" cy="0" r="1" stroke="black" fill="${color}" stroke-width="0" transform="scale(1,-1) rotate(-90 0 0)" />`;
 	} else {
 		const arcY = toPrecisionFloat(Math.sin(percentToRads(percent)), 3)
 		const arcX = toPrecisionFloat(Math.cos(percentToRads(percent)), 3)
 		const isMayorArc = percent > 50;
-		path = `<path d="M 0 0 L 1 0 A 1 1 0 ${isMayorArc ? 1 : 0} 1 ${arcX} ${arcY} L 0 0" stroke="black" fill="#6AC24B" stroke-width="0" transform="scale(1,-1) rotate(-90 0 0)" mask="url(#maskCircle)" />`;
+		path = `<path d="M 0 0 L 1 0 A 1 1 0 ${isMayorArc ? 1 : 0} 1 ${arcX} ${arcY} L 0 0" stroke="black" fill="${color}" stroke-width="0" transform="scale(1,-1) rotate(-90 0 0)" mask="url(#maskCircle)" />`;
 	}
 	return btoa(`<svg width="456" height="456" viewBox="-1.2 -1.2 2.4 2.4" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<mask id="maskCircle">

@@ -6,14 +6,6 @@
       <div class="left-panel-content">
         <img :src="src" alt="logo-pago-facil" />
       </div>
-      <!-- <div>
-        <ProgressCircle
-          class="global-progress-circle"
-          width="400"
-          :global="true"
-          :percentaje="40"
-        />
-      </div> -->
     </div>
     <div class="column right-panel-dashboard">
       <div v-show="showPanelSections" class="mt-6">
@@ -23,6 +15,7 @@
           :key="section.id"
         >
           <div
+            :class="{ disabled: !section.active }"
             class="column is-7-fullhd"
             @click="section.active ? openSideBar() : null"
           >
@@ -34,6 +27,7 @@
                 :title="section.name"
                 :active="section.active"
                 :percent="section.percentCompleted"
+                :accountType="accountType"
               />
             </router-link>
           </div>
@@ -110,11 +104,6 @@ export default {
     // align-items: center;
   }
 
-  // .desactive {
-  //   // pointer-events: none;
-  //   background: #cfcfcf !important;
-  // }
-
   .progress-bar {
     width: 60%;
   }
@@ -123,6 +112,9 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+  }
+  .disabled {
+    pointer-events: none;
   }
 }
 </style>

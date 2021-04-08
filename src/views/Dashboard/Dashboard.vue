@@ -55,8 +55,9 @@ export default {
     };
 
     onMounted(() => {
+      store.commit('setSectionActive', { id: SECTION_DM_ID });
       accountType.value = store.state.profile.company;
-      //TODO ask backed to get  accountType in the profile.
+      //TODO ask backend to get accountType in the profile.
 
       if (accountType.value == null) {
         accountType.value = PERSONA;

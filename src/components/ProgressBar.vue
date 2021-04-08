@@ -12,7 +12,7 @@ export default {
   name: 'ProgressBar',
   setup() {
     const store = useStore();
-    const accountType = computed(() => store.state.account.type);
+    const accountType = computed(() => store.state.account.type); // TODO get accountType from profile
     const globalPercentage = computed(() => store.state.globalPercentage);
 
     const src = computed(() => {

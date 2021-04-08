@@ -26,18 +26,18 @@
 </template>
 
 <script>
-import BasicLayout from "../../layouts/BasicLayout.vue";
-import DashboardDesktop from "../Dashboard/DashboardDesktop";
-import DashboardMobile from "../Dashboard/DashboardMobile";
-import Banner from "../../components/Banner";
-import SideBar from "../../components/SideBar";
-import { ref, onMounted, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { SECTION_DM_ID, PERSONA } from "../../utils/constants";
+import BasicLayout from '../../layouts/BasicLayout.vue';
+import DashboardDesktop from '../Dashboard/DashboardDesktop';
+import DashboardMobile from '../Dashboard/DashboardMobile';
+import Banner from '../../components/Banner';
+import SideBar from '../../components/SideBar';
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: {
     BasicLayout,
     DashboardDesktop,
@@ -51,11 +51,20 @@ export default {
     const router = useRouter();
 
     const openSideBar = () => {
-      store.commit("setShowSideBar", true);
+      store.commit('setShowSideBar', true);
     };
 
     onMounted(() => {
-      store.commit("setSectionActive", { id: SECTION_DM_ID });
+      store.commit('setSectionActive', { id: SECTION_DM_ID });
+      accountType.value = store.state.profile.company;
+      //TODO ask backend to get accountType in the profile.
+
+      if (accountType.value == null) {
+        accountType.value = PERSONA;
+      } else {
+        accountType.value = EMPRESA;
+      }
+      store.commit('setSectionActive', { id: SECTION_DM_ID });
       if (accountType.value === PERSONA) {
         getSections.value.splice(-1, 1);
       }

@@ -4,7 +4,7 @@
       class="column is-offset-1-fullhd is-8-desktop is-8-widescreen is-6-fullhd left-panel-dashboard"
     >
       <div class="left-panel-content">
-        <img :src="src" alt="logo-pago-facil" />
+        <img :src="src" alt="logo-pago-facil" :style="{ height: '70%' }" />
       </div>
     </div>
     <div class="column right-panel-dashboard">
@@ -16,7 +16,7 @@
         >
           <div
             :class="{ disabled: !section.active }"
-            class="column is-7-fullhd"
+            class="column is-7-fullhd custom-column"
             @click="section.active ? openSideBar() : null"
           >
             <router-link
@@ -34,14 +34,14 @@
         </div>
         <div class="columns">
           <div
-            class="column is-10-desktop is-10-widescreen is-7-fullhd"
+            class="column is-7-fullhd"
             :style="{
               justifyContent: 'center',
               alignItems: 'center',
               display: 'flex',
             }"
           >
-            <ProgressBar class="mt-6" />
+            <ProgressBar class="mt-6 custom-column" />
           </div>
         </div>
       </div>
@@ -115,6 +115,10 @@ export default {
   }
   .disabled {
     pointer-events: none;
+  }
+  .custom-column {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 </style>

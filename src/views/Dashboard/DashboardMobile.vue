@@ -3,7 +3,7 @@
     <!-- <div class="columns is-mobile custom-columns"> -->
     <div
       class="columns is-mobile custom-columns"
-      :class="[{ desactive: !section.active }, accountType]"
+      :class="[accountType, { disabled: !section.active }]"
       v-for="section in availableSections"
       :key="section.id"
     >
@@ -13,19 +13,13 @@
         class="router-link"
       >
         <div class="column section" @click="openSideBar">
-          <span class="text" :class="{ 'text-desactive': !section.active }">
+          <span class="text" :class="{ 'text-disabled': !section.active }">
             {{ section?.name }}
           </span>
         </div>
       </router-link>
     </div>
-    <div
-      :style="{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }"
-    >
+    <div class="columns is-mobile custom-columns">
       <ProgressBar class="mt-6" />
     </div>
   </div>
@@ -47,7 +41,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const accountType = computed(() => store.state.account.type);
+    const accountType = computed(() => store.state.account.type); //TODO get account from profile
     return {
       accountType,
     };
@@ -97,7 +91,7 @@ export default {
 }
 
 .empresa {
-  background-color: #19c37f;
+  background-color: #6ac24b;
 }
 
 .section {
@@ -108,10 +102,10 @@ export default {
   align-items: center;
 }
 
-.desactive {
+.disabled {
   background: #d6d6d6;
 }
-.text-desactive {
+.text-disabled {
   color: #707070 !important;
 }
 </style>

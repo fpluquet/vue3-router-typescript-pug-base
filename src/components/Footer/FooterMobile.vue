@@ -16,10 +16,12 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: white;
   .text {
     font-family: Roboto;
     font-style: normal;

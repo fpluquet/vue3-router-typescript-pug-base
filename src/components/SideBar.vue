@@ -3,8 +3,12 @@
     <div class="header">
       <fa @click="setCloseSideBar" icon="times" width="12" type="fas"></fa>
     </div>
-    <div class="side-bar-content">
-      <slot />
+    <div class="columns side-bar-content">
+      <div
+        class="column is-10-mobile is-10-tablet is-10-desktop is-10-widescreen is-8-fullhd"
+      >
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -45,13 +49,15 @@ export default {
   &.open {
     transform: translateX(0);
   }
+  .content {
+    display: flex;
+    flex: 1;
+  }
   .side-bar-content {
     display: flex;
     flex: 1;
-    padding-left: 80px;
-    padding-right: 80px;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   .header {
     position: absolute;

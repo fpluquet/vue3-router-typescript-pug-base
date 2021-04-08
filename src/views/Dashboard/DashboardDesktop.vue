@@ -16,7 +16,7 @@
         >
           <div
             :class="{ disabled: !section.active }"
-            class="column is-7-fullhd custom-column"
+            class="column is-7-fullhd is-11 custom-column"
             @click="section.active ? openSideBar() : null"
           >
             <router-link
@@ -34,7 +34,7 @@
         </div>
         <div class="columns">
           <div
-            class="column is-7-fullhd"
+            class="column is-7-fullhd is-11"
             :style="{
               justifyContent: 'center',
               alignItems: 'center',

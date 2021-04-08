@@ -4,7 +4,7 @@
     <div
       class="columns is-mobile custom-columns"
       :class="[{ desactive: !section.active }, accountType]"
-      v-for="section in getSections"
+      v-for="section in availableSections"
       :key="section.id"
     >
       <router-link
@@ -41,7 +41,7 @@ export default {
   components: { ProgressBar },
   props: {
     accountType: String,
-    getSections: Array,
+    availableSections: Array,
     showPanelSections: Boolean,
     openSideBar: Function,
   },

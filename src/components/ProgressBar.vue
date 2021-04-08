@@ -17,7 +17,6 @@ export default {
 
     const src = computed(() => {
       const color = accountType.value === PERSONA ? '#3D90E0' : '#6AC24B';
-      console.log(globalPercentage.value);
       return `data:image/svg+xml;base64,${svgProgressBar(
         globalPercentage.value,
         color,

@@ -22,7 +22,9 @@
 
     <div id="nav-bar-pago-facil" class="navbar-menu navbar-menu-custom">
       <div class="navbar-end">
-        <span class="custom-text mr-1">Hola, {{ userEmail }}</span>
+        <span v-show="Boolean(userEmail)" class="custom-text mr-1"
+          >Hola, {{ userEmail }}</span
+        >
         <!-- <a class="navbar-item">
           <fa icon="bell" width="18" type="far"></fa>
         </a> -->
@@ -42,7 +44,9 @@ export default {
   },
   setup() {
     const store = useStore();
-    let userEmail = computed(() => store.state.account.userEmail);
+    let userEmail = computed(() => {
+      return store.state.profile.email;
+    });
     return { userEmail };
   },
 };

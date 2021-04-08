@@ -80,8 +80,6 @@ export default {
       () => router.currentRoute.value.params.accountType,
     );
 
-    const userEmail = computed(() => store.state.account.userEmail);
-
     const cognitoId = computed(
       () => router.currentRoute.value.params.cognitoId,
     );
@@ -110,7 +108,7 @@ export default {
 
           router.push({
             name: 'Dashboard',
-            params: { accountType },
+            // params: { accountType: },
           });
         } catch (error) {
           console.log(error);

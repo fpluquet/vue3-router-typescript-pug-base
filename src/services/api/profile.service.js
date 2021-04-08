@@ -11,5 +11,5 @@ export const getProfile = async (cognitoId) => {
   const res = await authAxiosCall(cognitoId, '/dev/profile', {
     method: 'GET',
   });
-  return res.data.profile;
+  return res.data;
 };

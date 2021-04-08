@@ -4,8 +4,8 @@ import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants
 
 export default createStore({
   state: {
+    profile: {},
     account: {
-      userEmail: null,
       cognitoId: null,
       type: null,
     },
@@ -31,12 +31,6 @@ export default createStore({
         type: payload.accountType,
       }
     },
-    setUserEmail(state, payload) {
-      state.account = {
-        ...state.account,
-        userEmail: payload.userEmail,
-      }
-    },
     setShowSideBar(state, payload) {
       state.showSideBar = payload;
       state.showPanelSections = !payload
@@ -57,14 +51,19 @@ export default createStore({
     },
     setGlobalPercent(state, payload) {
       state.globalPercentage = payload.globalPercentage
+    },
+    setProfile(state, payload) {
+      state.profile = {
+        ...state.profile,
+        ...payload
+      }
     }
-
   },
   actions: {
   },
   modules: {
   },
-  plugins: [createPersistedState({
-    paths: ['account.userEmail', 'account.type']
-  })],
+  // plugins: [createPersistedState({
+  //   paths: ['account.cognitoId']
+  // })],
 })

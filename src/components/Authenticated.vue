@@ -1,32 +1,52 @@
 <template>
-  <router-view></router-view>
+  <div v-show="loading" class="loading">
+    <div>Loading...</div>
+  </div>
+  <router-view v-show="!loading"></router-view>
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { getProfile } from '@/services/api/profile.service';
+
 export default {
   name: 'Authenticated',
   setup() {
     const store = useStore();
     const router = useRouter();
+    const loading = ref(false);
 
-    onMounted(() => {
-      let cognitoId = Boolean(router.currentRoute.value.params.cognitoId);
+    onMounted(async () => {
+      let cognitoId = router.currentRoute.value.params.cognitoId;
       if (cognitoId) {
-        router.push({
-          name: 'Dashboard',
-          params: { accountType: 'persona' },
-        });
+        try {
+          loading.value = true;
+          const profile = await getProfile(cognitoId);
+          store.commit('setProfile', profile);
+          router.push({
+            name: 'Dashboard',
+            params: { accountType: 'persona' },
+          });
+        } catch (error) {
+          console.log(error);
+        }
+        loading.value = false;
       } else {
         router.push({ name: 'Home' });
       }
     });
-
-    return {};
+    return { loading };
   },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+</style>

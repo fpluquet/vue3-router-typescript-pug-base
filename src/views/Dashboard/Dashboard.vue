@@ -2,7 +2,7 @@
   <BasicLayout>
     <div class="show-desktop">
       <DashboardDesktop
-        :getSections="getSections"
+        :availableSections="availableSections"
         :showPanelSections="showPanelSections"
         :openSideBar="openSideBar"
         :accountType="accountType"
@@ -13,7 +13,7 @@
         <Banner :name="'pago_facil_banner'" :style="{ width: '70%' }" />
       </div>
       <DashboardMobile
-        :getSections="getSections"
+        :availableSections="availableSections"
         :showPanelSections="showPanelSections"
         :openSideBar="openSideBar"
         :accountType="accountType"
@@ -26,18 +26,18 @@
 </template>
 
 <script>
-import BasicLayout from "../../layouts/BasicLayout.vue";
-import DashboardDesktop from "../Dashboard/DashboardDesktop";
-import DashboardMobile from "../Dashboard/DashboardMobile";
-import Banner from "../../components/Banner";
-import SideBar from "../../components/SideBar";
-import { ref, onMounted, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { SECTION_DM_ID, PERSONA } from "../../utils/constants";
+import BasicLayout from '../../layouts/BasicLayout.vue';
+import DashboardDesktop from '../Dashboard/DashboardDesktop';
+import DashboardMobile from '../Dashboard/DashboardMobile';
+import Banner from '../../components/Banner';
+import SideBar from '../../components/SideBar';
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { SECTION_DM_ID, PERSONA, EMPRESA } from '../../utils/constants';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: {
     BasicLayout,
     DashboardDesktop,
@@ -46,28 +46,33 @@ export default {
     Banner,
   },
   setup() {
-    let type = ref(null);
     const store = useStore();
     const router = useRouter();
+    let accountType = ref(null);
 
     const openSideBar = () => {
-      store.commit("setShowSideBar", true);
+      store.commit('setShowSideBar', true);
     };
 
     onMounted(() => {
-      store.commit("setSectionActive", { id: SECTION_DM_ID });
+      accountType.value = store.state.profile.company;
+      //TODO ask backed to get  accountType in the profile.
+
+      if (accountType.value == null) {
+        accountType.value = PERSONA;
+      } else {
+        accountType.value = EMPRESA;
+      }
+      store.commit('setSectionActive', { id: SECTION_DM_ID });
       if (accountType.value === PERSONA) {
-        getSections.value.splice(-1, 1);
+        availableSections.value.splice(-1, 1);
       }
     });
-
     const showPanelSections = computed(() => store.state.showPanelSections);
-    let getSections = computed(() => store.state.sections);
-    const accountType = computed(() => store.state.account.type);
+    const availableSections = computed(() => store.state.sections);
     return {
       openSideBar,
-      type,
-      getSections,
+      availableSections,
       showPanelSections,
       accountType,
     };

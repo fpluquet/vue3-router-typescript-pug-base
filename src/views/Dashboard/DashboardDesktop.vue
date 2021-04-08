@@ -17,7 +17,11 @@
     </div>
     <div class="column right-panel-dashboard">
       <div v-show="showPanelSections" class="mt-6">
-        <div class="columns" v-for="section in getSections" :key="section.id">
+        <div
+          class="columns"
+          v-for="section in availableSections"
+          :key="section.id"
+        >
           <div
             class="column is-7-fullhd"
             @click="section.active ? openSideBar() : null"
@@ -66,7 +70,7 @@ export default {
   },
   props: {
     accountType: String,
-    getSections: Array,
+    availableSections: Array,
     showPanelSections: Boolean,
     openSideBar: Function,
   },

@@ -204,7 +204,6 @@ export default {
             formData.companyRut = '';
           }
           const resp = await services.createAccount(formData);
-          store.commit('setUserEmail', { userEmail: formData.email });
           router.push({
             name: 'code-input',
             params: { cognitoId: resp.data.cognitoId },

@@ -1,7 +1,11 @@
 <template>
   <Title class="mb-6" :title="'Datos Demográficos'" />
-  <DemographicDataFormOne :formData="formData" v-if="stepOne" />
-  <DemographicDataFormTwo :formData="formData" v-else />
+  <DemographicDataFormOne
+    :formData="formData"
+    :save="saveData"
+    v-if="stepOne"
+  />
+  <DemographicDataFormTwo :formData="formData" :save="saveData" v-else />
   <Button className="mt-6 is-fullwidth secondary" @click="stepOne = !stepOne">{{
     stepOne ? 'Siguiente' : 'Atras'
   }}</Button>
@@ -20,7 +24,7 @@ import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
 import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
 import { useGlobalPercentage } from '../../hooks/useGlobalPercent';
-import { getProfile } from '@/services/api/demographicData.service';
+import { saveProfile } from '@/services/api/profile.service';
 
 export default {
   name: 'DemographicData',
@@ -46,8 +50,17 @@ export default {
       () => router.currentRoute.value.params.cognitoId,
     );
 
+    const saveData = async (data) => {
+      try {
+        await saveProfile(cognitoId.value, data);
+        //toDO call to store.commit
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     onMounted(async () => {
-      const profile = await getProfile(cognitoId.value);
+      const profile = store.state.profile;
       formData.value.fantasyName = profile.fantasyName;
     });
 
@@ -55,7 +68,7 @@ export default {
       const quantitiFields = Object.keys(formData.value).length;
       let completedFields = 0;
       Object.entries(formData.value).forEach((value) => {
-        if (value[1].trim() !== '') {
+        if (value[1] && value[1].trim() !== '') {
           completedFields++;
         }
       });
@@ -87,7 +100,7 @@ export default {
       store.commit('setShowSideBar', false);
     };
 
-    return { stepOne, formData, closeSection };
+    return { stepOne, formData, closeSection, saveData };
   },
 };
 </script>

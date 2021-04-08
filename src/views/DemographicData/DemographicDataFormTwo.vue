@@ -3,8 +3,8 @@
     <div class="field">
       <div class="control has-icons-right">
         <input
-          @blur="saveData({ phone: formData.phone })"
-          @onBlur="saveData"
+          @blur="save({ phone: formData.phone })"
+          @onBlur="save"
           class="input"
           type="text"
           placeholder="Telefono"
@@ -19,7 +19,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="saveData({ street: formData.street })"
+        @blur="save({ street: formData.street })"
         class="input"
         type="text"
         placeholder="Calle"
@@ -30,7 +30,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="saveData({ local: formData.local })"
+        @blur="save({ local: formData.local })"
         class="input"
         type="text"
         placeholder="Local"
@@ -41,7 +41,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="saveData({ region: formData.region })"
+        @blur="save({ region: formData.region })"
         class="input"
         type="text"
         placeholder="Region"
@@ -52,7 +52,6 @@
       {{ formError.region }}
     </p>
   </div>
- 
 </template>
 
 <script>
@@ -67,10 +66,8 @@ export default {
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
-    const saveTel = (props) =>
-      console.log('send to backend the value ===>> ', props.formData.tel);
+
     return {
-      saveTel,
       formError,
     };
   },

@@ -1,26 +1,24 @@
 <template>
   <div class="field">
-    <div class="field">
-      <div class="control has-icons-right">
-        <input
-          @blur="save({ phone: formData.phone })"
-          @onBlur="save"
-          class="input"
-          type="text"
-          placeholder="Telefono"
-          v-model="formData.phone"
-        />
-      </div>
-      <p v-show="formError.tel" class="help is-danger">
-        {{ formError.phone }}
-      </p>
+    <div class="control has-icons-right">
+      <input
+        @blur="save({ phone: formData.phone })"
+        @onBlur="save"
+        class="input field-custom"
+        type="text"
+        placeholder="Telefono"
+        v-model="formData.phone"
+      />
     </div>
+    <p v-show="formError.tel" class="help is-danger">
+      {{ formError.phone }}
+    </p>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
         @blur="save({ street: formData.street })"
-        class="input"
+        class="input field-custom"
         type="text"
         placeholder="Calle"
         v-model="formData.street"
@@ -31,7 +29,7 @@
     <div class="control has-icons-right">
       <input
         @blur="save({ local: formData.local })"
-        class="input"
+        class="input field-custom"
         type="text"
         placeholder="Local"
         v-model="formData.local"
@@ -42,7 +40,7 @@
     <div class="control has-icons-right">
       <input
         @blur="save({ region: formData.region })"
-        class="input"
+        class="input field-custom"
         type="text"
         placeholder="Region"
         v-model="formData.region"
@@ -60,9 +58,10 @@ export default {
   name: 'DemographicDataFormTwo',
   props: {
     formData: Object,
+    save: Function,
   },
   components: {},
-  setup() {
+  setup(props) {
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
@@ -75,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.input {
+.field-custom {
   background: #f5f5f5;
   font-family: Roboto;
   font-style: normal;

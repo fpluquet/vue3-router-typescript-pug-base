@@ -53,7 +53,7 @@ export default {
     const saveData = async (data) => {
       try {
         await saveProfile(cognitoId.value, data);
-        //toDO call to store.commit
+        store.commit('setUpdateProfile', data);
       } catch (error) {
         console.log(error);
       }
@@ -61,7 +61,9 @@ export default {
 
     onMounted(async () => {
       const profile = store.state.profile;
-      formData.value.fantasyName = profile.fantasyName;
+      formData.value.fantasyName = profile.profile.fantasyName;
+      formData.value.socialReason = profile.profile.socialReason;
+      formData.value.heading = profile.profile.heading;
     });
 
     const calculateSectionPercent = () => {

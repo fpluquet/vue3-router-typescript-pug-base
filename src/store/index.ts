@@ -4,7 +4,7 @@ import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants
 
 export default createStore({
   state: {
-    profile: {},
+    profile: { profile: {} },
     account: {
       cognitoId: null,
       type: null,
@@ -57,6 +57,15 @@ export default createStore({
         ...state.profile,
         ...payload
       }
+    },
+    setUpdateProfile(state, payload) {
+      state.profile = {
+        ...state.profile,
+        profile: {
+          ...state.profile.profile,
+          ...payload
+        }
+      }
     }
   },
   actions: {
@@ -64,6 +73,6 @@ export default createStore({
   modules: {
   },
   // plugins: [createPersistedState({
-  //   paths: ['account.cognitoId']
+  //    paths: ['account.cognitoId']
   // })],
 })

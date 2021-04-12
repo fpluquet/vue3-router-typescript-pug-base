@@ -29,9 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .button-link {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   text-align: center;

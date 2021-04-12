@@ -2,7 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 $family-sans-serif: 'Roboto';
-$font-style: normal;
+$weight-bold: 'bold';
+$primary: #1d9add;
+$success: #6ac24b;
 
 @import '~bulma';
 

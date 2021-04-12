@@ -13,7 +13,10 @@
         class="router-link"
       >
         <div class="column section" @click="openSideBar">
-          <span class="text" :class="{ 'text-disabled': !section.active }">
+          <span
+            class="text has-text-weight-bold has-text-centered has-text-white"
+            :class="{ 'text-disabled': !section.active }"
+          >
             {{ section?.name }}
           </span>
         </div>
@@ -57,13 +60,9 @@ export default {
   flex-direction: column;
   // flex: 1;
   .text {
-    font-family: Roboto;
     font-style: normal;
-    font-weight: bold;
     font-size: 15px;
     line-height: 18px;
-    text-align: center;
-    color: #ffffff;
   }
 }
 .router-link {

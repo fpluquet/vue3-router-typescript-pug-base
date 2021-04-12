@@ -1,6 +1,8 @@
 <template>
-  <div class="content-error">
-    <span class="text">ERROR 404 NOT FOUND</span>
+  <div
+    class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center"
+  >
+    <span class="text-size">ERROR 404 NOT FOUND</span>
   </div>
 </template>
 
@@ -9,13 +11,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.content-error {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  .text {
-    font-size: 40px;
-  }
+.text-size {
+  font-size: 40px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="columns">
     <div class="column">
-      <div class="notification notif" v-show="!removeNotif">
+      <div class="notification notif has-text-centered" v-show="!removeNotif">
         <button
           type="button"
           @click="removeNotif = true"
@@ -33,11 +33,11 @@
             {{ formError.code }}
           </p>
         </div>
-        <Button
+        <ButtonColor
           :type="'submit'"
-          :class="'button is-fullwidth mt-5'"
+          :class="'is-fullwidth mt-5'"
           :loading="loading"
-          >Confirmar</Button
+          >Confirmar</ButtonColor
         >
       </form>
       <ButtonLink :handleClick="resendCode" :loading="loadingResendCode"
@@ -53,12 +53,12 @@ import { useStore } from 'vuex';
 import * as Yup from 'yup';
 import { useRouter } from 'vue-router';
 import * as services from '@/services/api/account.service';
-import Button from '../../components/Button.vue';
+import ButtonColor from '../../components/ButtonColor.vue';
 import ButtonLink from '../../components/ButtonLink.vue';
 
 export default {
   name: 'CodeInput',
-  components: { Button, ButtonLink },
+  components: { ButtonColor, ButtonLink },
   setup() {
     const store = useStore();
     const formData = {};
@@ -138,24 +138,14 @@ export default {
 <style lang="scss" scoped>
 .notif {
   background: #edf7e9;
-  text-align: center;
+  // text-align: center;
 }
 .text {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 133.19%;
-
   color: #6ac24b;
 }
-.remove-notif {
-  display: none;
-}
 .input {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   color: #343434 !important;

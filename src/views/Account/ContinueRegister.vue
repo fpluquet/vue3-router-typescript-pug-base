@@ -16,8 +16,8 @@
             El campo E-mail no es correcto.
           </p>
         </div>
-        <Button :type="'submit'" :class="'button is-fullwidth mt-5'"
-          >Continuar</Button
+        <ButtonColor :type="'submit'" :class="'is-fullwidth mt-5'"
+          >Continuar</ButtonColor
         >
       </form>
       <ButtonLink :handleClick="goBack">VOLVER</ButtonLink>
@@ -26,21 +26,23 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import * as Yup from "yup";
-import Button from "../../components/Button";
-import ButtonLink from "../../components/ButtonLink";
-import { useRouter } from "vue-router";
+import { ref } from 'vue';
+import * as Yup from 'yup';
+import ButtonColor from '../../components/ButtonColor';
+import ButtonLink from '../../components/ButtonLink';
+import { useRouter } from 'vue-router';
 export default {
-  name: "ContinueRegister",
-  components: { Button, ButtonLink },
+  name: 'ContinueRegister',
+  components: { ButtonColor, ButtonLink },
   setup() {
     let formData = {};
     let formError = ref({});
     let router = useRouter();
 
     let schemaForm = Yup.object().shape({
-      email: Yup.string().email().required(),
+      email: Yup.string()
+        .email()
+        .required(),
     });
 
     const goBack = () => {
@@ -70,5 +72,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

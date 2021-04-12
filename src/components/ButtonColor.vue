@@ -2,18 +2,19 @@
   <button
     :type="type"
     class="button custom-button"
-    :class="[account, { 'is-loading': loading }]"
+    :class="[getClassByAccount(account), { 'is-loading': loading }]"
   >
     <slot />
   </button>
 </template>
 
 <script>
-import { ref } from "vue";
-import { useStore } from "vuex";
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { getClassByAccount } from '@/utils/tools';
 
 export default {
-  name: "Button",
+  name: 'Button',
   props: {
     type: String,
     className: String,
@@ -22,26 +23,18 @@ export default {
   },
   setup() {
     const store = useStore();
+    return { getClassByAccount };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .custom-button {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
   color: #ffffff !important;
   min-height: 42px;
   border-radius: 0px;
-  &.persona {
-    background-color: #1d9add;
-  }
-  &.empresa {
-    background-color: #6ac24b;
-  }
 }
 </style>

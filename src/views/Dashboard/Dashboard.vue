@@ -101,7 +101,6 @@ export default {
 @media screen and (min-width: 769px) {
   .show-desktop {
     flex: 1;
-    /* width: 100%; */
     display: flex;
     flex-direction: column;
   }
@@ -109,7 +108,4 @@ export default {
     display: none;
   }
 }
-// .content-img {
-//   display: none;
-// }
 </style>

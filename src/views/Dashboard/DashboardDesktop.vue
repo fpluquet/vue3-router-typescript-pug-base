@@ -1,13 +1,17 @@
 <template>
   <div class="columns dashboard">
     <div
-      class="column is-offset-1-fullhd is-8-desktop is-8-widescreen is-6-fullhd left-panel-dashboard"
+      class="column is-offset-1-fullhd is-8-desktop is-8-widescreen is-6-fullhd is-relative is-flex"
     >
-      <div class="left-panel-content">
+      <div
+        class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center"
+      >
         <img :src="src" alt="logo-pago-facil" :style="{ height: '70%' }" />
       </div>
     </div>
-    <div class="column right-panel-dashboard">
+    <div
+      class="column is-flex is-justify-content-center is-flex-direction-column"
+    >
       <div v-show="showPanelSections" class="mt-6">
         <div
           class="columns"
@@ -16,7 +20,7 @@
         >
           <div
             :class="{ disabled: !section.active }"
-            class="column is-7-fullhd is-11 custom-column"
+            class="column is-7-fullhd is-11 pl-0 pr-0"
             @click="section.active ? openSideBar() : null"
           >
             <router-link
@@ -41,7 +45,7 @@
               display: 'flex',
             }"
           >
-            <ProgressBar class="mt-6 custom-column" />
+            <ProgressBar class="mt-6 pl-0 pr-0" />
           </div>
         </div>
       </div>
@@ -78,31 +82,6 @@ export default {
 <style lang="scss" scoped>
 .dashboard {
   height: 100%;
-  .left-panel-dashboard {
-    display: flex;
-    position: relative;
-    // margin-right: 20px;
-  }
-
-  .left-panel-content {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .right-panel-dashboard {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    flex-direction: column;
-  }
-  .left-panel-content {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    // align-items: center;
-  }
 
   .progress-bar {
     width: 60%;
@@ -115,10 +94,6 @@ export default {
   }
   .disabled {
     pointer-events: none;
-  }
-  .custom-column {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 </style>

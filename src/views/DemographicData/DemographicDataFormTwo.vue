@@ -76,9 +76,6 @@ export default {
 <style lang="scss" scoped>
 .field-custom {
   background: #f5f5f5;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   color: #343434 !important;

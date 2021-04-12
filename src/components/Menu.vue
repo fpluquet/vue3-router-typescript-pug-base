@@ -20,7 +20,10 @@
       </a>
     </div>
 
-    <div id="nav-bar-pago-facil" class="navbar-menu navbar-menu-custom">
+    <div
+      id="nav-bar-pago-facil"
+      class="navbar-menu is-justify-content-space-evenly"
+    >
       <div class="navbar-end">
         <span v-show="Boolean(userEmail)" class="custom-text mr-1"
           >Hola, {{ userEmail }}</span
@@ -66,18 +69,9 @@ export default {
   background: skyblue;
   border-radius: 50%;
 }
-
-.custom-img-name {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-}
-.custom-text {
+\ .custom-text {
   display: flex;
   align-items: center;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 27px;
 }
@@ -88,8 +82,5 @@ export default {
   display: flex;
   flex: 1;
   justify-content: center;
-}
-.navbar-menu-custom {
-  justify-content: space-evenly;
 }
 </style>

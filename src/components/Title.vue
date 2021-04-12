@@ -19,7 +19,6 @@ export default {
 
 <style lang="scss" scoped>
 .title {
-  font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 34px;

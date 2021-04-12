@@ -3,7 +3,7 @@
     v-show="formErrorsAPI.length"
     v-for="errorApi in formErrorsAPI"
     :key="errorApi.field"
-    class="content-error"
+    class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center mb-5"
   >
     <div class="help is-danger">
       {{ errorApi.field + ': ' + errorApi.error }}
@@ -251,9 +251,6 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 14px;
   line-height: 16px;
   color: #343434 !important;
@@ -268,12 +265,5 @@ export default {
   top: 10px;
   right: 10px;
   cursor: pointer;
-}
-.content-error {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
 }
 </style>

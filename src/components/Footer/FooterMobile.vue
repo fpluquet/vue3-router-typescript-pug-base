@@ -23,9 +23,6 @@ export default {
   align-items: center;
   background: white;
   .text {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
     font-size: 14px;
     line-height: 16px;
     text-align: center;

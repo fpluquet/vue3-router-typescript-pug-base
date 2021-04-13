@@ -1,23 +1,4 @@
 <template>
-  <!-- <div class="columns">
-    <div class="column custom-column">
-        >Seleccionar tipo de cuenta
-        <fa
-          icon="chevron-down"
-          width="20"
-          type="fas"
-          class="fa-chevron"
-        ></fa>
-        <fa
-          v-else
-          icon="chevron-up"
-          width="20"
-          type="fas"
-          class="fa-chevron"
-        ></fa>
-      </Button>
-    </div>
-  </div> -->
   <div class="columns">
     <div class="column custom-column">
       <Button @click="setAccountType(PERSONA)" className="is-fullwidth persona">
@@ -84,9 +65,6 @@ export default {
   top: 10px;
   right: 10px;
 }
-// .hide {
-//   display: none;
-// }
 .custom-column {
   .column {
     padding: 0.5rem !important;

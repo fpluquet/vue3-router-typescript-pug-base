@@ -1,23 +1,7 @@
 <template>
   <div class="columns">
     <div class="column">
-      <div class="notification notif has-text-centered" v-show="!removeNotif">
-        <button
-          type="button"
-          @click="removeNotif = true"
-          class="delete"
-        ></button>
-        <div class="content-text">
-          <span v-if="sentCodeMessage" class="text"
-            >Se ha enviado un mail de verificación de la cuenta con un
-            código.</span
-          >
-          <span v-else class="text"
-            >Se ha reenviado un mail de verificación de la cuenta con un
-            código.</span
-          >
-        </div>
-      </div>
+      <Notification :message="message" v-show="message !== ''" />
       <form @submit.prevent="confirmCode">
         <div class="field">
           <div class="control has-icons-right">
@@ -48,26 +32,30 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import * as Yup from 'yup';
 import { useRouter } from 'vue-router';
 import * as services from '@/services/api/account.service';
 import ButtonColor from '../../components/ButtonColor.vue';
 import ButtonLink from '../../components/ButtonLink.vue';
+import { ClientError } from '@/utils/exceptions';
+import { INVALID_CODE } from '@/utils/constants';
+import Notification from '@/components/Notification';
 
 export default {
   name: 'CodeInput',
-  components: { ButtonColor, ButtonLink },
+  components: { ButtonColor, ButtonLink, Notification },
   setup() {
     const store = useStore();
-    const formData = {};
+    const formData = ref({});
     const formError = ref({});
     const router = useRouter();
-    const removeNotif = ref(false);
-    const sentCodeMessage = ref(true);
     const loading = ref(false);
     const loadingResendCode = ref(false);
+    const message = ref(
+      'Se ha enviado un mail de verificación de la cuenta con un código.',
+    );
 
     // validation inputs.
     const schemaForm = Yup.object().shape({
@@ -84,13 +72,26 @@ export default {
       () => router.currentRoute.value.params.cognitoId,
     );
 
+    watch(
+      formData,
+      (now, prev) => {
+        try {
+          formError.value = {};
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      { deep: true },
+    );
+
     // Request to api
     const resendCode = async () => {
+      message.value = '';
       try {
         loadingResendCode.value = true;
         await services.resendCode(cognitoId.value);
-        removeNotif.value = false;
-        sentCodeMessage.value = false;
+        message.value =
+          'Se ha reenviado un mail de verificación de la cuenta con un código.';
       } catch (error) {
         console.log(error);
       }
@@ -100,10 +101,10 @@ export default {
     // Request to api
     const confirmCode = async () => {
       try {
-        await schemaForm.validate(formData, { abortEarly: false });
+        await schemaForm.validate(formData.value, { abortEarly: false });
         try {
           loading.value = true;
-          await services.confirmCode(formData, cognitoId.value);
+          await services.confirmCode(formData.value, cognitoId.value);
           store.commit('setCognitoId', { cognitoId: cognitoId.value });
 
           router.push({
@@ -111,7 +112,11 @@ export default {
             // params: { accountType: },
           });
         } catch (error) {
-          console.log(error);
+          if (error instanceof ClientError) {
+            if (error.code === INVALID_CODE) {
+              messageError.value = errorCodes.get(error.code);
+            }
+          }
         }
         loading.value = false;
       } catch (error) {
@@ -128,23 +133,13 @@ export default {
       formError,
       confirmCode,
       resendCode,
-      removeNotif,
-      sentCodeMessage,
+      message,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.notif {
-  background: #edf7e9;
-  // text-align: center;
-}
-.text {
-  font-size: 14px;
-  line-height: 133.19%;
-  color: #6ac24b;
-}
 .input {
   font-size: 14px;
   line-height: 16px;

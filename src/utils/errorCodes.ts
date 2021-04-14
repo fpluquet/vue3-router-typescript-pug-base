@@ -1,4 +1,4 @@
-import { EMAIL_ALREADY_EXIST, INVALID_USER_RUT } from './constants'
+import { EMAIL_ALREADY_EXIST, INVALID_USER_RUT, INVALID_CODE, LIMIT_EXCEEDED } from './constants'
 
 
 class DefaultMap {
@@ -16,7 +16,9 @@ class DefaultMap {
 
 export const errorCodes = new DefaultMap([
     [EMAIL_ALREADY_EXIST, 'Este email ya ha sido registrado.'],
-    [INVALID_USER_RUT, 'El formato del rut no es correcto.']
+    [INVALID_USER_RUT, 'El formato del rut del usuario no es correcto.'],
+    [INVALID_CODE, 'El código ingresado no es válido.'],
+    [LIMIT_EXCEEDED, 'Ha alcanzo la cantidad de máxima de intentos.']
 ]);
 
 

@@ -36,7 +36,7 @@ const apiCall = async (...args) => {
           throw new ClientError(
             error.response.data.message,
             error.response.data.errors,
-            error.response.status,
+            error.response.code,
           );
         } else {
           throw error;

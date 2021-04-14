@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import * as Yup from 'yup';
@@ -145,7 +145,7 @@ export default {
     ButtonLink,
   },
   setup() {
-    let formData = {};
+    let formData = ref({});
     let formError = ref({});
     let formErrorsAPI = ref([]);
     let messageError = ref('');
@@ -194,7 +194,7 @@ export default {
       loading.value = true;
       messageError.value = '';
       try {
-        await schemaForm.validate(formData, { abortEarly: false });
+        await schemaForm.validate(formData.value, { abortEarly: false });
         try {
           formData.isCompany = false;
           if (accountType === EMPRESA) {
@@ -203,7 +203,7 @@ export default {
             // ToDO remove this part. for now is a backend requirenement
             formData.companyRut = '';
           }
-          const resp = await services.createAccount(formData);
+          const resp = await services.createAccount(formData.value);
           router.push({
             name: 'code-input',
             params: { cognitoId: resp.data.cognitoId },
@@ -215,11 +215,13 @@ export default {
             }
             if (error.args) {
               error.args.forEach((error) => {
-                //ToDO sync with backend.
-                // formErrorsAPI.value.push(
-                //   errorCodes.get(error.code, 'Ha ocurrido un error.'),
-                // );
-                formErrorsAPI.value.push(error);
+                formErrorsAPI.value.push({
+                  field: error.field ? error.field.toUpperCase() : 'Error',
+                  error: errorCodes.get(
+                    error.code,
+                    'Algo salió mal, por favor intenta de nuevo.',
+                  ),
+                });
               });
             }
           }
@@ -232,6 +234,30 @@ export default {
       }
       loading.value = false;
     };
+
+    watch(
+      formData,
+      (now, prev) => {
+        try {
+          if (now.email) {
+            formError.value.email = '';
+          }
+          if (now.password) {
+            formError.value.password = '';
+          }
+          if (now.userRut) {
+            formError.value.userRut = '';
+          }
+          if (now.companyRut) {
+            formError.value.companyRut = '';
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      { deep: true },
+    );
+
     return {
       onCreateAccount,
       formData,

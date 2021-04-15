@@ -1,5 +1,6 @@
 <template>
-  <img :src="src" />
+  <!-- <img :src="src" /> -->
+  <img src="/progress-general-bar.svg" alt="" height="20" width="450" />
 </template>
 
 <script>

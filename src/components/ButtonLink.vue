@@ -12,6 +12,9 @@
       @click="handleClick"
       :class="{ 'is-loading': loading }"
       class="button button-link"
+      :style="{
+        'text-decoration': decorationTextUnderling ? 'underline' : 'none',
+      }"
       ><slot
     /></span>
   </div>
@@ -23,6 +26,7 @@ export default {
   props: {
     handleClick: Function,
     loading: Boolean,
+    decorationTextUnderling: Boolean,
   },
 };
 </script>
@@ -32,7 +36,6 @@ export default {
   font-size: 14px;
   line-height: 16px;
   text-align: center;
-  text-decoration-line: underline;
 }
 .button {
   & {

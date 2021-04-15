@@ -1,5 +1,8 @@
 <template>
-  <div class="footer is-flex  is-justify-content-center is-align-items-center">
+  <div
+    class="custom-footer is-flex is-justify-content-center is-align-items-center"
+    :style="{ background: getColorByAccount('persona') }"
+  >
     <div class="columns">
       <div class="is-flex is-justify-content-center is-align-items-center p-1">
         <ButtonLink :style="{ 'margin-top': '0px' }"
@@ -32,23 +35,28 @@
 
 <script>
 import ButtonLink from '@/components/ButtonLink';
+import { getColorByAccount } from '@/utils/tools';
 export default {
   name: 'Footer',
   components: {
     ButtonLink,
   },
+  setup() {
+    return {
+      getColorByAccount,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.footer {
-  background: #e5e5e5;
+.custom-footer {
   flex: 1;
-  // flex: 1;
-  .text {
-    font-size: 14px;
-    line-height: 16px;
-    color: #343434;
-  }
+  margin-top: 100px;
+}
+.text {
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
 }
 </style>

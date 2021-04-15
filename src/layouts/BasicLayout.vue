@@ -3,11 +3,11 @@
   Menu
     .container
       slot
-
+ 
 </template>-->
 <template>
   <div class="basic-layout">
-    <Menu />
+    <Menu class="mt-5 mb-4" />
     <div class="custom-container">
       <slot />
     </div>
@@ -15,14 +15,13 @@
   </div>
 </template>
 
-
 <script>
-import Menu from "../components/Menu";
-import SideBar from "../components/SideBar";
-import Footer from "../components/Footer/Footer";
+import Menu from '../components/Menu';
+import SideBar from '../components/SideBar';
+import Footer from '../components/Footer/Footer';
 
 export default {
-  name: "BasicLayout",
+  name: 'BasicLayout',
   components: { Menu, SideBar, Footer },
 };
 </script>
@@ -35,9 +34,9 @@ export default {
   flex-direction: column;
   .custom-container {
     display: flex;
-    height: 75vh !important;
+    // height: 65vh !important;
     flex: 1;
-    background: #e5e5e5;
+    // background: #e5e5e5;
   }
 }
 @media screen and (max-width: 768px) {

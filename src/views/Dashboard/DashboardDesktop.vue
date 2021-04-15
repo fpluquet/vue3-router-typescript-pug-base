@@ -1,6 +1,36 @@
 <template>
-  <div class="columns dashboard">
+  <div
+    class="columns is-vcentered is-centered mt-3"
+    :style="{
+      flex: 1,
+    }"
+  >
     <div
+      class="column is-10-mobile is-10-tablet is-10-desktop is-10-widescreen is-8-fullhd has-text-centered"
+    >
+      <ProgressBar />
+    </div>
+  </div>
+
+  <div
+    class="conatiner is-flex is-flex-grow-1 is-justify-content-center is-align-items-flex-start mb-1"
+  >
+    <div
+      class="column is-10-mobile is-10-tablet is-10-desktop is-10-widescreen is-8-fullhd wizard-container"
+    >
+      <div class="field">
+        <div class="control has-icons-right">
+          <input
+            class="input field-custom"
+            type="text"
+            placeholder="Nombre fantasia"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="columns dashboard">
+   <div
       class="column is-offset-1-fullhd is-8-desktop is-8-widescreen is-6-fullhd is-relative is-flex"
     >
       <div
@@ -49,8 +79,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div> 
+  </div>-->
 </template>
 
 <script>
@@ -80,6 +110,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wizard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  height: 400px;
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 500px;
+  // margin: auto;
+  z-index: 1;
+}
 .dashboard {
   height: 100%;
 

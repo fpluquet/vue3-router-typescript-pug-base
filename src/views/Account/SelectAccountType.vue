@@ -1,15 +1,24 @@
 <template>
   <div class="columns">
     <div class="column custom-column">
+      <div class="text has-text-centered">
+        <span>
+          Selecciona un tipo de cuenta.
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column custom-column">
       <Button @click="setAccountType(PERSONA)" className="is-fullwidth persona">
-        Crear Persona
+        Persona
       </Button>
     </div>
   </div>
   <div class="columns">
     <div class="column custom-column">
       <Button @click="setAccountType(EMPRESA)" className="is-fullwidth empresa">
-        Crear Empresa
+        Empresa
       </Button>
     </div>
   </div>
@@ -101,8 +110,8 @@ input.error {
 }
 
 .text {
-  font-size: 16px;
-  line-height: 16px;
-  color: #000000;
+  font-size: 14px;
+  line-height: 19px;
+  color: #7a7a7a;
 }
 </style>

@@ -1,39 +1,28 @@
 <template>
-  <nav
-    class="navbar"
-    role="navigation"
-    aria-label="main navigation"
-    :style="{ background: '#e5e5e5', zIndex: '0' }"
+  <div
+    class="columns is-flex is-relative"
+    :style="{ background: '#E5E5E5', 'margin-bottom': '0px' }"
   >
-    <div class="navbar-brand nav-brand-custom">
-      <Banner :name="'pago_facil_banner'" :style="{ width: 252, height: 62 }" />
-      <a
-        role="button"
-        class="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="nav-bar-pago-facil"
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
     <div
-      id="nav-bar-pago-facil"
-      class="navbar-menu is-justify-content-space-evenly"
+      class="column is-flex is-justify-content-center is-align-items-flex-end"
     >
-      <div class="navbar-end">
-        <span v-show="Boolean(userEmail)" class="custom-text mr-1"
-          >Hola, {{ userEmail }}</span
-        >
-        <!-- <a class="navbar-item">
-          <fa icon="bell" width="18" type="far"></fa>
-        </a> -->
-      </div>
+      <Banner :name="'pago_facil_banner'" />
     </div>
-  </nav>
+    <div
+      :style="{
+        position: 'absolute',
+        top: '-10px',
+        right: '15px',
+        height: '100%',
+        display: 'flex',
+        'align-items': 'flex-end',
+      }"
+    >
+      <span v-show="Boolean(userEmail)" class="custom-text  mr-1">{{
+        userEmail
+      }}</span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -61,26 +50,10 @@ export default {
     display: none;
   }
 }
-.navbar-end {
-  margin-left: 0 !important;
-}
-
-.custom-img {
-  background: skyblue;
-  border-radius: 50%;
-}
-\ .custom-text {
+.custom-text {
   display: flex;
   align-items: center;
   font-size: 14px;
   line-height: 27px;
-}
-.navbar-item img {
-  max-height: 3.25rem;
-}
-.nav-brand-custom {
-  display: flex;
-  flex: 1;
-  justify-content: center;
 }
 </style>

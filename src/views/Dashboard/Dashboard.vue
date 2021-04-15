@@ -19,9 +19,6 @@
         :accountType="accountType"
       />
     </div>
-    <SideBar>
-      <router-view></router-view>
-    </SideBar>
   </BasicLayout>
 </template>
 

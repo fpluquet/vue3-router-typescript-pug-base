@@ -8,7 +8,7 @@
             <input
               class="input"
               type="code"
-              placeholder="Codigo"
+              placeholder="Código"
               v-model="formData.code"
               :class="{ 'is-danger': formError.code }"
             />
@@ -24,8 +24,14 @@
           >Confirmar</ButtonColor
         >
       </form>
-      <ButtonLink :handleClick="resendCode" :loading="loadingResendCode"
-        >Reenviar Codigo</ButtonLink
+      <ButtonLink
+        decorationTextUnderling="{true}"
+        :handleClick="resendCode"
+        :loading="loadingResendCode"
+        >Reenviar Código</ButtonLink
+      >
+      <ButtonLink :decorationTextUnderling="true" :handleClick="goBack"
+        >VOLVER</ButtonLink
       >
     </div>
   </div>
@@ -67,6 +73,10 @@ export default {
     const accountType = computed(
       () => router.currentRoute.value.params.accountType,
     );
+
+    const goBack = () => {
+      router.push({ name: 'create-account' });
+    };
 
     const cognitoId = computed(
       () => router.currentRoute.value.params.cognitoId,
@@ -134,6 +144,7 @@ export default {
       confirmCode,
       resendCode,
       message,
+      goBack,
     };
   },
 };

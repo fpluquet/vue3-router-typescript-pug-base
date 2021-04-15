@@ -20,7 +20,9 @@
           >Continuar</ButtonColor
         >
       </form>
-      <ButtonLink :handleClick="goBack">VOLVER</ButtonLink>
+      <ButtonLink :decorationTextUnderling="true" :handleClick="goBack"
+        >VOLVER</ButtonLink
+      >
     </div>
   </div>
 </template>

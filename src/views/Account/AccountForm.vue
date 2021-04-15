@@ -59,8 +59,8 @@
               <div
                 :data-tooltip="
                   accountType === EMPRESA
-                    ? 'Ingrese el RUT de la Persona que registrara la empresa.'
-                    : 'Ingrese el RUT de la persona'
+                    ? 'Ingrese el RUT de la Persona que registrará la empresa.\n Formato: XX.XXX.XXX - Y.'
+                    : 'Ingrese el RUT personal. \n Formato: XX.XXX.XXX - Y.'
                 "
                 :style="{ color: 'rgb(74,74,74)' }"
               >
@@ -115,7 +115,9 @@
           >Crear Cuenta</ButtonColor
         >
       </form>
-      <ButtonLink :handleClick="goBack">VOLVER</ButtonLink>
+      <ButtonLink :decorationTextUnderling="true" :handleClick="goBack"
+        >VOLVER</ButtonLink
+      >
     </div>
   </div>
 </template>

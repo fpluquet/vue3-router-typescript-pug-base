@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import FooterMobile from "./FooterMobile";
-import FooterDesktop from "./FooterDesktop";
+import FooterMobile from './FooterMobile';
+import FooterDesktop from './FooterDesktop';
 export default {
   components: {
     FooterMobile,
@@ -22,6 +22,11 @@ export default {
 @media screen and (min-width: 769px) {
   .show-desktop {
     display: flex;
+    height: 28vh;
+    background: #3d90e0 !important;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
   .show-mobile {
     display: none;

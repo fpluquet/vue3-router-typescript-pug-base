@@ -8,8 +8,6 @@ import { computed } from 'vue';
 export default {
   props: {
     name: String,
-    width: String,
-    height: String,
   },
   setup(props) {
     const src = computed(() => `/${props.name}.svg`);

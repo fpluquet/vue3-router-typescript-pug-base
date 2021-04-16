@@ -26,7 +26,7 @@ export default {
           const profile = await getProfile(cognitoId);
           store.commit('setProfile', profile);
           router.push({
-            name: 'Dashboard',
+            name: 'datos-generales',
             params: { accountType: 'persona' },
           });
         } catch (error) {

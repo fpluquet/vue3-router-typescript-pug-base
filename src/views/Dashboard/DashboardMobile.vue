@@ -7,7 +7,7 @@
       v-for="section in availableSections"
       :key="section.id"
     >
-      <router-link
+      <!-- <router-link
         :disabled="!section?.active"
         :to="{ name: section?.routeName }"
         class="router-link"
@@ -20,7 +20,7 @@
             {{ section?.name }}
           </span>
         </div>
-      </router-link>
+      </router-link> -->
     </div>
     <div class="columns is-mobile custom-columns">
       <ProgressBar class="mt-6" />

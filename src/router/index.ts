@@ -7,10 +7,13 @@ import ContinueRegister from '../views/Account/ContinueRegister.vue'
 import CodeInput from '../views/Account/CodeInput.vue'
 import SelectAccountType from '../views/Account/SelectAccountType.vue'
 import DemographicData from '../views/DemographicData/index.vue'
+import GeneralData from '../views/GeneralData.vue'
+import Localization from '../views/Localization.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import Documentation from '../views/Documentation.vue'
 import NotFound from '../views/NotFound.vue'
-NotFound
+import { ROUTE_DM_NAME, ROUTE_LOC_NAME, ROUTE_VB_NAME, ROUTE_DOC_NAME } from '@/utils/constants';
+
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -53,20 +56,28 @@ const routes: Array<RouteRecordRaw> = [
         component: Dashboard,
         children: [
           {
-            path: 'datos-demograficos',
-            name: 'datos-demograficos',
-            component: DemographicData
+            path: 'datos-generales',
+            name: ROUTE_DM_NAME,
+            meta: { next: 'localizacion' },
+            component: GeneralData
+          },
+          {
+            path: 'localizacion',
+            name: ROUTE_LOC_NAME,
+            meta: { next: 'validacion-biometrica' },
+            component: Localization,
           },
           {
             path: 'validacion-biometrica',
-            name: 'validacion-biometrica',
+            name: ROUTE_VB_NAME,
+            meta: { next: 'documentacion' },
             component: BiometricValidation,
           },
-          {
-            path: 'documentacion',
-            name: 'documentation',
-            component: Documentation,
-          },
+          // {
+          //   path: 'documentacion',
+          //   name: ROUTE_DOC_NAME,
+          //   component: Documentation,
+          // },
         ]
       },
     ]

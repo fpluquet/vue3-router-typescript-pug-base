@@ -2,22 +2,22 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ fantasyName: formData.fantasyName })"
+        @blur="save({ fantasyName: formData.generalData.fantasyName })"
         class="input field-custom"
         type="text"
         placeholder="Nombre fantasia"
-        v-model="formData.fantasyName"
+        v-model="formData.generalData.fantasyName"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ socialReason: formData.socialReason })"
+        @blur="save({ socialReason: formData.generalData.socialReason })"
         class="input field-custom"
         type="text"
         placeholder="Razon social"
-        v-model="formData.socialReason"
+        v-model="formData.generalData.socialReason"
       />
     </div>
   </div>
@@ -25,7 +25,7 @@
     <div class="select is-fullwidth">
       <select
         @change="(ev) => save({ heading: ev.target.value })"
-        v-model="formData.heading"
+        v-model="formData.generalData.heading"
         class="field-custom is-fullwidth"
       >
         <option v-for="option in headingOptions" :key="option">{{
@@ -37,11 +37,11 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="validateUrl({ url: formData.url })"
+        @blur="validateUrl({ url: formData.generalData.url })"
         class="input field-custom"
         type="text"
         placeholder="URL"
-        v-model="formData.url"
+        v-model="formData.generalData.url"
       />
     </div>
     <p v-show="formError.url" class="help is-danger">{{ formError.url }}</p>
@@ -89,21 +89,17 @@ export default {
     watch(
       props.formData,
       (now, prev) => {
-        try {
-          // if (now.fantasyName) {
-          //   formError.value.fantasyName = '';
-          // }
-          // if (now.socialReason) {
-          //   formError.value.socialReason = '';
-          // }
-          // if (now.heading) {
-          //   formError.value.heading = '';
-          // }
-          if (now.url) {
-            formError.value.url = '';
-          }
-        } catch (error) {
-          console.log(error);
+        if (now.fantasyName !== '') {
+          formError.value.fantasyName = '';
+        }
+        if (now.socialReason) {
+          formError.value.socialReason = '';
+        }
+        if (now.heading) {
+          formError.value.heading = '';
+        }
+        if (now.url) {
+          formError.value.url = '';
         }
       },
       { deep: true },

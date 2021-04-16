@@ -30,6 +30,7 @@
         >
           <router-view :save="saveData" :formData="formData"></router-view>
           <Button
+            :disabled="statusButton"
             v-show="showNextButton"
             className="mt-5 is-fullwidth is-primary"
             @click="goFordward"
@@ -64,7 +65,7 @@ import BoxSection from '../../components/BoxSection';
 import { saveProfile } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import {
-  ROUTE_DM_NAME,
+  ROUTE_DG_NAME,
   ROUTE_VB_NAME,
   ROUTE_DOC_NAME,
   EMPRESA,
@@ -92,6 +93,7 @@ export default {
     const src = computed(() => `/logo_central_${props.accountType}.svg`);
     const showNextButton = ref(true);
     const showFinishButton = ref(false);
+    const statusButton = ref(true);
 
     let formData = ref({
       generalData: {
@@ -110,7 +112,7 @@ export default {
 
     const nextRoute = computed(() => router.currentRoute.value.meta.next);
     const firstStep = computed(
-      () => router.currentRoute.value.name === ROUTE_DM_NAME,
+      () => router.currentRoute.value.name === ROUTE_DG_NAME,
     );
 
     const lastStep = computed(
@@ -139,42 +141,22 @@ export default {
         showNextButton.value = true;
         showFinishButton.value = false;
       }
-      // if (props.accountType === PERSONA) {
-      //   if (router.currentRoute.value.name === ROUTE_VB_NAME) {
-      //     showNextButton.value = false;
-      //     showFinishButton.value = true;
-      //   } else {
-      //     showNextButton.value = true;
-      //   }
-      // }
-
-      // if (props.accountType === EMPRESA) {
-      //   if (router.currentRoute.value.name === ROUTE_DOC_NAME) {
-      //     showNextButton.value = false;
-      //     showFinishButton.value = true;
-      //   } else {
-      //   }
-      // }
-
-      // } else if (
-      //   props.accountType === EMPRESA &&
-      //   router.currentRoute.value.name === ROUTE_DOC_NAME
-      // ) {
-      //   showNextButton.value = false;
-      //   showFinishButton.value = true;
-      // } else if (
-      //   props.accountType === EMPRESA &&
-      //   router.currentRoute.value.name === ROUTE_VB_NAME
-      // ) {
-      //   showNextButton.value = false;
-      //   showFinishButton.value = false;
-      // } else {
-      //   showNextButton.value = true;
-      //   showFinishButton.value = false;
-      // }
     });
 
     const finishAction = () => console.log('finish');
+    const hasAllValues = () => true;
+
+    watch(
+      formData.value.generalData,
+      (now, prev) => {
+        if (router.currentRoute.value.name === ROUTE_DG_NAME) {
+          if (hasAllValues(formData.generalData)) {
+            statusButton.value = false;
+          }
+        }
+      },
+      { deep: true },
+    );
 
     const goFordward = () => {
       router.push({ name: nextRoute.value });
@@ -212,6 +194,7 @@ export default {
       goBack,
       validate,
       finishAction,
+      statusButton,
     };
   },
 };

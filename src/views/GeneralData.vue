@@ -89,16 +89,7 @@ export default {
     watch(
       props.formData,
       (now, prev) => {
-        if (now.fantasyName !== '') {
-          formError.value.fantasyName = '';
-        }
-        if (now.socialReason) {
-          formError.value.socialReason = '';
-        }
-        if (now.heading) {
-          formError.value.heading = '';
-        }
-        if (now.url) {
+        if (props.formData.generalData.url) {
           formError.value.url = '';
         }
       },

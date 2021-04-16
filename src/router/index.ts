@@ -12,7 +12,7 @@ import Localization from '../views/Localization.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import Documentation from '../views/Documentation.vue'
 import NotFound from '../views/NotFound.vue'
-import { ROUTE_DM_NAME, ROUTE_LOC_NAME, ROUTE_VB_NAME, ROUTE_DOC_NAME } from '@/utils/constants';
+import { ROUTE_DG_NAME, ROUTE_LOC_NAME, ROUTE_VB_NAME, ROUTE_DOC_NAME } from '@/utils/constants';
 
 
 
@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: 'datos-generales',
-            name: ROUTE_DM_NAME,
+            name: ROUTE_DG_NAME,
             meta: { next: 'localizacion' },
             component: GeneralData
           },

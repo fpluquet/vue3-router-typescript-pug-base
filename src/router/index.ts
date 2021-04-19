@@ -58,7 +58,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'datos-generales',
             name: ROUTE_DG_NAME,
-            meta: { next: 'localizacion' },
+            meta: { next: ROUTE_LOC_NAME },
             component: GeneralData
           },
           {
@@ -70,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'validacion-biometrica',
             name: ROUTE_VB_NAME,
-            meta: { next: 'documentacion' },
+            meta: { next: ROUTE_DOC_NAME },
             component: BiometricValidation,
           },
           // {

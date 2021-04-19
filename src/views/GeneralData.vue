@@ -2,22 +2,22 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ fantasyName: formData.generalData.fantasyName })"
+        @blur="save({ fantasyName: formData.fantasyName })"
         class="input field-custom"
         type="text"
         placeholder="Nombre fantasia"
-        v-model="formData.generalData.fantasyName"
+        v-model="formData.fantasyName"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ socialReason: formData.generalData.socialReason })"
+        @blur="save({ socialReason: formData.socialReason })"
         class="input field-custom"
         type="text"
         placeholder="Razon social"
-        v-model="formData.generalData.socialReason"
+        v-model="formData.socialReason"
       />
     </div>
   </div>
@@ -25,7 +25,7 @@
     <div class="select is-fullwidth">
       <select
         @change="(ev) => save({ heading: ev.target.value })"
-        v-model="formData.generalData.heading"
+        v-model="formData.heading"
         class="field-custom is-fullwidth"
       >
         <option v-for="option in headingOptions" :key="option">{{
@@ -37,20 +37,24 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="validateUrl({ url: formData.generalData.url })"
+        @blur="validateUrl({ url: formData.url })"
         class="input field-custom"
         type="text"
         placeholder="URL"
-        v-model="formData.generalData.url"
+        v-model="formData.url"
       />
     </div>
     <p v-show="formError.url" class="help is-danger">{{ formError.url }}</p>
   </div>
+  <Button className="mt-5 is-fullwidth is-primary" @click="goNext()"
+    >Siguiente</Button
+  >
 </template>
 
 <script>
 import { ref, watch } from 'vue';
 import * as Yup from 'yup';
+import Button from '@/components/Button';
 
 export default {
   name: 'GeneralData',
@@ -58,13 +62,15 @@ export default {
     formData: Object,
     cognitoId: String,
     save: Function,
+    goNext: Function,
   },
-  components: {},
+  components: { Button },
   setup(props) {
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
     const headingOptions = ['a', 'b', 'c'];
+   
 
     //Validation inputs
     let schemaForm = Yup.object().shape({
@@ -89,7 +95,7 @@ export default {
     watch(
       props.formData,
       (now, prev) => {
-        if (props.formData.generalData.url) {
+        if (props.formData.url) {
           formError.value.url = '';
         }
       },

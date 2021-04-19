@@ -28,14 +28,18 @@
         <div
           class="column is-10-mobile is-10-tablet is-10-desktop is-10-widescreen is-8-fullhd"
         >
-          <router-view :save="saveData" :formData="formData"></router-view>
-          <Button
+          <router-view
+            :save="saveData"
+            :formData="formData[router.currentRoute.value.name]"
+            :goNext="goFordward"
+          ></router-view>
+          <!-- <Button
             :disabled="statusButton"
             v-show="showNextButton"
             className="mt-5 is-fullwidth is-primary"
             @click="goFordward"
             >Siguiente</Button
-          >
+          > -->
           <!-- <Button
             v-show="!showFinishButton && !showNextButton"
             className="mt-5 is-fullwidth is-primary"
@@ -55,7 +59,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, reactive } from 'vue';
 import Button from '@/components/Button';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -68,6 +72,7 @@ import {
   ROUTE_DG_NAME,
   ROUTE_VB_NAME,
   ROUTE_DOC_NAME,
+  ROUTE_LOC_NAME,
   EMPRESA,
   PERSONA,
 } from '@/utils/constants';
@@ -95,14 +100,14 @@ export default {
     const showFinishButton = ref(false);
     const statusButton = ref(true);
 
-    let formData = ref({
-      generalData: {
+    let formData = reactive({
+      [ROUTE_DG_NAME]: {
         fantasyName: '',
         socialReason: '',
         heading: '',
         url: '',
       },
-      localization: {
+      [ROUTE_LOC_NAME]: {
         phone: '',
         street: '',
         region: '',
@@ -147,7 +152,7 @@ export default {
     const hasAllValues = () => true;
 
     watch(
-      formData.value.generalData,
+      formData.generalData,
       (now, prev) => {
         if (router.currentRoute.value.name === ROUTE_DG_NAME) {
           if (hasAllValues(formData.generalData)) {
@@ -161,7 +166,6 @@ export default {
     const goFordward = () => {
       router.push({ name: nextRoute.value });
     };
-
     const goBack = () => router.go(-1);
 
     const saveData = async (data) => {
@@ -195,6 +199,7 @@ export default {
       validate,
       finishAction,
       statusButton,
+      router,
     };
   },
 };

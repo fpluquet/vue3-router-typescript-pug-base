@@ -25,7 +25,7 @@
         >
       </form>
       <ButtonLink
-        decorationTextUnderling="{true}"
+        :decorationTextUnderling="true"
         :handleClick="resendCode"
         :loading="loadingResendCode"
         >Reenviar Código</ButtonLink
@@ -114,12 +114,12 @@ export default {
         await schemaForm.validate(formData.value, { abortEarly: false });
         try {
           loading.value = true;
-          await services.confirmCode(formData.value, cognitoId.value);
+          // await services.confirmCode(formData.value, cognitoId.value);
           store.commit('setCognitoId', { cognitoId: cognitoId.value });
 
           router.push({
-            name: 'Dashboard',
-            // params: { accountType: },
+            name: 'generalData',
+            // params: { accountType: 'persona'},
           });
         } catch (error) {
           if (error instanceof ClientError) {

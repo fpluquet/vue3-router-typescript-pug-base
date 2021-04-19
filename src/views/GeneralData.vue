@@ -37,22 +37,27 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="validateUrl({ url: formData.url })"
+        @blur="save({ website: formData.website })"
         class="input field-custom"
         type="text"
         placeholder="URL"
-        v-model="formData.url"
+        v-model="formData.website"
       />
     </div>
-    <p v-show="formError.url" class="help is-danger">{{ formError.url }}</p>
+    <p v-show="formError.website" class="help is-danger">
+      {{ formError.website }}
+    </p>
   </div>
-  <Button className="mt-5 is-fullwidth is-primary" @click="goNext()"
+  <Button
+    :disabled="disabledButton"
+    className="mt-5 is-fullwidth is-primary"
+    @click="goNext()"
     >Siguiente</Button
   >
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
 import * as Yup from 'yup';
 import Button from '@/components/Button';
 
@@ -70,41 +75,83 @@ export default {
     let messageError = ref('');
     let loading = ref(false);
     const headingOptions = ['a', 'b', 'c'];
-   
+    const disabledButton = ref();
+
+    let { fantasyName, heading, socialReason, website } = toRefs(
+      props.formData,
+    );
+
+    const hasAllCompleted = () =>
+      props.formData.fantasyName !== '' &&
+      props.formData.fantasyName !== undefined &&
+      props.formData.socialReason !== '' &&
+      props.formData.socialReason !== undefined &&
+      props.formData.heading !== '' &&
+      props.formData.heading !== undefined &&
+      props.formData.website !== '' &&
+      props.formData.website !== undefined;
+
+    onMounted(async () => {
+      if (!hasAllCompleted()) {
+        disabledButton.value = true;
+      }
+    });
 
     //Validation inputs
     let schemaForm = Yup.object().shape({
-      url: Yup.string().url('Por favor ingresa una url válida'),
+      website: Yup.string().url('Por favor ingresa una url válida'),
     });
 
-    const validateUrl = async (url) => {
+    const validateUrl = async (website) => {
       try {
-        await schemaForm.validate(url, { abortEarly: false });
-        try {
-          props.save(url);
-        } catch (error) {
-          console.log(error);
-        }
+        return schemaForm.validate(
+          { website: website.value },
+          { abortEarly: false },
+        );
       } catch (error) {
-        error.inner.forEach((err) => {
-          formError.value[err.path] = err.message;
-        });
+        throw error;
       }
     };
 
     watch(
       props.formData,
       (now, prev) => {
-        if (props.formData.url) {
-          formError.value.url = '';
+        if (props.formData.website) {
+          formError.value.website = '';
         }
       },
       { deep: true },
     );
+
+    watchEffect(() => {
+      if (hasAllCompleted()) {
+        disabledButton.value = false;
+      } else {
+        disabledButton.value = true;
+      }
+    });
+
+    watch(website, (now, prev) => {
+      validateUrl(website)
+        .then((res) => {
+          if (hasAllCompleted()) {
+            disabledButton.value = false;
+          } else {
+            disabledButton.value = true;
+          }
+        })
+        .catch((error) => {
+          error.inner.forEach((err) => {
+            formError.value[err.path] = err.message;
+          });
+        });
+    });
+
     return {
       formError,
       validateUrl,
       headingOptions,
+      disabledButton,
     };
   },
 };

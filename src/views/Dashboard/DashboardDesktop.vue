@@ -32,6 +32,7 @@
             :save="saveData"
             :formData="formData[router.currentRoute.value.name]"
             :goNext="goFordward"
+            :cognitoId="cognitoId"
           ></router-view>
           <!-- <Button
             :disabled="statusButton"
@@ -66,7 +67,7 @@ import { useRouter } from 'vue-router';
 import ProgressBar from '../../components/ProgressBar';
 import ProgressCircle from '../../components/ProgressCircle';
 import BoxSection from '../../components/BoxSection';
-import { saveProfile } from '@/services/api/profile.service';
+import { saveProfile, getProfile } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import {
   ROUTE_DG_NAME,
@@ -105,7 +106,7 @@ export default {
         fantasyName: '',
         socialReason: '',
         heading: '',
-        url: '',
+        website: '',
       },
       [ROUTE_LOC_NAME]: {
         phone: '',
@@ -114,7 +115,9 @@ export default {
         local: '',
       },
     });
-
+    const cognitoId = computed(
+      () => router.currentRoute.value.params.cognitoId,
+    );
     const nextRoute = computed(() => router.currentRoute.value.meta.next);
     const firstStep = computed(
       () => router.currentRoute.value.name === ROUTE_DG_NAME,
@@ -136,6 +139,16 @@ export default {
           component: Documentation,
         });
       }
+    });
+
+    onMounted(async () => {
+      const profile = await getProfile(cognitoId.value);
+      //const profile = store.state.profile; //Todo get profile from store.state
+      formData.fantasyName = profile.profile.fantasyName;
+      formData.socialReason = profile.profile.socialReason;
+      formData.heading = profile.profile.heading;
+      // formData.website = profile.profile.website;
+      formData.website = 'a';
     });
 
     watch(router.currentRoute, (now, prev) => {
@@ -177,10 +190,6 @@ export default {
       }
     };
 
-    const cognitoId = computed(
-      () => router.currentRoute.value.params.cognitoId,
-    );
-
     const validate = () => {
       console.log('call jumio service');
       showFinishButton.value = true;
@@ -200,6 +209,7 @@ export default {
       finishAction,
       statusButton,
       router,
+      cognitoId,
     };
   },
 };

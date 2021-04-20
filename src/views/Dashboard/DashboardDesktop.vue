@@ -47,11 +47,11 @@
             @click="validate"
             >Validar</Button
           > -->
-          <Button
+          <ButtonColor
             v-show="lastStep"
             className="mt-5 is-fullwidth is-primary"
             @click="finishAction"
-            >Finalizar</Button
+            >Finalizar</ButtonColor
           >
         </div>
       </div>
@@ -61,7 +61,7 @@
 
 <script>
 import { ref, computed, watch, onMounted, reactive } from 'vue';
-import Button from '@/components/Button';
+import ButtonColor from '@/components/ButtonColor';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import ProgressBar from '../../components/ProgressBar';
@@ -84,7 +84,7 @@ export default {
     ProgressBar,
     BoxSection,
     ProgressCircle,
-    Button,
+    ButtonColor,
     Documentation,
   },
   props: {

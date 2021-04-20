@@ -108,7 +108,6 @@
           </p>
         </div>
         <ButtonColor
-          :account="accountType"
           :type="'submit'"
           class="'button is-fullwidth mt-5'"
           :loading="loading"
@@ -178,12 +177,13 @@ export default {
           },
         ),
       companyRut:
-        accountType === EMPRESA
+        accountType.value == EMPRESA
           ? Yup.string().required('Por favor ingresa el rut de la empresa.')
-          : '',
+          : Yup.string(),
     });
 
     accountType = computed(() => router.currentRoute.value.params.accountType);
+    console.log(accountType.value, EMPRESA);
 
     const goBack = () => {
       store.commit('setAccountType', { accountType: null });
@@ -198,12 +198,9 @@ export default {
       try {
         await schemaForm.validate(formData.value, { abortEarly: false });
         try {
-          formData.isCompany = false;
-          if (accountType === EMPRESA) {
-            formData.isCompany = true;
-          } else {
-            // ToDO remove this part. for now is a backend requirenement
-            formData.companyRut = '';
+          formData.value.isCompany = false;
+          if (accountType.value === EMPRESA) {
+            formData.value.isCompany = true;
           }
           const resp = await services.createAccount(formData.value);
           router.push({

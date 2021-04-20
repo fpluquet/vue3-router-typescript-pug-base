@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { getColorByAccount } from '@/utils/tools';
 import { PERSONA } from '@/utils/constants';
@@ -26,7 +26,7 @@ export default {
   setup() {
     const store = useStore();
     const hide = ref(false);
-    const accountType = PERSONA; // ToDo get from vuex. (profile)
+    const accountType = computed(() => store.state.profile.isCompany);
     return { getColorByAccount, accountType, PERSONA };
   },
 };

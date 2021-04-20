@@ -45,7 +45,6 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  justify-content: center;
   background: #ffffff;
   box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
@@ -53,7 +52,7 @@ export default {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 500px;
-  // margin: auto;
+  margin: auto;
   z-index: 1;
 }
 .splash {

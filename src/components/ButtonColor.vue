@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { getClassByAccount } from '@/utils/tools';
 
@@ -23,7 +23,9 @@ export default {
   },
   setup() {
     const store = useStore();
-    return { getClassByAccount };
+
+    const account = computed(() => store.state.profile.isCompany);
+    return { account, getClassByAccount };
   },
 };
 </script>

@@ -10,7 +10,7 @@ import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { getProfile } from '@/services/api/profile.service';
-import { ROUTE_DG_NAME } from '@/utils/constants';
+import { ROUTE_DG_NAME, EMPRESA, PERSONA } from '@/utils/constants';
 
 export default {
   name: 'Authenticated',
@@ -28,7 +28,9 @@ export default {
           store.commit('setProfile', profile);
           router.push({
             name: ROUTE_DG_NAME,
-            params: { accountType: 'persona' },
+            params: {
+              accountType: profile.profile.isCompany ? EMPRESA : PERSONA,
+            },
           });
         } catch (error) {
           console.log(error);

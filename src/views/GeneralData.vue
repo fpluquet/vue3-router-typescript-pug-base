@@ -48,18 +48,18 @@
       {{ formError.website }}
     </p>
   </div>
-  <Button
+  <ButtonColor
     :disabled="disabledButton"
-    className="mt-5 is-fullwidth is-primary"
+    class="mt-5 is-fullwidth"
     @click="goNext()"
-    >Siguiente</Button
+    >Siguiente</ButtonColor
   >
 </template>
 
 <script>
 import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
 import * as Yup from 'yup';
-import Button from '@/components/Button';
+import ButtonColor from '@/components/ButtonColor';
 
 export default {
   name: 'GeneralData',
@@ -69,7 +69,7 @@ export default {
     save: Function,
     goNext: Function,
   },
-  components: { Button },
+  components: { ButtonColor },
   setup(props) {
     let formError = ref({});
     let messageError = ref('');

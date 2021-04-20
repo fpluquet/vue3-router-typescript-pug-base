@@ -50,17 +50,17 @@
       {{ formError.region }}
     </p>
   </div>
-  <Button
+  <ButtonColor
     :disabled="disabledButton"
-    className="mt-5 is-fullwidth is-primary"
+    class="mt-5 is-fullwidth"
     @click="goNext()"
-    >Siguiente</Button
+    >Siguiente</ButtonColor
   >
 </template>
 
 <script>
 import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
-import Button from '@/components/Button';
+import ButtonColor from '@/components/ButtonColor';
 
 export default {
   name: 'Localization',
@@ -70,7 +70,7 @@ export default {
     goNext: Function,
     cognitoId: String,
   },
-  components: { Button },
+  components: { ButtonColor },
   setup(props) {
     let formError = ref({});
     let messageError = ref('');

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="columns is-flex is-relative"
+    class="columns is-flex is-relative desktop"
     :style="{ background: '#E5E5E5', 'margin-bottom': '0px' }"
   >
     <div
@@ -18,7 +18,7 @@
         'align-items': 'flex-end',
       }"
     >
-      <span v-show="Boolean(userEmail)" class="custom-text  mr-1">{{
+      <span v-show="Boolean(userEmail)" class="custom-text mr-1">{{
         userEmail
       }}</span>
     </div>
@@ -46,8 +46,8 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (max-width: 768px) {
-  .navbar {
-    display: none;
+  .desktop {
+    display: none !important;
   }
 }
 .custom-text {

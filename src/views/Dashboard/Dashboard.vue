@@ -8,7 +8,7 @@
         :accountType="accountType"
       />
     </div>
-    <div class="show-mobile">
+    <!-- <div class="show-mobile">
       <div class="banner-content">
         <Banner :name="'pago_facil_banner'" :style="{ width: '70%' }" />
       </div>
@@ -18,7 +18,7 @@
         :openSideBar="openSideBar"
         :accountType="accountType"
       />
-    </div>
+    </div> -->
   </BasicLayout>
 </template>
 
@@ -79,30 +79,25 @@ export default {
 </script>
 
 <style lang="scss">
-@media screen and (max-width: 768px) {
-  .show-desktop {
-    display: none;
-  }
-  .show-mobile {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-  }
-  .banner-content {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 60px;
-    margin-top: 60px;
-  }
-}
-@media screen and (min-width: 769px) {
-  .show-desktop {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .show-mobile {
-    display: none;
-  }
+// @media screen and (max-width: 768px) {
+//   .show-desktop {
+//     display: none;
+//   }
+//   .show-mobile {
+//     display: flex;
+//     flex: 1;
+//     flex-direction: column;
+//   }
+//   .banner-content {
+//     display: flex;
+//     justify-content: center;
+//     margin-bottom: 60px;
+//     margin-top: 60px;
+//   }
+// }
+.show-desktop {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>

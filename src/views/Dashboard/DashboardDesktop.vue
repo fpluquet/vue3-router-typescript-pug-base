@@ -1,21 +1,31 @@
 <template>
   <div
-    class="columns is-vcentered is-centered mt-3"
+    class="columns is-vcentered is-centered mt-3 is-hidden-mobile"
     :style="{
       flex: 1,
     }"
   >
     <div
-      class="column is-10-mobile is-10-tablet is-10-desktop is-10-widescreen is-8-fullhd has-text-centered"
+      class="column is-10-desktop is-10-widescreen is-10-fullhd has-text-centered"
     >
       <ProgressBar />
     </div>
   </div>
 
   <div
-    class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-flex-start mb-1"
+    class="is-flex is-flex-grow-1 is-justify-content-space-evenly is-align-items-flex-start mb-1 mobile"
   >
+    <!-- MOBILE   !-->
     <div class="column wizard-container is-relative">
+      <div class="columns is-vcentered is-centered is-hidden-tablet">
+        <div class="column is-12-mobile is-12-tablet has-text-centered">
+          <Banner :name="'pago_facil_banner'" class="mobile-banner" />
+        </div>
+        <div class="column is-12-mobile is-12-tablet has-text-centered">
+          <ProgressBar />
+        </div>
+      </div>
+      <!-- ---------- !-->
       <img
         v-show="!firstStep"
         src="/back_arrow.svg"
@@ -26,7 +36,7 @@
       />
       <div class="columns is-centered">
         <div
-          class="column is-10-mobile is-10-tablet is-10-desktop is-10-widescreen is-8-fullhd"
+          class="column is-12-mobile is-10-tablet is-10-desktop is-10-widescreen is-10-fullhd"
         >
           <router-view
             :save="saveData"
@@ -61,14 +71,16 @@
 
 <script>
 import { ref, computed, watch, onMounted, reactive } from 'vue';
-import ButtonColor from '@/components/ButtonColor';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import ProgressBar from '../../components/ProgressBar';
-import ProgressCircle from '../../components/ProgressCircle';
-import BoxSection from '../../components/BoxSection';
+import ButtonColor from '@/components/ButtonColor';
+import ProgressBar from '@/components/ProgressBar';
+import ProgressCircle from '@/components/ProgressCircle';
+import BoxSection from '@/components/BoxSection';
 import { saveProfile, getProfile } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
+import Banner from '@/components/Banner.vue';
+
 import {
   ROUTE_DG_NAME,
   ROUTE_VB_NAME,
@@ -86,6 +98,7 @@ export default {
     ProgressCircle,
     ButtonColor,
     Documentation,
+    Banner,
   },
   props: {
     accountType: String,
@@ -211,26 +224,64 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wizard-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #ffffff;
-  box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
-  border-radius: 15px;
-  height: 500px;
-  padding-left: 20px;
-  padding-right: 20px;
-  max-width: 600px;
-  z-index: 1;
+// mobile
+@media screen and (max-width: 768px) {
+  .mobile {
+    display: flex;
+    align-items: center !important;
+    justify-content: space-between;
+  }
+  .mobile-banner {
+    width: 60%;
+    max-width: 180px;
+  }
+  .wizard-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff;
+    box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    min-height: 75%;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 80%;
+    // width: 80%;
+    z-index: 1;
 
-  .img-arrow {
-    position: absolute;
-    top: 35px;
-    left: 15px;
-    cursor: pointer;
+    .img-arrow {
+      position: absolute;
+      top: 35px;
+      left: 15px;
+      cursor: pointer;
+    }
   }
 }
+
+// desktop
+@media screen and (min-width: 769px) {
+  .wizard-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff;
+    box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    height: 500px;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 600px;
+    z-index: 1;
+
+    .img-arrow {
+      position: absolute;
+      top: 35px;
+      left: 15px;
+      cursor: pointer;
+    }
+  }
+}
+
 .dashboard {
   height: 100%;
 

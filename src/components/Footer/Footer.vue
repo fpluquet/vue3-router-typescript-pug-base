@@ -1,25 +1,19 @@
 <template>
-  <!-- <template class="show-mobile">
-    <FooterMobile />
-  </template> -->
   <template class="show-desktop">
-    <FooterDesktop />
+    <FooterDesktopMobile />
   </template>
 </template>
 
 <script>
-import FooterMobile from './FooterMobile';
-import FooterDesktop from './FooterDesktop';
+import FooterDesktopMobile from './FooterDesktopMobile';
 export default {
   components: {
-    FooterMobile,
-    FooterDesktop,
+    FooterDesktopMobile,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// @media screen and (min-width: 769px) {
 .show-desktop {
   display: flex;
   height: 28vh;
@@ -28,16 +22,4 @@ export default {
   bottom: 0;
   width: 100%;
 }
-// .show-mobile {
-//   display: none;
-// }
-// }
-// @media screen and (max-width: 769px) {
-//   .show-desktop {
-//     display: none;
-//   }
-//   .show-mobile {
-//     display: flex;
-//   }
-// }
 </style>

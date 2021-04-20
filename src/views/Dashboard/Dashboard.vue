@@ -1,7 +1,7 @@
 <template>
   <BasicLayout>
     <div class="show-desktop">
-      <DashboardDesktop
+      <DashboardDesktopMobile
         :availableSections="availableSections"
         :showPanelSections="showPanelSections"
         :accountType="accountType"
@@ -12,7 +12,7 @@
 
 <script>
 import BasicLayout from '../../layouts/BasicLayout.vue';
-import DashboardDesktop from '../Dashboard/DashboardDesktop';
+import DashboardDesktopMobile from '../Dashboard/DashboardDesktopMobile';
 import Banner from '../../components/Banner';
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -23,7 +23,7 @@ export default {
   name: 'Dashboard',
   components: {
     BasicLayout,
-    DashboardDesktop,
+    DashboardDesktopMobile,
     Banner,
   },
   setup() {

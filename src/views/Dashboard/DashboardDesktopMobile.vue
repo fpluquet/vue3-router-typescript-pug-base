@@ -75,8 +75,6 @@ import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
-import ProgressCircle from '@/components/ProgressCircle';
-import BoxSection from '@/components/BoxSection';
 import { saveProfile, getProfile } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import Banner from '@/components/Banner.vue';
@@ -91,11 +89,9 @@ import {
 } from '@/utils/constants';
 
 export default {
-  name: 'DashboardDesktop',
+  name: 'DashboardDesktopMobile',
   components: {
     ProgressBar,
-    BoxSection,
-    ProgressCircle,
     ButtonColor,
     Documentation,
     Banner,

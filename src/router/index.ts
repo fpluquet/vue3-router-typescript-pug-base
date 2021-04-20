@@ -64,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'localizacion',
             name: ROUTE_LOC_NAME,
-            meta: { next: 'validacion-biometrica' },
+            meta: { next: ROUTE_VB_NAME },
             component: Localization,
           },
           {

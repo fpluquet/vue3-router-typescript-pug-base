@@ -48,7 +48,7 @@
             >Validar</Button
           > -->
           <Button
-            v-show="showFinishButton"
+            v-show="lastStep"
             className="mt-5 is-fullwidth is-primary"
             @click="finishAction"
             >Finalizar</Button
@@ -97,9 +97,9 @@ export default {
     const store = useStore();
     const router = useRouter();
     const src = computed(() => `/logo_central_${props.accountType}.svg`);
-    const showNextButton = ref(true);
-    const showFinishButton = ref(false);
-    const statusButton = ref(true);
+    // const showNextButton = ref(true);
+    // const showFinishButton = ref(false);
+    // const statusButton = ref(true);
 
     let formData = reactive({
       [ROUTE_DG_NAME]: {
@@ -144,37 +144,41 @@ export default {
     onMounted(async () => {
       const profile = await getProfile(cognitoId.value);
       //const profile = store.state.profile; //Todo get profile from store.state
-      formData.fantasyName = profile.profile.fantasyName;
-      formData.socialReason = profile.profile.socialReason;
-      formData.heading = profile.profile.heading;
-      // formData.website = profile.profile.website;
-      formData.website = 'a';
+      formData[ROUTE_DG_NAME].fantasyName = profile.profile.fantasyName;
+      formData[ROUTE_DG_NAME].socialReason = profile.profile.socialReason;
+      formData[ROUTE_DG_NAME].heading = profile.profile.heading;
+      formData[ROUTE_DG_NAME].website = profile.profile.website;
+
+      formData[ROUTE_LOC_NAME].phone = profile.profile.phone;
+      formData[ROUTE_LOC_NAME].street = profile.profile.socialReason;
+      formData[ROUTE_LOC_NAME].region = profile.profile.heading;
+      formData[ROUTE_LOC_NAME].local = profile.profile.website;
     });
 
-    watch(router.currentRoute, (now, prev) => {
-      if (lastStep.value) {
-        showNextButton.value = false;
-        showFinishButton.value = true;
-      } else {
-        showNextButton.value = true;
-        showFinishButton.value = false;
-      }
-    });
+    // watch(router.currentRoute, (now, prev) => {
+    //   if (lastStep.value) {
+    //     showNextButton.value = false;
+    //     showFinishButton.value = true;
+    //   } else {
+    //     showNextButton.value = true;
+    //     showFinishButton.value = false;
+    //   }
+    // });
 
     const finishAction = () => console.log('finish');
     const hasAllValues = () => true;
 
-    watch(
-      formData.generalData,
-      (now, prev) => {
-        if (router.currentRoute.value.name === ROUTE_DG_NAME) {
-          if (hasAllValues(formData.generalData)) {
-            statusButton.value = false;
-          }
-        }
-      },
-      { deep: true },
-    );
+    // watch(
+    //   formData.generalData,
+    //   (now, prev) => {
+    //     if (router.currentRoute.value.name === ROUTE_DG_NAME) {
+    //       if (hasAllValues(formData.generalData)) {
+    //         statusButton.value = false;
+    //       }
+    //     }
+    //   },
+    //   { deep: true },
+    // );
 
     const goFordward = () => {
       router.push({ name: nextRoute.value });
@@ -190,24 +194,15 @@ export default {
       }
     };
 
-    const validate = () => {
-      console.log('call jumio service');
-      showFinishButton.value = true;
-    };
-
     return {
       src,
-      showNextButton,
-      showFinishButton,
       formData,
       firstStep,
       lastStep,
       goFordward,
       saveData,
       goBack,
-      validate,
       finishAction,
-      statusButton,
       router,
       cognitoId,
     };

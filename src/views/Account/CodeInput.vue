@@ -46,7 +46,7 @@ import * as services from '@/services/api/account.service';
 import ButtonColor from '../../components/ButtonColor.vue';
 import ButtonLink from '../../components/ButtonLink.vue';
 import { ClientError } from '@/utils/exceptions';
-import { INVALID_CODE } from '@/utils/constants';
+import { INVALID_CODE, ROUTE_DG_NAME } from '@/utils/constants';
 import Notification from '@/components/Notification';
 
 export default {
@@ -114,11 +114,11 @@ export default {
         await schemaForm.validate(formData.value, { abortEarly: false });
         try {
           loading.value = true;
-          // await services.confirmCode(formData.value, cognitoId.value);
+          await services.confirmCode(formData.value, cognitoId.value);
           store.commit('setCognitoId', { cognitoId: cognitoId.value });
 
           router.push({
-            name: 'generalData',
+            name: ROUTE_DG_NAME,
             // params: { accountType: 'persona'},
           });
         } catch (error) {

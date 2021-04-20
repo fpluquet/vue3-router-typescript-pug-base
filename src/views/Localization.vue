@@ -50,24 +50,61 @@
       {{ formError.region }}
     </p>
   </div>
+  <Button
+    :disabled="disabledButton"
+    className="mt-5 is-fullwidth is-primary"
+    @click="goNext()"
+    >Siguiente</Button
+  >
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
+import Button from '@/components/Button';
+
 export default {
-  name: 'DemographicDataFormTwo',
+  name: 'Localization',
   props: {
     formData: Object,
     save: Function,
+    goNext: Function,
+    cognitoId: String,
   },
-  components: {},
+  components: { Button },
   setup(props) {
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
+    let { phone, street, region, local } = toRefs(props.formData);
+    const disabledButton = ref();
+
+    const hasAllCompleted = () =>
+      phone.value !== '' &&
+      phone.value !== undefined &&
+      street.value !== '' &&
+      street.value !== undefined &&
+      region.value !== '' &&
+      region.value !== undefined &&
+      local.value !== '' &&
+      local.value !== undefined;
+
+    onMounted(async () => {
+      if (!hasAllCompleted()) {
+        disabledButton.value = true;
+      }
+    });
+
+    watchEffect(() => {
+      if (hasAllCompleted()) {
+        disabledButton.value = false;
+      } else {
+        disabledButton.value = true;
+      }
+    });
 
     return {
       formError,
+      disabledButton,
     };
   },
 };

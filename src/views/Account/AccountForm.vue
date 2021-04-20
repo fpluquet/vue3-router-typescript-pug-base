@@ -205,10 +205,10 @@ export default {
             // ToDO remove this part. for now is a backend requirenement
             formData.companyRut = '';
           }
-          // const resp = await services.createAccount(formData.value);
+          const resp = await services.createAccount(formData.value);
           router.push({
             name: 'code-input',
-            params: { cognitoId: '26d97415-5bf5-4c23-86c2-61652d032a00' },
+            params: { cognitoId: resp.data.cognitoId },
           });
         } catch (error) {
           if (error instanceof ClientError) {

@@ -10,6 +10,7 @@ import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { getProfile } from '@/services/api/profile.service';
+import { ROUTE_DG_NAME } from '@/utils/constants';
 
 export default {
   name: 'Authenticated',
@@ -26,7 +27,7 @@ export default {
           const profile = await getProfile(cognitoId);
           store.commit('setProfile', profile);
           router.push({
-            name: 'datos-generales',
+            name: ROUTE_DG_NAME,
             params: { accountType: 'persona' },
           });
         } catch (error) {

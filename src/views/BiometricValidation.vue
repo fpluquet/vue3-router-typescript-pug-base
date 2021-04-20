@@ -2,22 +2,26 @@
   <Title class="mb-6" :title="'Validación biométrica'" />
 
   <!-- <Button
-    v-show="!showNextButton"
+    :disabled="disabledButton"
     className="mt-5 is-fullwidth is-primary"
-    @click="validate"
-    >Validar</Button
+    @click="goNext"
+    >Finalizar</Button
   > -->
 </template>
 
 <script>
 import Title from '@/components/Title';
+import Button from '@/components/Button';
+
 export default {
   props: {
     title: String,
     showNextButton: Boolean,
+    goNext: Function,
   },
   components: {
     Title,
+    Button,
   },
   setup(props) {
     const validate = () => {

@@ -82,14 +82,14 @@ export default {
     );
 
     const hasAllCompleted = () =>
-      props.formData.fantasyName !== '' &&
-      props.formData.fantasyName !== undefined &&
-      props.formData.socialReason !== '' &&
-      props.formData.socialReason !== undefined &&
-      props.formData.heading !== '' &&
-      props.formData.heading !== undefined &&
-      props.formData.website !== '' &&
-      props.formData.website !== undefined;
+      fantasyName.value !== '' &&
+      fantasyName.value !== undefined &&
+      socialReason.value !== '' &&
+      socialReason.value !== undefined &&
+      heading.value !== '' &&
+      heading.value !== undefined &&
+      website.value!== '' &&
+      website.value !== undefined;
 
     onMounted(async () => {
       if (!hasAllCompleted()) {

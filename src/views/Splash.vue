@@ -53,7 +53,7 @@ export default {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 500px;
-  margin: auto;
+  // margin: auto;
   z-index: 1;
 }
 .splash {
@@ -79,11 +79,11 @@ export default {
     justify-content: center;
   }
 }
-@media screen and (max-width: 768px) {
-  .splash {
-    background: #ffffff !important;
-  }
-}
+// @media screen and (max-width: 768px) {
+//   .splash {
+//     background: #ffffff !important;
+//   }
+// }
 
 // .img-bg {
 //   background-image: url('/layout.svg');

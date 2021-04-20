@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="columns is-flex is-relative desktop"
-    :style="{ background: '#E5E5E5', 'margin-bottom': '0px' }"
-  >
+  <div class="columns is-flex is-relative is-hidden-mobile mt-0">
     <div
       class="column is-flex is-justify-content-center is-align-items-flex-end"
     >
@@ -45,11 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 768px) {
-  .desktop {
-    display: none !important;
-  }
-}
 .custom-text {
   display: flex;
   align-items: center;

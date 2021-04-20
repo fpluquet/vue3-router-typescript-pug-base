@@ -3,7 +3,7 @@
     :style="{
       display: 'flex',
       justifyContent: 'center',
-      'margin-top': '20px',
+      marginTop: '20px',
       cursor: 'pointer',
     }"
     :class="{ 'is-loading': loading }"

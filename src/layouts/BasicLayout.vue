@@ -17,12 +17,11 @@
 
 <script>
 import Menu from '../components/Menu';
-import SideBar from '../components/SideBar';
 import Footer from '../components/Footer/Footer';
 
 export default {
   name: 'BasicLayout',
-  components: { Menu, SideBar, Footer },
+  components: { Menu, Footer },
 };
 </script>
 
@@ -36,18 +35,6 @@ export default {
     display: flex;
     // height: 65vh !important;
     flex: 1;
-    // background: #e5e5e5;
   }
 }
-// @media screen and (max-width: 768px) {
-//   .basic-layout {
-//     display: flex;
-//     flex: 1;
-//   }
-//   .custom-container {
-//     display: flex;
-//     flex: 1;
-//     background: red !important;
-//   }
-// }
 </style>

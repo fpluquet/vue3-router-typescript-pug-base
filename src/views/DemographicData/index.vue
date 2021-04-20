@@ -81,27 +81,6 @@ export default {
       return percentCompleted;
     };
 
-    watch(
-      () => store.state.showSideBar,
-      (showSideBar, prevShowSideBar) => {
-        if (prevShowSideBar) {
-          const percentCompleted = calculateSectionPercent();
-          store.commit('setSectionPercentage', {
-            id: SECTION_DM_ID,
-            percentCompleted,
-          });
-          const globalPercentage = useGlobalPercentage(store);
-          store.commit('setGlobalPercent', {
-            globalPercentage,
-          });
-        }
-      },
-    );
-
-    const closeSection = () => {
-      store.commit('setShowSideBar', false);
-    };
-
     return { stepOne, formData, closeSection, saveData };
   },
 };

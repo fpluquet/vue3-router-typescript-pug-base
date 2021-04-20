@@ -10,7 +10,6 @@ export default createStore({
       type: null,
     },
     globalPercentage: 0,
-    showSideBar: false,
     showPanelSections: true,
     sections: [
       { id: SECTION_DM_ID, name: 'Datos demográficos', active: true, routeName: 'datos-generales', percentCompleted: 0 },
@@ -31,10 +30,7 @@ export default createStore({
         type: payload.accountType,
       }
     },
-    setShowSideBar(state, payload) {
-      state.showSideBar = payload;
-      state.showPanelSections = !payload
-    },
+
     setSectionActive(state, payload) {
       state.sections = state.sections.map(({ id, ...rest }) => ({
         id,

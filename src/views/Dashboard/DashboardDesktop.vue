@@ -104,7 +104,6 @@ export default {
     accountType: String,
     availableSections: Array,
     showPanelSections: Boolean,
-    openSideBar: Function,
   },
   setup(props) {
     const store = useStore();

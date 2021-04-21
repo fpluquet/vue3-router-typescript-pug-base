@@ -58,6 +58,7 @@
             >Validar</Button
           > -->
           <ButtonColor
+            :accountType="accountType"
             v-show="lastStep"
             className="mt-5 is-fullwidth is-primary"
             @click="finishAction"
@@ -98,8 +99,6 @@ export default {
   },
   props: {
     accountType: String,
-    availableSections: Array,
-    showPanelSections: Boolean,
   },
   setup(props) {
     const store = useStore();
@@ -123,6 +122,7 @@ export default {
         local: '',
       },
     });
+
     const cognitoId = computed(
       () => router.currentRoute.value.params.cognitoId,
     );
@@ -213,6 +213,7 @@ export default {
       finishAction,
       router,
       cognitoId,
+      accountType,
     };
   },
 };

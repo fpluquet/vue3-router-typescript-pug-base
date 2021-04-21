@@ -18,6 +18,7 @@
           </p>
         </div>
         <ButtonColor
+          :accountType="accountType"
           :type="'submit'"
           :class="'is-fullwidth mt-5'"
           :loading="loading"
@@ -145,6 +146,7 @@ export default {
       resendCode,
       message,
       goBack,
+      accountType,
     };
   },
 };

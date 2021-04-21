@@ -68,7 +68,7 @@ export default createStore({
   },
   modules: {
   },
-  plugins: [createPersistedState({
-    //  paths: ['account.cognitoId']
-  })],
+  // plugins: [createPersistedState({
+  //   //  paths: ['account.cognitoId']
+  // })],
 })

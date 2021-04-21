@@ -111,6 +111,7 @@
           :type="'submit'"
           class="'button is-fullwidth mt-5'"
           :loading="loading"
+          :accountType="accountType"
           >Crear Cuenta</ButtonColor
         >
       </form>
@@ -153,8 +154,11 @@ export default {
     let loading = ref(false);
     const router = useRouter();
     const store = useStore();
-    let accountType = ref(null);
     let inputType = ref(true);
+
+    const accountType = computed(
+      () => router.currentRoute.value.params.accountType,
+    );
 
     //Validation inputs
     let schemaForm = Yup.object().shape({
@@ -181,9 +185,6 @@ export default {
           ? Yup.string().required('Por favor ingresa el rut de la empresa.')
           : Yup.string(),
     });
-
-    accountType = computed(() => router.currentRoute.value.params.accountType);
-    console.log(accountType.value, EMPRESA);
 
     const goBack = () => {
       store.commit('setAccountType', { accountType: null });

@@ -50,6 +50,7 @@
   </div>
   <ButtonColor
     :disabled="disabledButton"
+    :accountType="accountType"
     class="mt-5 is-fullwidth"
     @click="goNext()"
     >Siguiente</ButtonColor
@@ -60,6 +61,7 @@
 import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'GeneralData',
@@ -71,6 +73,7 @@ export default {
   },
   components: { ButtonColor },
   setup(props) {
+    const router = useRouter();
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
@@ -88,7 +91,7 @@ export default {
       socialReason.value !== undefined &&
       heading.value !== '' &&
       heading.value !== undefined &&
-      website.value!== '' &&
+      website.value !== '' &&
       website.value !== undefined;
 
     onMounted(async () => {
@@ -96,6 +99,10 @@ export default {
         disabledButton.value = true;
       }
     });
+
+    const accountType = computed(
+      () => router.currentRoute.value.params.accountType,
+    );
 
     //Validation inputs
     let schemaForm = Yup.object().shape({
@@ -152,6 +159,7 @@ export default {
       validateUrl,
       headingOptions,
       disabledButton,
+      accountType,
     };
   },
 };

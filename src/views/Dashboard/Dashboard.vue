@@ -29,28 +29,11 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    let accountType = ref(null);
+    const accountType = computed(
+      () => router.currentRoute.value.params.accountType,
+    );
 
-    onMounted(() => {
-      store.commit('setSectionActive', { id: SECTION_DM_ID });
-      accountType.value = store.state.profile.company;
-      //TODO ask backend to get accountType in the profile.
-
-      if (accountType.value == null) {
-        accountType.value = PERSONA;
-      } else {
-        accountType.value = EMPRESA;
-      }
-      store.commit('setSectionActive', { id: SECTION_DM_ID });
-      if (accountType.value === PERSONA) {
-        availableSections.value.splice(-1, 1);
-      }
-    });
-    const showPanelSections = computed(() => store.state.showPanelSections);
-    const availableSections = computed(() => store.state.sections);
     return {
-      availableSections,
-      showPanelSections,
       accountType,
     };
   },

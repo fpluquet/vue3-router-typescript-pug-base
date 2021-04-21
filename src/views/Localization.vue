@@ -51,6 +51,7 @@
     </p>
   </div>
   <ButtonColor
+    accountType:accountType
     :disabled="disabledButton"
     class="mt-5 is-fullwidth"
     @click="goNext()"
@@ -60,6 +61,7 @@
 
 <script>
 import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
+import { useRouter } from 'vue-router';
 import ButtonColor from '@/components/ButtonColor';
 
 export default {
@@ -72,6 +74,7 @@ export default {
   },
   components: { ButtonColor },
   setup(props) {
+    const router = useRouter();
     let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
@@ -94,6 +97,10 @@ export default {
       }
     });
 
+    const accountType = computed(
+      () => router.currentRoute.value.params.accountType,
+    );
+
     watchEffect(() => {
       if (hasAllCompleted()) {
         disabledButton.value = false;
@@ -105,6 +112,7 @@ export default {
     return {
       formError,
       disabledButton,
+      accountType,
     };
   },
 };

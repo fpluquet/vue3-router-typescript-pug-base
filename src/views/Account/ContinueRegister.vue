@@ -16,7 +16,9 @@
             El campo E-mail no es correcto.
           </p>
         </div>
-        <ButtonColor :type="'submit'" :class="'is-fullwidth mt-5'"
+        <ButtonColor
+          :type="'submit'"
+          :class="'is-fullwidth mt-5'"
           >Continuar</ButtonColor
         >
       </form>

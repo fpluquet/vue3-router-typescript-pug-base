@@ -2,7 +2,7 @@
   <button
     :type="type"
     class="button custom-button"
-    :class="[getClassByAccount(account), { 'is-loading': loading }]"
+    :class="[getClassByAccount(accountType), { 'is-loading': loading }]"
   >
     <slot />
   </button>
@@ -18,14 +18,14 @@ export default {
   props: {
     type: String,
     className: String,
-    account: String,
+    accountType: String,
     loading: Boolean,
   },
   setup() {
     const store = useStore();
 
-    const account = computed(() => store.state.profile.isCompany);
-    return { account, getClassByAccount };
+    // const account = computed(() => store.state.profile.isCompany);
+    return { getClassByAccount };
   },
 };
 </script>

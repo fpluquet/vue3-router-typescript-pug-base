@@ -175,7 +175,7 @@ export default {
       }
     });
     
-    // validating url
+      // validating url
     let schemaForm = Yup.object().shape({
       website: Yup.string().url('Por favor ingresa una url válida'),
     });

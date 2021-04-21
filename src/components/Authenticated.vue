@@ -29,11 +29,12 @@ export default {
           router.push({
             name: ROUTE_DG_NAME,
             params: {
-              accountType: profile.profile.isCompany ? EMPRESA : PERSONA,
+              accountType: profile.isCompany ? EMPRESA : PERSONA,
             },
           });
         } catch (error) {
           console.log(error);
+          //ToDo user not exist. display error
         }
         loading.value = false;
       } else {

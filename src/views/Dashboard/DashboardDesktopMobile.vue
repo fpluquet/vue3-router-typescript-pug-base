@@ -213,7 +213,6 @@ export default {
       finishAction,
       router,
       cognitoId,
-      accountType,
     };
   },
 };

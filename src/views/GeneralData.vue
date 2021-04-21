@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
+import { ref, watch, onMounted, toRefs, watchEffect, computed } from 'vue';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import { useRouter } from 'vue-router';

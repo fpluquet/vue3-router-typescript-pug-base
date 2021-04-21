@@ -2,12 +2,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="
-          (ev) => {
-            ev.prevent.default();
-            save({ fantasyName: formData.fantasyName.value });
-          }
-        "
+        @blur="save('fantasyName', formData.fantasyName.value)"
         class="input field-custom"
         type="text"
         placeholder="Nombre fantasia"
@@ -18,12 +13,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="
-          (ev) => {
-            ev.prevent.default();
-            save({ socialReason: formData.socialReason.value });
-          }
-        "
+        @blur="save('socialReason', formData.socialReason.value)"
         class="input field-custom"
         type="text"
         placeholder="Razon social"
@@ -34,7 +24,7 @@
   <div class="field">
     <div class="select is-fullwidth">
       <select
-        @change="(ev) => save({ heading: ev.target.value })"
+        @change="(ev) => save('heading', ev.target.value)"
         v-model="formData.heading.value"
         class="field-custom is-fullwidth"
       >
@@ -47,12 +37,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="
-          (ev) => {
-            ev.prevent.default();
-            save({ website: formData.website.value });
-          }
-        "
+        @blur="save('website', formData.website.value)"
         class="input field-custom"
         type="text"
         placeholder="URL"

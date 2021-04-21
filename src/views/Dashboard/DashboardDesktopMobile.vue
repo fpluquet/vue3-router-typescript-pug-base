@@ -341,18 +341,18 @@ export default {
     };
     const goBack = () => router.go(-1);
 
-    const saveData = async (data, address) => {
+    const saveData = async (attr, value, address = false) => {
       try {
         if (address) {
-          await saveProfileAddress(cognitoId.value, data);
+          await saveProfileAddress(cognitoId.value, { [attr]: value });
         } else {
-          await saveProfile(cognitoId.value, data);
+          await saveProfile(cognitoId.value, { [attr]: value });
         }
-        const key = Object.keys(data)[0];
-        if (data[key] !== '') {
-          formData[router.currentRoute.value.name][key].saved = true;
+        // const key = Object.keys(data)[0];
+        if (value !== '') {
+          formData[router.currentRoute.value.name][attr].saved = true;
         } else {
-          formData[router.currentRoute.value.name][key].saved = false;
+          formData[router.currentRoute.value.name][attr].saved = false;
         }
       } catch (error) {
         console.log(error);

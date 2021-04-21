@@ -2,7 +2,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ phone: formData.phone.value })"
+        @blur="save('phone', formData.phone.value)"
         @onBlur="save"
         class="input field-custom"
         type="text"
@@ -17,7 +17,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ street: formData.street.value }, true)"
+        @blur="save('street', formData.street.value, true)"
         class="input field-custom"
         type="text"
         placeholder="Calle"
@@ -28,7 +28,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ local: formData.local.value }, true)"
+        @blur="save('local', formData.local.value, true)"
         class="input field-custom"
         type="text"
         placeholder="Local"
@@ -39,7 +39,7 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ region: formData.region.value }, true)"
+        @blur="save('region', formData.region.value, true)"
         class="input field-custom"
         type="text"
         placeholder="Region"

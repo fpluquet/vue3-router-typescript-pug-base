@@ -2,22 +2,32 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ fantasyName: formData.fantasyName })"
+        @blur="
+          (ev) => {
+            ev.prevent.default();
+            save({ fantasyName: formData.fantasyName.value });
+          }
+        "
         class="input field-custom"
         type="text"
         placeholder="Nombre fantasia"
-        v-model="formData.fantasyName"
+        v-model="formData.fantasyName.value"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ socialReason: formData.socialReason })"
+        @blur="
+          (ev) => {
+            ev.prevent.default();
+            save({ socialReason: formData.socialReason.value });
+          }
+        "
         class="input field-custom"
         type="text"
         placeholder="Razon social"
-        v-model="formData.socialReason"
+        v-model="formData.socialReason.value"
       />
     </div>
   </div>
@@ -25,7 +35,7 @@
     <div class="select is-fullwidth">
       <select
         @change="(ev) => save({ heading: ev.target.value })"
-        v-model="formData.heading"
+        v-model="formData.heading.value"
         class="field-custom is-fullwidth"
       >
         <option v-for="option in headingOptions" :key="option">{{
@@ -37,11 +47,16 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ website: formData.website })"
+        @blur="
+          (ev) => {
+            ev.prevent.default();
+            save({ website: formData.website.value });
+          }
+        "
         class="input field-custom"
         type="text"
         placeholder="URL"
-        v-model="formData.website"
+        v-model="formData.website.value"
       />
     </div>
     <p v-show="formError.website" class="help is-danger">
@@ -68,7 +83,6 @@ export default {
   components: { ButtonColor },
   setup(props) {
     const router = useRouter();
-    // let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
     const headingOptions = ['a', 'b', 'c'];

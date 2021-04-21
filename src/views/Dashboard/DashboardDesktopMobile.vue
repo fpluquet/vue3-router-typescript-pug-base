@@ -76,12 +76,17 @@ import {
   reactive,
   toRefs,
 } from 'vue';
+// import lodash from 'lodash'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
-import { saveProfile, getProfile } from '@/services/api/profile.service';
+import {
+  saveProfile,
+  saveProfileAddress,
+  getProfile,
+} from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import Banner from '@/components/Banner.vue';
 
@@ -113,54 +118,131 @@ export default {
     let formError = ref({});
     let lastStep = ref();
 
+    // {fantasyName, website} = toRefs(formData)
+
     let formData = reactive({
       [ROUTE_DG_NAME]: {
-        fantasyName: '',
-        socialReason: '',
-        heading: '',
-        website: '',
+        fantasyName: {
+          value: '',
+          saved: false,
+        },
+        socialReason: {
+          value: '',
+          saved: false,
+        },
+        heading: {
+          value: '',
+          saved: false,
+        },
+        website: {
+          value: '',
+          saved: false,
+        },
       },
       [ROUTE_LOC_NAME]: {
-        phone: '',
-        street: '',
-        region: '',
-        local: '',
+        phone: {
+          value: '',
+          saved: false,
+        },
+        street: {
+          value: '',
+          saved: false,
+        },
+        region: {
+          value: '',
+          saved: false,
+        },
+        local: {
+          value: '',
+          saved: false,
+        },
       },
     });
 
-    const hasAllCompleted = (route) => {
+    // function mergeObjects(source, defaults) {
+    //   const common = lodash.intersect(
+    //     Array.from(Object.keys(source)),
+    //     Array.from(Object.keys(defaults)),
+    //   );
+    //   common.forEach((kk) => (defaults[kk] = source[kk]));
+    // }
+
+    onMounted(async () => {
+      try {
+        const profile = await getProfile(cognitoId.value);
+        // formData.forEach((element) => {
+        //   element.forEach((el) => {
+        //     console.log;
+        //   });
+        // });
+        // const profile = store.state.profile; //Todo get profile from store.state
+        if (profile.company.fantasyName) {
+          formData[ROUTE_DG_NAME].fantasyName.value =
+            profile.company.fantasyName;
+          formData[ROUTE_DG_NAME].fantasyName.saved = true;
+        }
+        if (profile.company.socialReason) {
+          formData[ROUTE_DG_NAME].socialReason.value =
+            profile.company.socialReason;
+          formData[ROUTE_DG_NAME].socialReason.saved = true;
+        }
+        if (profile.company.heading) {
+          formData[ROUTE_DG_NAME].heading.value = profile.company.heading;
+          formData[ROUTE_DG_NAME].heading.saved = true;
+        }
+        if (profile.company.website) {
+          formData[ROUTE_DG_NAME].website.value = profile.company.website;
+          formData[ROUTE_DG_NAME].website.saved = true;
+        }
+
+        if (profile.company.phone) {
+          formData[ROUTE_LOC_NAME].phone.value = profile.company.phone;
+          formData[ROUTE_LOC_NAME].phone.saved = true;
+        }
+        if (profile.company.address.street) {
+          formData[ROUTE_LOC_NAME].street.value =
+            profile.company.address.street;
+          formData[ROUTE_LOC_NAME].street.saved = true;
+        }
+        if (profile.company.address.local) {
+          formData[ROUTE_LOC_NAME].local.value = profile.company.address.local;
+          formData[ROUTE_LOC_NAME].local.saved = true;
+        }
+        if (profile.company.address.region) {
+          formData[ROUTE_LOC_NAME].region.value =
+            profile.company.address.region;
+          formData[ROUTE_LOC_NAME].region.saved = true;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    });
+
+    const hasAllCompleted = () => {
       if (router.currentRoute.value.name === ROUTE_DG_NAME) {
         return (
-          formData[ROUTE_DG_NAME].fantasyName !== '' &&
-          formData[ROUTE_DG_NAME].fantasyName !== undefined &&
-          formData[ROUTE_DG_NAME].socialReason !== '' &&
-          formData[ROUTE_DG_NAME].socialReason !== undefined &&
-          formData[ROUTE_DG_NAME].heading !== '' &&
-          formData[ROUTE_DG_NAME].heading !== undefined &&
-          formData[ROUTE_DG_NAME].website !== '' &&
-          formData[ROUTE_DG_NAME].website !== undefined
+          formData[ROUTE_DG_NAME].fantasyName.saved &&
+          formData[ROUTE_DG_NAME].socialReason.saved &&
+          formData[ROUTE_DG_NAME].heading.saved &&
+          formData[ROUTE_DG_NAME].website.saved
         );
       }
 
       if (router.currentRoute.value.name === ROUTE_LOC_NAME) {
         return (
-          formData[ROUTE_LOC_NAME].phone !== '' &&
-          formData[ROUTE_LOC_NAME].phone !== undefined &&
-          formData[ROUTE_LOC_NAME].street !== '' &&
-          formData[ROUTE_LOC_NAME].street !== undefined &&
-          formData[ROUTE_LOC_NAME].region !== '' &&
-          formData[ROUTE_LOC_NAME].region !== undefined &&
-          formData[ROUTE_LOC_NAME].local !== '' &&
-          formData[ROUTE_LOC_NAME].local !== undefined
+          formData[ROUTE_LOC_NAME].phone.saved &&
+          formData[ROUTE_LOC_NAME].street.saved &&
+          formData[ROUTE_LOC_NAME].region.saved &&
+          formData[ROUTE_LOC_NAME].local.saved
         );
       }
     };
 
-    onMounted(async () => {
-      if (!hasAllCompleted()) {
-        disabledButton.value = false;
-      }
-    });
+    // onMounted(async () => {
+    //   if (!hasAllCompleted()) {
+    //     disabledButton.value = true;
+    //   }
+    // });
 
     const cognitoId = computed(
       () => router.currentRoute.value.params.cognitoId,
@@ -171,18 +253,21 @@ export default {
       if (hasAllCompleted()) {
         disabledButton.value = false;
       } else {
-        disabledButton.value = false;
+        disabledButton.value = true;
       }
     });
-    
-      // validating url
+
+    // validating url
     let schemaForm = Yup.object().shape({
       website: Yup.string().url('Por favor ingresa una url válida'),
     });
-    
+
     const validateUrl = async (website) => {
       try {
-        return schemaForm.validate({ website: website }, { abortEarly: false });
+        return schemaForm.validate(
+          { website: website.value },
+          { abortEarly: false },
+        );
       } catch (error) {
         throw error;
       }
@@ -212,7 +297,7 @@ export default {
     watch(
       formData[ROUTE_DG_NAME],
       (now, prev) => {
-        if (formData[ROUTE_DG_NAME].website) {
+        if (formData[ROUTE_DG_NAME].website.value) {
           formError.value.website = '';
         }
       },
@@ -256,10 +341,19 @@ export default {
     };
     const goBack = () => router.go(-1);
 
-    const saveData = async (data) => {
+    const saveData = async (attr, value, address) => {
       try {
-        await saveProfile(cognitoId.value, data);
-        store.commit('setUpdateProfile', data);
+        if (address) {
+          await saveProfileAddress(cognitoId.value, data);
+        } else {
+          await saveProfile(cognitoId.value, data);
+        }
+        const key = Object.keys(data)[0];
+        if (data[key] !== '') {
+          formData[router.currentRoute.value.name][key].saved = true;
+        } else {
+          formData[router.currentRoute.value.name][key].saved = false;
+        }
       } catch (error) {
         console.log(error);
       }

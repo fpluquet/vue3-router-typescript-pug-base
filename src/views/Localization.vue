@@ -2,12 +2,12 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ phone: formData.phone })"
+        @blur="save({ phone: formData.phone.value })"
         @onBlur="save"
         class="input field-custom"
         type="text"
         placeholder="Telefono"
-        v-model="formData.phone"
+        v-model="formData.phone.value"
       />
     </div>
     <p v-show="formError.tel" class="help is-danger">
@@ -17,33 +17,33 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ street: formData.street })"
+        @blur="save({ street: formData.street.value }, true)"
         class="input field-custom"
         type="text"
         placeholder="Calle"
-        v-model="formData.street"
+        v-model="formData.street.value"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ local: formData.local })"
+        @blur="save({ local: formData.local.value }, true)"
         class="input field-custom"
         type="text"
         placeholder="Local"
-        v-model="formData.local"
+        v-model="formData.local.value"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save({ region: formData.region })"
+        @blur="save({ region: formData.region.value }, true)"
         class="input field-custom"
         type="text"
         placeholder="Region"
-        v-model="formData.region"
+        v-model="formData.region.value"
       />
     </div>
     <p v-show="formError.region" class="help is-danger">

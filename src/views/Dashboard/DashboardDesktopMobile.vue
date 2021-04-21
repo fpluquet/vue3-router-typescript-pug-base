@@ -341,7 +341,7 @@ export default {
     };
     const goBack = () => router.go(-1);
 
-    const saveData = async (attr, value, address) => {
+    const saveData = async (data, address) => {
       try {
         if (address) {
           await saveProfileAddress(cognitoId.value, data);

@@ -1,11 +1,7 @@
 <template>
   <BasicLayout>
     <div class="show-desktop">
-      <DashboardDesktopMobile
-        :availableSections="availableSections"
-        :showPanelSections="showPanelSections"
-        :accountType="accountType"
-      />
+      <DashboardDesktopMobile :accountType="accountType" />
     </div>
   </BasicLayout>
 </template>

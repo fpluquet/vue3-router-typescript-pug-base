@@ -99,7 +99,7 @@ export default {
     color: #7a7a7a !important;
     min-height: 36px;
     &:hover {
-      background-color: #6ac24b !important;
+      background-color: #35a96a !important;
       color: white !important;
     }
   }

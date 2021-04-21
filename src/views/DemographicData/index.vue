@@ -23,7 +23,6 @@ import DemographicDataFormTwo from './DemographicDataFormTwo';
 import Button from '@/components/Button.vue';
 import Title from '@/components/Title.vue';
 import { SECTION_DM_ID, PERSONA } from '../../utils/constants';
-import { useGlobalPercentage } from '../../hooks/useGlobalPercent';
 import { saveProfile } from '@/services/api/profile.service';
 
 export default {

@@ -150,17 +150,21 @@ export default {
     });
 
     onMounted(async () => {
-      const profile = await getProfile(cognitoId.value);
-      //const profile = store.state.profile; //Todo get profile from store.state
-      formData[ROUTE_DG_NAME].fantasyName = profile.profile.fantasyName;
-      formData[ROUTE_DG_NAME].socialReason = profile.profile.socialReason;
-      formData[ROUTE_DG_NAME].heading = profile.profile.heading;
-      formData[ROUTE_DG_NAME].website = profile.profile.website;
+      try {
+        const profile = await getProfile(cognitoId.value);
+        //const profile = store.state.profile; //Todo get profile from store.state
+        formData[ROUTE_DG_NAME].fantasyName = profile.profile.fantasyName;
+        formData[ROUTE_DG_NAME].socialReason = profile.profile.socialReason;
+        formData[ROUTE_DG_NAME].heading = profile.profile.heading;
+        formData[ROUTE_DG_NAME].website = profile.profile.website;
 
-      formData[ROUTE_LOC_NAME].phone = profile.profile.phone;
-      formData[ROUTE_LOC_NAME].street = profile.profile.socialReason;
-      formData[ROUTE_LOC_NAME].region = profile.profile.heading;
-      formData[ROUTE_LOC_NAME].local = profile.profile.website;
+        formData[ROUTE_LOC_NAME].phone = profile.profile.phone;
+        formData[ROUTE_LOC_NAME].street = profile.profile.socialReason;
+        formData[ROUTE_LOC_NAME].region = profile.profile.heading;
+        formData[ROUTE_LOC_NAME].local = profile.profile.website;
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     // watch(router.currentRoute, (now, prev) => {

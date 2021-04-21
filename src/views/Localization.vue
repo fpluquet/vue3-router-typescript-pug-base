@@ -50,17 +50,10 @@
       {{ formError.region }}
     </p>
   </div>
-  <ButtonColor
-    accountType:accountType
-    :disabled="disabledButton"
-    class="mt-5 is-fullwidth"
-    @click="goNext()"
-    >Siguiente</ButtonColor
-  >
 </template>
 
 <script>
-import { ref, watch, onMounted, toRefs, watchEffect } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import ButtonColor from '@/components/ButtonColor';
 
@@ -68,6 +61,7 @@ export default {
   name: 'Localization',
   props: {
     formData: Object,
+    formError: Object,
     save: Function,
     goNext: Function,
     cognitoId: String,
@@ -75,42 +69,15 @@ export default {
   components: { ButtonColor },
   setup(props) {
     const router = useRouter();
-    let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
-    let { phone, street, region, local } = toRefs(props.formData);
     const disabledButton = ref();
-
-    const hasAllCompleted = () =>
-      phone.value !== '' &&
-      phone.value !== undefined &&
-      street.value !== '' &&
-      street.value !== undefined &&
-      region.value !== '' &&
-      region.value !== undefined &&
-      local.value !== '' &&
-      local.value !== undefined;
-
-    onMounted(async () => {
-      if (!hasAllCompleted()) {
-        disabledButton.value = true;
-      }
-    });
 
     const accountType = computed(
       () => router.currentRoute.value.params.accountType,
     );
 
-    watchEffect(() => {
-      if (hasAllCompleted()) {
-        disabledButton.value = false;
-      } else {
-        disabledButton.value = true;
-      }
-    });
-
     return {
-      formError,
       disabledButton,
       accountType,
     };

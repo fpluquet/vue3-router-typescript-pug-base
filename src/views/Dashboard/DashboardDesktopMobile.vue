@@ -15,8 +15,8 @@
   <div
     class="is-flex is-flex-grow-1 is-justify-content-space-evenly is-align-items-flex-start mb-1 mobile"
   >
-    <!-- MOBILE   !-->
     <div class="column wizard-container is-relative">
+      <!-- MOBILE   !-->
       <div class="columns is-vcentered is-centered is-hidden-tablet">
         <div class="column is-12-mobile is-12-tablet has-text-centered">
           <Banner :name="'pago_facil_banner'" class="mobile-banner" />
@@ -43,24 +43,20 @@
             :formData="formData[router.currentRoute.value.name]"
             :goNext="goFordward"
             :cognitoId="cognitoId"
+            :formError="formError"
           ></router-view>
-          <!-- <Button
-            :disabled="statusButton"
-            v-show="showNextButton"
-            className="mt-5 is-fullwidth is-primary"
+          <ButtonColor
+            v-show="!lastStep"
+            :disabled="disabledButton"
+            :accountType="accountType"
+            class="mt-5 is-fullwidth"
             @click="goFordward"
-            >Siguiente</Button
-          > -->
-          <!-- <Button
-            v-show="!showFinishButton && !showNextButton"
-            className="mt-5 is-fullwidth is-primary"
-            @click="validate"
-            >Validar</Button
-          > -->
+            >Siguiente</ButtonColor
+          >
           <ButtonColor
             :accountType="accountType"
             v-show="lastStep"
-            className="mt-5 is-fullwidth is-primary"
+            class="mt-5 is-fullwidth"
             @click="finishAction"
             >Finalizar</ButtonColor
           >
@@ -71,9 +67,18 @@
 </template>
 
 <script>
-import { ref, computed, watch, onMounted, reactive } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  watchEffect,
+  onMounted,
+  reactive,
+  toRefs,
+} from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
 import { saveProfile, getProfile } from '@/services/api/profile.service';
@@ -104,9 +109,9 @@ export default {
     const store = useStore();
     const router = useRouter();
     const src = computed(() => `/logo_central_${props.accountType}.svg`);
-    // const showNextButton = ref(true);
-    // const showFinishButton = ref(false);
-    // const statusButton = ref(true);
+    const disabledButton = ref();
+    let formError = ref({});
+    let lastStep = ref();
 
     let formData = reactive({
       [ROUTE_DG_NAME]: {
@@ -123,74 +128,128 @@ export default {
       },
     });
 
+    const hasAllCompleted = (route) => {
+      if (router.currentRoute.value.name === ROUTE_DG_NAME) {
+        return (
+          formData[ROUTE_DG_NAME].fantasyName !== '' &&
+          formData[ROUTE_DG_NAME].fantasyName !== undefined &&
+          formData[ROUTE_DG_NAME].socialReason !== '' &&
+          formData[ROUTE_DG_NAME].socialReason !== undefined &&
+          formData[ROUTE_DG_NAME].heading !== '' &&
+          formData[ROUTE_DG_NAME].heading !== undefined &&
+          formData[ROUTE_DG_NAME].website !== '' &&
+          formData[ROUTE_DG_NAME].website !== undefined
+        );
+      }
+
+      if (router.currentRoute.value.name === ROUTE_LOC_NAME) {
+        return (
+          formData[ROUTE_LOC_NAME].phone !== '' &&
+          formData[ROUTE_LOC_NAME].phone !== undefined &&
+          formData[ROUTE_LOC_NAME].street !== '' &&
+          formData[ROUTE_LOC_NAME].street !== undefined &&
+          formData[ROUTE_LOC_NAME].region !== '' &&
+          formData[ROUTE_LOC_NAME].region !== undefined &&
+          formData[ROUTE_LOC_NAME].local !== '' &&
+          formData[ROUTE_LOC_NAME].local !== undefined
+        );
+      }
+    };
+
+    onMounted(async () => {
+      if (!hasAllCompleted()) {
+        disabledButton.value = false;
+      }
+    });
+
     const cognitoId = computed(
       () => router.currentRoute.value.params.cognitoId,
     );
     const nextRoute = computed(() => router.currentRoute.value.meta.next);
+
+    watchEffect(() => {
+      if (hasAllCompleted()) {
+        disabledButton.value = false;
+      } else {
+        disabledButton.value = false;
+      }
+    });
+    
+    // validating url
+    let schemaForm = Yup.object().shape({
+      website: Yup.string().url('Por favor ingresa una url válida'),
+    });
+    
+    const validateUrl = async (website) => {
+      try {
+        return schemaForm.validate({ website: website }, { abortEarly: false });
+      } catch (error) {
+        throw error;
+      }
+    };
+
+    watch(
+      formData[ROUTE_DG_NAME],
+      (now, prev) => {
+        validateUrl(formData[ROUTE_DG_NAME].website)
+          .then((res) => {
+            if (hasAllCompleted()) {
+              disabledButton.value = false;
+            } else {
+              disabledButton.value = true;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            error.inner.forEach((err) => {
+              formError.value[err.path] = err.message;
+            });
+          });
+      },
+      { deep: true },
+    );
+
+    watch(
+      formData[ROUTE_DG_NAME],
+      (now, prev) => {
+        if (formData[ROUTE_DG_NAME].website) {
+          formError.value.website = '';
+        }
+      },
+      { deep: true },
+    );
+
+    // first step
     const firstStep = computed(
       () => router.currentRoute.value.name === ROUTE_DG_NAME,
     );
 
-    const lastStep = computed(
-      () =>
+    // checking last step
+    watchEffect(() => {
+      if (
         (props.accountType === EMPRESA &&
           router.currentRoute.value.name === ROUTE_DOC_NAME) ||
         (props.accountType === PERSONA &&
-          router.currentRoute.value.name === ROUTE_VB_NAME),
-    );
+          router.currentRoute.value.name === ROUTE_VB_NAME)
+      ) {
+        lastStep.value = true;
+      } else {
+        lastStep.value = false;
+      }
+    });
 
+    // adding dynamic new route
     onMounted(() => {
       if (props.accountType === EMPRESA) {
         router.addRoute('Dashboard', {
           path: 'documentacion',
-          name: 'documentacion',
+          name: ROUTE_DOC_NAME,
           component: Documentation,
         });
       }
     });
 
-    onMounted(async () => {
-      try {
-        const profile = await getProfile(cognitoId.value);
-        //const profile = store.state.profile; //Todo get profile from store.state
-        formData[ROUTE_DG_NAME].fantasyName = profile.profile.fantasyName;
-        formData[ROUTE_DG_NAME].socialReason = profile.profile.socialReason;
-        formData[ROUTE_DG_NAME].heading = profile.profile.heading;
-        formData[ROUTE_DG_NAME].website = profile.profile.website;
-
-        formData[ROUTE_LOC_NAME].phone = profile.profile.phone;
-        formData[ROUTE_LOC_NAME].street = profile.profile.socialReason;
-        formData[ROUTE_LOC_NAME].region = profile.profile.heading;
-        formData[ROUTE_LOC_NAME].local = profile.profile.website;
-      } catch (error) {
-        console.log(error);
-      }
-    });
-
-    // watch(router.currentRoute, (now, prev) => {
-    //   if (lastStep.value) {
-    //     showNextButton.value = false;
-    //     showFinishButton.value = true;
-    //   } else {
-    //     showNextButton.value = true;
-    //     showFinishButton.value = false;
-    //   }
-    // });
-
     const finishAction = () => console.log('finish');
-    const hasAllValues = () => true;
-
-    // watch(
-    //   formData.generalData,
-    //   (now, prev) => {
-    //     if (router.currentRoute.value.name === ROUTE_DG_NAME) {
-    //       if (hasAllValues(formData.generalData)) {
-    //         statusButton.value = false;
-    //       }
-    //     }
-    //   },
-    //   { deep: true },
-    // );
 
     const goFordward = () => {
       router.push({ name: nextRoute.value });
@@ -209,6 +268,7 @@ export default {
     return {
       src,
       formData,
+      formError,
       firstStep,
       lastStep,
       goFordward,
@@ -217,6 +277,7 @@ export default {
       finishAction,
       router,
       cognitoId,
+      disabledButton,
     };
   },
 };

@@ -48,17 +48,10 @@
       {{ formError.website }}
     </p>
   </div>
-  <ButtonColor
-    :disabled="disabledButton"
-    :accountType="accountType"
-    class="mt-5 is-fullwidth"
-    @click="goNext()"
-    >Siguiente</ButtonColor
-  >
 </template>
 
 <script>
-import { ref, watch, onMounted, toRefs, watchEffect, computed } from 'vue';
+import { ref, computed } from 'vue';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import { useRouter } from 'vue-router';
@@ -67,6 +60,7 @@ export default {
   name: 'GeneralData',
   props: {
     formData: Object,
+    formError: Object,
     cognitoId: String,
     save: Function,
     goNext: Function,
@@ -74,89 +68,17 @@ export default {
   components: { ButtonColor },
   setup(props) {
     const router = useRouter();
-    let formError = ref({});
+    // let formError = ref({});
     let messageError = ref('');
     let loading = ref(false);
     const headingOptions = ['a', 'b', 'c'];
     const disabledButton = ref();
 
-    let { fantasyName, heading, socialReason, website } = toRefs(
-      props.formData,
-    );
-
-    const hasAllCompleted = () =>
-      fantasyName.value !== '' &&
-      fantasyName.value !== undefined &&
-      socialReason.value !== '' &&
-      socialReason.value !== undefined &&
-      heading.value !== '' &&
-      heading.value !== undefined &&
-      website.value !== '' &&
-      website.value !== undefined;
-
-    onMounted(async () => {
-      if (!hasAllCompleted()) {
-        disabledButton.value = true;
-      }
-    });
-
     const accountType = computed(
       () => router.currentRoute.value.params.accountType,
     );
 
-    //Validation inputs
-    let schemaForm = Yup.object().shape({
-      website: Yup.string().url('Por favor ingresa una url válida'),
-    });
-
-    const validateUrl = async (website) => {
-      try {
-        return schemaForm.validate(
-          { website: website.value },
-          { abortEarly: false },
-        );
-      } catch (error) {
-        throw error;
-      }
-    };
-
-    watch(
-      props.formData,
-      (now, prev) => {
-        if (props.formData.website) {
-          formError.value.website = '';
-        }
-      },
-      { deep: true },
-    );
-
-    watchEffect(() => {
-      if (hasAllCompleted()) {
-        disabledButton.value = false;
-      } else {
-        disabledButton.value = true;
-      }
-    });
-
-    watch(website, (now, prev) => {
-      validateUrl(website)
-        .then((res) => {
-          if (hasAllCompleted()) {
-            disabledButton.value = false;
-          } else {
-            disabledButton.value = true;
-          }
-        })
-        .catch((error) => {
-          error.inner.forEach((err) => {
-            formError.value[err.path] = err.message;
-          });
-        });
-    });
-
     return {
-      formError,
-      validateUrl,
       headingOptions,
       disabledButton,
       accountType,

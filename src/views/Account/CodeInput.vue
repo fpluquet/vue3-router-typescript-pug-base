@@ -119,8 +119,8 @@ export default {
           store.commit('setCognitoId', { cognitoId: cognitoId.value });
 
           router.push({
-            name: ROUTE_DG_NAME,
-            // params: { accountType: 'persona'},
+            name: 'Auth',
+            params: { cognitoId: cognitoId.value },
           });
         } catch (error) {
           if (error instanceof ClientError) {

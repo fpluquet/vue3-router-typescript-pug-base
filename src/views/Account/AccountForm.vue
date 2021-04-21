@@ -90,7 +90,9 @@
             />
             <div class="container-icon">
               <a
-                data-tooltip="Ingrese el RUT de la Empresa."
+                :data-tooltip="
+                  'Ingrese el RUT de la Empresa. \n Formato: XX.XXX.XXX - Y.'
+                "
                 :style="{ color: 'rgb(74,74,74)' }"
               >
                 <fa
@@ -175,14 +177,22 @@ export default {
         .required('Por favor ingresa el rut de la persona.')
         .test(
           'is-valid-rut',
-          'El formato del rut de usuario no es válido',
+          'El formato del rut de persona no es válido.',
           function(value) {
             return validateRut(value);
           },
         ),
       companyRut:
         accountType.value == EMPRESA
-          ? Yup.string().required('Por favor ingresa el rut de la empresa.')
+          ? Yup.string()
+              .required('Por favor ingresa el rut de la empresa.')
+              .test(
+                'is-valid-rut',
+                'El formato del rut de empresa no es válido.',
+                function(value) {
+                  return validateRut(value);
+                },
+              )
           : Yup.string(),
     });
 

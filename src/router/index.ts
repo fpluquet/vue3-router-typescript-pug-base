@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         component: AccountForm,
       },
       {
-        path: '/account-section/code-input/:accountType/:cognitoId',
+        path: '/account-section/code-input/:accountType(persona|empresa)/:cognitoId',
         name: 'code-input',
         component: CodeInput,
       },
@@ -51,7 +51,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Authenticated,
     children: [
       {
-        path: 'dashboard/:accountType',
+        path: 'dashboard/:accountType(persona|empresa)',
         name: 'Dashboard',
         component: Dashboard,
         children: [

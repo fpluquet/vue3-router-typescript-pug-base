@@ -312,9 +312,6 @@ export default {
       }
     });
 
-    // onBeforeRouteLeave((to, from) => alert('aaaa'));
-    // onBeforeRouteUpdate((to, from) => alert('aaaa'));
-
     // adding dynamic new route
     onMounted(() => {
       if (props.accountType === EMPRESA) {

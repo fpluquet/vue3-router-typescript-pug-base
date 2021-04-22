@@ -76,7 +76,7 @@ import {
   reactive,
   toRefs,
 } from 'vue';
-// import lodash from 'lodash'
+import lodash from 'lodash';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import * as Yup from 'yup';
@@ -118,8 +118,6 @@ export default {
     let formError = ref({});
     let lastStep = ref();
 
-    // {fantasyName, website} = toRefs(formData)
-
     let formData = reactive({
       [ROUTE_DG_NAME]: {
         fantasyName: {
@@ -159,63 +157,65 @@ export default {
       },
     });
 
-    // function mergeObjects(source, defaults) {
-    //   const common = lodash.intersect(
-    //     Array.from(Object.keys(source)),
-    //     Array.from(Object.keys(defaults)),
-    //   );
-    //   common.forEach((kk) => (defaults[kk] = source[kk]));
-    // }
+    function mergeObjects(source, defaults) {
+      const common = lodash.intersection(
+        Array.from(Object.keys(source)),
+        Array.from(Object.keys(defaults)),
+      );
+      common.forEach((kk) => (defaults[kk].value = source[kk]));
+      common.forEach((kk) => {
+        if (
+          defaults[kk].value !== null &&
+          defaults[kk].value !== undefined &&
+          defaults[kk].value !== ''
+        ) {
+          defaults[kk].saved = true;
+        }
+      });
+    }
 
-    onMounted(async () => {
-      try {
-        const profile = await getProfile(cognitoId.value);
-        // formData.forEach((element) => {
-        //   element.forEach((el) => {
-        //     console.log;
-        //   });
-        // });
-        // const profile = store.state.profile; //Todo get profile from store.state
-        if (profile.company.fantasyName) {
-          formData[ROUTE_DG_NAME].fantasyName.value =
-            profile.company.fantasyName;
-          formData[ROUTE_DG_NAME].fantasyName.saved = true;
-        }
-        if (profile.company.socialReason) {
-          formData[ROUTE_DG_NAME].socialReason.value =
-            profile.company.socialReason;
-          formData[ROUTE_DG_NAME].socialReason.saved = true;
-        }
-        if (profile.company.heading) {
-          formData[ROUTE_DG_NAME].heading.value = profile.company.heading;
-          formData[ROUTE_DG_NAME].heading.saved = true;
-        }
-        if (profile.company.website) {
-          formData[ROUTE_DG_NAME].website.value = profile.company.website;
-          formData[ROUTE_DG_NAME].website.saved = true;
-        }
+    onMounted(() => {
+      const profile = store.state.profile;
+      const aux = { ...profile, ...profile.address };
+      mergeObjects(aux, formData[ROUTE_DG_NAME]);
+      console.log(formData);
+      mergeObjects(aux, formData[ROUTE_LOC_NAME]);
+      console.log(formData);
+      // store.commit('setProfile', profile.company);
+      // if (profile.fantasyName) {
+      //   formData[ROUTE_DG_NAME].fantasyName.value = profile.fantasyName;
+      //   formData[ROUTE_DG_NAME].fantasyName.saved = true;
+      // }
+      // if (profile.socialReason) {
+      //   formData[ROUTE_DG_NAME].socialReason.value = profile.socialReason;
+      //   formData[ROUTE_DG_NAME].socialReason.saved = true;
+      // }
+      // if (profile.heading) {
+      //   formData[ROUTE_DG_NAME].heading.value = profile.heading;
+      //   formData[ROUTE_DG_NAME].heading.saved = true;
+      // }
+      // if (profile.website) {
+      //   formData[ROUTE_DG_NAME].website.value = profile.website;
+      //   formData[ROUTE_DG_NAME].website.saved = true;
+      // }
 
-        if (profile.company.phone) {
-          formData[ROUTE_LOC_NAME].phone.value = profile.company.phone;
-          formData[ROUTE_LOC_NAME].phone.saved = true;
-        }
-        if (profile.company.address.street) {
-          formData[ROUTE_LOC_NAME].street.value =
-            profile.company.address.street;
-          formData[ROUTE_LOC_NAME].street.saved = true;
-        }
-        if (profile.company.address.local) {
-          formData[ROUTE_LOC_NAME].local.value = profile.company.address.local;
-          formData[ROUTE_LOC_NAME].local.saved = true;
-        }
-        if (profile.company.address.region) {
-          formData[ROUTE_LOC_NAME].region.value =
-            profile.company.address.region;
-          formData[ROUTE_LOC_NAME].region.saved = true;
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      // if (profile.phone) {
+      //   formData[ROUTE_LOC_NAME].phone.value = profile.phone;
+      //   formData[ROUTE_LOC_NAME].phone.saved = true;
+      // }
+      // if (profile.address.street) {
+      //   formData[ROUTE_LOC_NAME].street.value = profile.address.street;
+      //   formData[ROUTE_LOC_NAME].street.saved = true;
+      // }
+      // if (profile.address.local) {
+      //   formData[ROUTE_LOC_NAME].local.value = profile.address.local;
+      //   formData[ROUTE_LOC_NAME].local.saved = true;
+      // }
+      // if (profile.address.region) {
+      //   formData[ROUTE_LOC_NAME].region.value = profile.address.region;
+      //   formData[ROUTE_LOC_NAME].region.saved = true;
+      // }
+      // console.log(formData[ROUTE_DG_NAME], 'formData');
     });
 
     const hasAllCompleted = () => {
@@ -354,6 +354,7 @@ export default {
         } else {
           formData[router.currentRoute.value.name][attr].saved = false;
         }
+        store.commit('setProfile', { [attr]: value });
       } catch (error) {
         console.log(error);
       }

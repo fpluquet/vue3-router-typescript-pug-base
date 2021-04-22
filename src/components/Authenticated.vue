@@ -25,7 +25,7 @@ export default {
         try {
           loading.value = true;
           const profile = await getProfile(cognitoId);
-          store.commit('setProfile', profile);
+          store.commit('setProfile', profile.company);
           router.push({
             name: ROUTE_DG_NAME,
             params: {

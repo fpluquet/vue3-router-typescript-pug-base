@@ -15,6 +15,14 @@
   <div
     class="is-flex is-flex-grow-1 is-justify-content-space-evenly is-align-items-flex-start mb-1 mobile"
   >
+    <img
+      v-show="!firstStep"
+      src="/back_arrow.svg"
+      class="img-arrow is-hidden-tablet"
+      width="20"
+      alt="back-arrow"
+      @click="goBack"
+    />
     <div class="column wizard-container is-relative">
       <!-- MOBILE   !-->
       <div class="columns is-vcentered is-centered is-hidden-tablet">
@@ -29,7 +37,7 @@
       <img
         v-show="!firstStep"
         src="/back_arrow.svg"
-        class="img-arrow"
+        class="img-arrow is-hidden-mobile"
         width="20"
         alt="back-arrow"
         @click="goBack"
@@ -403,13 +411,12 @@ export default {
     max-width: 80%;
     // width: 80%;
     z-index: 1;
-
-    .img-arrow {
-      position: absolute;
-      top: 35px;
-      left: 15px;
-      cursor: pointer;
-    }
+  }
+  .img-arrow {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    cursor: pointer;
   }
 }
 

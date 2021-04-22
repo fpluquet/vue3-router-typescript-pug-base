@@ -14,7 +14,7 @@
         </div>
         <div class="columns is-centered is-mobile">
           <div
-            class="is-10-mobile is-8-tablet column is-10-fullhd field mb-1 custom-column"
+            class="is-12-mobile is-10-tablet column is-10-fullhd field mb-1 custom-column"
           >
             <router-view></router-view>
           </div>
@@ -41,6 +41,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+//desktop
+
 .content-splash {
   display: flex;
   justify-content: center;
@@ -48,12 +50,25 @@ export default {
   background: #ffffff;
   box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
-  height: 600px;
+  // height: 600px;
   padding-left: 20px;
   padding-right: 20px;
   max-width: 500px;
   margin: auto;
   z-index: 1;
+
+  // desktop
+  @media screen and (min-width: 769px) {
+    &.content-splash {
+      height: 600px;
+    }
+  }
+  // desktop
+  @media screen and (max-width: 768px) {
+    &.content-splash {
+      height: 500px;
+    }
+  }
 }
 .splash {
   display: flex;
@@ -78,42 +93,4 @@ export default {
     justify-content: center;
   }
 }
-// @media screen and (max-width: 768px) {
-//   .splash {
-//     background: #ffffff !important;
-//   }
-// }
-
-// .img-bg {
-//   background-image: url('/layout.svg');
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-//   width: 50%;
-//   height: 100%;
-//   flex: 1;
-// }
-
-// @media screen and (max-width: 768px) {
-//   .img-bg {
-//     display: none;
-//   }
-//   .arc {
-//     display: none;
-//   }
-// }
-
-// .arc {
-//   width: 50%;
-//   height: 30%;
-//   bottom: 0;
-//   left: 0;
-//   position: fixed;
-// }
-
-// .content-arc {
-//   display: flex;
-//   justify-content: flex-end;
-//   margin-right: 60px;
-// }
 </style>

@@ -11,7 +11,13 @@
       <ProgressBar />
     </div>
   </div>
-
+  <div class="is-flex is-justify-content-center mb-4" v-if="apiError">
+    <Notification
+      :message="apiError"
+      :displayError="true"
+      :remove="removeNotification"
+    />
+  </div>
   <div
     class="is-flex is-flex-grow-1 is-justify-content-space-evenly is-align-items-flex-start mb-1 mobile"
   >
@@ -83,10 +89,12 @@ import {
   onMounted,
   reactive,
   toRefs,
+  onUnmounted,
+  onBeforeMount,
 } from 'vue';
 import lodash from 'lodash';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
@@ -97,6 +105,7 @@ import {
 } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import Banner from '@/components/Banner.vue';
+import Notification from '@/components/Notification';
 
 import {
   ROUTE_DG_NAME,
@@ -114,6 +123,7 @@ export default {
     ButtonColor,
     Documentation,
     Banner,
+    Notification,
   },
   props: {
     accountType: String,
@@ -125,6 +135,7 @@ export default {
     const disabledButton = ref();
     let formError = ref({});
     let lastStep = ref();
+    let apiError = ref(null);
 
     let formData = reactive({
       [ROUTE_DG_NAME]: {
@@ -182,48 +193,26 @@ export default {
       });
     }
 
+    // // onBeforeMount(() => window('beforeunload', algo));
+    // onBeforeRouteUpdate((to, from) => alert('updated'));
+    // onBeforeRouteLeave(() => alert('leave'));
+    // onMounted(
+    //   () =>
+    //     (window.onbeforeunload = function() {
+    //       console.log('mounted');
+    //       return 'Are you sure you want to close the window?';
+    //     }),
+    // );
+    // onUnmounted(() => {
+    //   console.log('unmounted');
+    //   window.onbeforeunload = null;
+    // });
+
     onMounted(() => {
       const profile = store.state.profile;
       const aux = { ...profile, ...profile.address };
       mergeObjects(aux, formData[ROUTE_DG_NAME]);
-      console.log(formData);
       mergeObjects(aux, formData[ROUTE_LOC_NAME]);
-      console.log(formData);
-      // store.commit('setProfile', profile.company);
-      // if (profile.fantasyName) {
-      //   formData[ROUTE_DG_NAME].fantasyName.value = profile.fantasyName;
-      //   formData[ROUTE_DG_NAME].fantasyName.saved = true;
-      // }
-      // if (profile.socialReason) {
-      //   formData[ROUTE_DG_NAME].socialReason.value = profile.socialReason;
-      //   formData[ROUTE_DG_NAME].socialReason.saved = true;
-      // }
-      // if (profile.heading) {
-      //   formData[ROUTE_DG_NAME].heading.value = profile.heading;
-      //   formData[ROUTE_DG_NAME].heading.saved = true;
-      // }
-      // if (profile.website) {
-      //   formData[ROUTE_DG_NAME].website.value = profile.website;
-      //   formData[ROUTE_DG_NAME].website.saved = true;
-      // }
-
-      // if (profile.phone) {
-      //   formData[ROUTE_LOC_NAME].phone.value = profile.phone;
-      //   formData[ROUTE_LOC_NAME].phone.saved = true;
-      // }
-      // if (profile.address.street) {
-      //   formData[ROUTE_LOC_NAME].street.value = profile.address.street;
-      //   formData[ROUTE_LOC_NAME].street.saved = true;
-      // }
-      // if (profile.address.local) {
-      //   formData[ROUTE_LOC_NAME].local.value = profile.address.local;
-      //   formData[ROUTE_LOC_NAME].local.saved = true;
-      // }
-      // if (profile.address.region) {
-      //   formData[ROUTE_LOC_NAME].region.value = profile.address.region;
-      //   formData[ROUTE_LOC_NAME].region.saved = true;
-      // }
-      // console.log(formData[ROUTE_DG_NAME], 'formData');
     });
 
     const hasAllCompleted = () => {
@@ -246,12 +235,6 @@ export default {
       }
     };
 
-    // onMounted(async () => {
-    //   if (!hasAllCompleted()) {
-    //     disabledButton.value = true;
-    //   }
-    // });
-
     const cognitoId = computed(
       () => router.currentRoute.value.params.cognitoId,
     );
@@ -272,10 +255,7 @@ export default {
 
     const validateUrl = async (website) => {
       try {
-        return schemaForm.validate(
-          { website: website.value },
-          { abortEarly: false },
-        );
+        return schemaForm.validate({ website }, { abortEarly: false });
       } catch (error) {
         throw error;
       }
@@ -284,7 +264,7 @@ export default {
     watch(
       formData[ROUTE_DG_NAME],
       (now, prev) => {
-        validateUrl(formData[ROUTE_DG_NAME].website)
+        validateUrl(formData[ROUTE_DG_NAME].website.value)
           .then((res) => {
             if (hasAllCompleted()) {
               disabledButton.value = false;
@@ -293,6 +273,7 @@ export default {
             }
           })
           .catch((error) => {
+            disabledButton.value = true;
             console.log(error);
             error.inner.forEach((err) => {
               formError.value[err.path] = err.message;
@@ -331,6 +312,9 @@ export default {
       }
     });
 
+    // onBeforeRouteLeave((to, from) => alert('aaaa'));
+    // onBeforeRouteUpdate((to, from) => alert('aaaa'));
+
     // adding dynamic new route
     onMounted(() => {
       if (props.accountType === EMPRESA) {
@@ -349,6 +333,8 @@ export default {
     };
     const goBack = () => router.go(-1);
 
+    const removeNotification = () => (apiError.value = null);
+
     const saveData = async (attr, value, address = false) => {
       try {
         if (address) {
@@ -364,6 +350,7 @@ export default {
         }
         store.commit('setProfile', { [attr]: value });
       } catch (error) {
+        apiError.value = `${'Ocurrio un error al intentar guardar ' + attr}`;
         console.log(error);
       }
     };
@@ -381,6 +368,8 @@ export default {
       router,
       cognitoId,
       disabledButton,
+      apiError,
+      removeNotification,
     };
   },
 };

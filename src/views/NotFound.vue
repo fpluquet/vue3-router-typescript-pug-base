@@ -2,7 +2,14 @@
   <div
     class="is-flex is-flex-grow-1 is-justify-content-center is-align-items-center"
   >
-    <span class="text-size">ERROR 404 NOT FOUND</span>
+    <div
+      class="is-flex is-flex-grow-1 is-flex-direction-column is-justify-content-center is-align-items-center"
+    >
+      <div class="text-size"><p>ERROR 404</p></div>
+      <div class="text-size">
+        <p>ROUTE NOT FOUND</p>
+      </div>
+    </div>
   </div>
 </template>
 

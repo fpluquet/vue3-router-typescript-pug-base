@@ -1,13 +1,24 @@
 <template>
   <div
-    class="notification has-text-centered"
-    :style="{ background: accountType === PERSONA ? '#eaf2fa' : '#EDF7E9' }"
+    class="notification has-text-centered content-notification"
+    :style="{
+      background: accountType === PERSONA ? '#eaf2fa' : '#EDF7E9',
+    }"
   >
-    <!-- <button type="button" class="delete"></button> -->
+    <button
+      v-show="displayError"
+      type="button"
+      class="delete"
+      @click="remove"
+    ></button>
     <div class="content-text">
-      <span class="text" :style="{ color: getColorByAccount(accountType) }">{{
-        message
-      }}</span>
+      <span
+        class="text"
+        :style="{
+          color: displayError ? '#F56E6E' : getColorByAccount(accountType),
+        }"
+        >{{ message }}</span
+      >
     </div>
   </div>
 </template>
@@ -22,11 +33,13 @@ export default {
   name: 'Notification',
   props: {
     message: String,
+    displayError: Boolean,
+    remove: Function,
   },
   setup() {
     const store = useStore();
-    const hide = ref(false);
     const accountType = computed(() => store.state.profile.isCompany);
+
     return { getColorByAccount, accountType, PERSONA };
   },
 };
@@ -35,5 +48,10 @@ export default {
 .text {
   font-size: 14px;
   line-height: 16px;
+}
+@media screen and (min-width: 769px) {
+  .content-notification {
+    width: 30%;
+  }
 }
 </style>

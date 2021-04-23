@@ -37,22 +37,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @media screen and (max-width: 768px) {
-//   .show-desktop {
-//     display: none;
-//   }
-//   .show-mobile {
-//     display: flex;
-//     flex: 1;
-//     flex-direction: column;
-//   }
-//   .banner-content {
-//     display: flex;
-//     justify-content: center;
-//     margin-bottom: 60px;
-//     margin-top: 60px;
-//   }
-// }
 .show-desktop {
   flex: 1;
   display: flex;

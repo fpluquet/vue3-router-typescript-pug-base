@@ -166,7 +166,6 @@ export default {
           }),
         );
       } catch (error) {
-        console.log('aca1');
         apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
         throw error;
       }
@@ -372,7 +371,7 @@ export default {
     background: #ffffff;
     box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
     border-radius: 15px;
-    height: 500px;
+    height: 480px;
     padding-left: 20px;
     padding-right: 20px;
     max-width: 600px;
@@ -384,23 +383,6 @@ export default {
       left: 15px;
       cursor: pointer;
     }
-  }
-}
-
-.dashboard {
-  height: 100%;
-
-  .progress-bar {
-    width: 60%;
-  }
-
-  .global-progress-circle {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .disabled {
-    pointer-events: none;
   }
 }
 </style>

@@ -22,12 +22,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="img-bg"></div>
-  <div class="arc">
-    <div class="content-arc">
-      <img src="/arco.svg" />
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -60,10 +54,10 @@ export default {
   // desktop
   @media screen and (min-width: 769px) {
     &.content-splash {
-      height: 600px;
+      height: 500px;
     }
   }
-  // desktop
+  // mobile
   @media screen and (max-width: 768px) {
     &.content-splash {
       height: 500px;

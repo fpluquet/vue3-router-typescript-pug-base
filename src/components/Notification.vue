@@ -49,9 +49,10 @@ export default {
   font-size: 14px;
   line-height: 16px;
 }
-@media screen and (min-width: 769px) {
-  .content-notification {
-    width: 30%;
-  }
-}
+// @media screen and (min-width: 769px) {
+//   .content-notification {
+//     // width: 30%;
+//   }
+// }
+
 </style>

@@ -18,7 +18,7 @@ export default {
   display: flex;
   height: 28vh;
   background: #3d90e0 !important;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
 }

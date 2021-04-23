@@ -91,13 +91,11 @@ import {
 } from 'vue';
 import lodash from 'lodash';
 import { useStore } from 'vuex';
-import { useRouter, onBeforeRouteUpdate } from 'vue-router';
+import { useRouter, onBeforeRouteUpdate, onBeforeEach } from 'vue-router';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
-import {
-  saveProfile,
-} from '@/services/api/profile.service';
+import { saveProfile } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import Banner from '@/components/Banner.vue';
 import Notification from '@/components/Notification';
@@ -154,25 +152,32 @@ export default {
     }
 
     function saveData() {
-      Object.entries(formData[router.currentRoute.value.name]).forEach(
-        async (element) => {
-          await saveProfile(cognitoId.value, { [element[0]]: element[1] });
-          store.commit('setProfile', {
-            [element[0]]: element[1],
-          });
-        },
+      const promises = Object.entries(
+        formData[router.currentRoute.value.name],
+      ).map((element) =>
+        saveProfile(cognitoId.value, { [element[0]]: element[1] }),
       );
-      return ''
+      try {
+        Promise.all(promises).then((res) =>
+          res.forEach((element) => {
+            store.commit('setProfile', {
+              [element[0]]: element[1],
+            });
+          }),
+        );
+      } catch (error) {
+        console.log('aca1');
+        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+        throw error;
+      }
+      return '';
     }
 
-    // saving the data before the route changes
-    onBeforeRouteUpdate(async (to, from) => {
+    router.beforeEach((to, from, next) => {
       try {
         saveData();
-      } catch (error) {
-        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
-        console.log(error);
-      }
+        next();
+      } catch (error) {}
     });
 
     // saving the data before close the windows.

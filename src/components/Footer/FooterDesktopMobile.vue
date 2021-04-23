@@ -59,7 +59,7 @@ export default {
 <style lang="scss" scoped>
 .custom-footer {
   flex: 1;
-  margin-top: 100px;
+  margin-top: 80px;
 }
 .text {
   font-size: 14px;

@@ -6,11 +6,9 @@ import AccountForm from '../views/Account/AccountForm.vue'
 import ContinueRegister from '../views/Account/ContinueRegister.vue'
 import CodeInput from '../views/Account/CodeInput.vue'
 import SelectAccountType from '../views/Account/SelectAccountType.vue'
-import DemographicData from '../views/DemographicData/index.vue'
 import GeneralData from '../views/GeneralData.vue'
 import Localization from '../views/Localization.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
-import Documentation from '../views/Documentation.vue'
 import NotFound from '../views/NotFound.vue'
 import { ROUTE_DG_NAME, ROUTE_LOC_NAME, ROUTE_VB_NAME, ROUTE_DOC_NAME } from '@/utils/constants';
 

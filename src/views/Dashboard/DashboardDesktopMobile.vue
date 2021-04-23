@@ -347,7 +347,7 @@ export default {
     background: #ffffff;
     box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
     border-radius: 15px;
-    min-height: 75%;
+    min-height: 72%;
     padding-left: 20px;
     padding-right: 20px;
     max-width: 80%;
@@ -371,7 +371,7 @@ export default {
     background: #ffffff;
     box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
     border-radius: 15px;
-    height: 480px;
+    height: 430px;
     padding-left: 20px;
     padding-right: 20px;
     max-width: 600px;

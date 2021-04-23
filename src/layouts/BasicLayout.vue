@@ -7,7 +7,7 @@
 </template>-->
 <template>
   <div class="basic-layout">
-    <Menu class="mt-5 mb-4" />
+    <Menu class="mt-0 mb-4" />
     <div class="custom-container">
       <slot />
     </div>

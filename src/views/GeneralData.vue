@@ -2,32 +2,26 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('fantasyName', formData.fantasyName.value)"
         class="input field-custom"
         type="text"
         placeholder="Nombre fantasia"
-        v-model="formData.fantasyName.value"
+        v-model="formData.fantasyName"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('socialReason', formData.socialReason.value)"
         class="input field-custom"
         type="text"
         placeholder="Razon social"
-        v-model="formData.socialReason.value"
+        v-model="formData.socialReason"
       />
     </div>
   </div>
   <div class="field">
     <div class="select is-fullwidth">
-      <select
-        @change="(ev) => save('heading', ev.target.value)"
-        v-model="formData.heading.value"
-        class="field-custom is-fullwidth"
-      >
+      <select v-model="formData.heading" class="field-custom is-fullwidth">
         <option v-for="option in headingOptions" :key="option">{{
           option
         }}</option>
@@ -37,11 +31,10 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('website', formData.website.value)"
         class="input field-custom"
         type="text"
         placeholder="URL"
-        v-model="formData.website.value"
+        v-model="formData.website"
       />
     </div>
     <p v-show="formError.website" class="help is-danger">
@@ -62,7 +55,6 @@ export default {
     formData: Object,
     formError: Object,
     cognitoId: String,
-    save: Function,
     goNext: Function,
   },
   components: { ButtonColor },

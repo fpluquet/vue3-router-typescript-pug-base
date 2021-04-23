@@ -54,21 +54,12 @@ export default createStore({
         ...payload
       }
     },
-    // setUpdateProfile(state, payload) {
-    //   state.profile = {
-    //     ...state.profile,
-    //     profile: {
-    //       ...state.profile.profile,
-    //       ...payload
-    //     }
-    //   }
-    // }
   },
   actions: {
   },
   modules: {
   },
   plugins: [createPersistedState({
-    //  paths: ['account.cognitoId']
+     paths: ['profile']
   })],
 })

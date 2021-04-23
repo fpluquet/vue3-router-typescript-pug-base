@@ -2,12 +2,11 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('phone', formData.phone.value)"
         @onBlur="save"
         class="input field-custom"
         type="text"
         placeholder="Telefono"
-        v-model="formData.phone.value"
+        v-model="formData.phone"
       />
     </div>
     <p v-show="formError.tel" class="help is-danger">
@@ -17,33 +16,30 @@
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('street', formData.street.value, true)"
         class="input field-custom"
         type="text"
         placeholder="Calle"
-        v-model="formData.street.value"
+        v-model="formData.address.street"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('local', formData.local.value, true)"
         class="input field-custom"
         type="text"
         placeholder="Local"
-        v-model="formData.local.value"
+        v-model="formData.address.local"
       />
     </div>
   </div>
   <div class="field">
     <div class="control has-icons-right">
       <input
-        @blur="save('region', formData.region.value, true)"
         class="input field-custom"
         type="text"
         placeholder="Region"
-        v-model="formData.region.value"
+        v-model="formData.address.region"
       />
     </div>
     <p v-show="formError.region" class="help is-danger">
@@ -62,7 +58,6 @@ export default {
   props: {
     formData: Object,
     formError: Object,
-    save: Function,
     goNext: Function,
     cognitoId: String,
   },

@@ -53,7 +53,6 @@
           class="column is-12-mobile is-10-tablet is-10-desktop is-10-widescreen is-10-fullhd"
         >
           <router-view
-            :save="saveData"
             :formData="formData[router.currentRoute.value.name]"
             :goNext="goFordward"
             :cognitoId="cognitoId"
@@ -88,20 +87,16 @@ import {
   watchEffect,
   onMounted,
   reactive,
-  toRefs,
   onUnmounted,
-  onBeforeMount,
 } from 'vue';
 import lodash from 'lodash';
 import { useStore } from 'vuex';
-import { useRouter, onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router';
+import { useRouter, onBeforeRouteUpdate } from 'vue-router';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
 import {
   saveProfile,
-  saveProfileAddress,
-  getProfile,
 } from '@/services/api/profile.service';
 import Documentation from '@/views/Documentation';
 import Banner from '@/components/Banner.vue';
@@ -139,40 +134,14 @@ export default {
 
     let formData = reactive({
       [ROUTE_DG_NAME]: {
-        fantasyName: {
-          value: '',
-          saved: false,
-        },
-        socialReason: {
-          value: '',
-          saved: false,
-        },
-        heading: {
-          value: '',
-          saved: false,
-        },
-        website: {
-          value: '',
-          saved: false,
-        },
+        fantasyName: '',
+        socialReason: '',
+        heading: '',
+        website: '',
       },
       [ROUTE_LOC_NAME]: {
-        phone: {
-          value: '',
-          saved: false,
-        },
-        street: {
-          value: '',
-          saved: false,
-        },
-        region: {
-          value: '',
-          saved: false,
-        },
-        local: {
-          value: '',
-          saved: false,
-        },
+        phone: '',
+        address: { street: '', region: '', local: '' },
       },
     });
 
@@ -181,56 +150,61 @@ export default {
         Array.from(Object.keys(source)),
         Array.from(Object.keys(defaults)),
       );
-      common.forEach((kk) => (defaults[kk].value = source[kk]));
-      common.forEach((kk) => {
-        if (
-          defaults[kk].value !== null &&
-          defaults[kk].value !== undefined &&
-          defaults[kk].value !== ''
-        ) {
-          defaults[kk].saved = true;
-        }
-      });
+      common.forEach((kk) => (defaults[kk] = source[kk]));
     }
 
-    // // onBeforeMount(() => window('beforeunload', algo));
-    // onBeforeRouteUpdate((to, from) => alert('updated'));
-    // onBeforeRouteLeave(() => alert('leave'));
-    // onMounted(
-    //   () =>
-    //     (window.onbeforeunload = function() {
-    //       console.log('mounted');
-    //       return 'Are you sure you want to close the window?';
-    //     }),
-    // );
-    // onUnmounted(() => {
-    //   console.log('unmounted');
-    //   window.onbeforeunload = null;
-    // });
+    function saveData() {
+      Object.entries(formData[router.currentRoute.value.name]).forEach(
+        async (element) => {
+          await saveProfile(cognitoId.value, { [element[0]]: element[1] });
+          store.commit('setProfile', {
+            [element[0]]: element[1],
+          });
+        },
+      );
+      return ''
+    }
 
+    // saving the data before the route changes
+    onBeforeRouteUpdate(async (to, from) => {
+      try {
+        saveData();
+      } catch (error) {
+        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+        console.log(error);
+      }
+    });
+
+    // saving the data before close the windows.
+    onMounted(() => (window.onbeforeunload = saveData));
+    onUnmounted(() => {
+      console.log('unmounted');
+      window.onbeforeunload = null;
+    });
+
+    // pupulating the data from profile
     onMounted(() => {
       const profile = store.state.profile;
-      const aux = { ...profile, ...profile.address };
-      mergeObjects(aux, formData[ROUTE_DG_NAME]);
-      mergeObjects(aux, formData[ROUTE_LOC_NAME]);
+      mergeObjects(profile, formData[ROUTE_DG_NAME]);
+      mergeObjects(profile, formData[ROUTE_LOC_NAME]);
     });
 
     const hasAllCompleted = () => {
       if (router.currentRoute.value.name === ROUTE_DG_NAME) {
         return (
-          formData[ROUTE_DG_NAME].fantasyName.saved &&
-          formData[ROUTE_DG_NAME].socialReason.saved &&
-          formData[ROUTE_DG_NAME].heading.saved &&
-          formData[ROUTE_DG_NAME].website.saved
+          formData[ROUTE_DG_NAME].fantasyName !== '' &&
+          formData[ROUTE_DG_NAME].socialReason !== '' &&
+          formData[ROUTE_DG_NAME].heading !== '' &&
+          formData[ROUTE_DG_NAME].website !== ''
         );
       }
 
       if (router.currentRoute.value.name === ROUTE_LOC_NAME) {
         return (
-          formData[ROUTE_LOC_NAME].phone.saved &&
-          formData[ROUTE_LOC_NAME].street.saved &&
-          formData[ROUTE_LOC_NAME].region.saved &&
-          formData[ROUTE_LOC_NAME].local.saved
+          formData[ROUTE_LOC_NAME].phone !== '' &&
+          formData[ROUTE_LOC_NAME].address.street !== '' &&
+          formData[ROUTE_LOC_NAME].address.region !== '' &&
+          formData[ROUTE_LOC_NAME].address.local !== ''
         );
       }
     };
@@ -264,7 +238,7 @@ export default {
     watch(
       formData[ROUTE_DG_NAME],
       (now, prev) => {
-        validateUrl(formData[ROUTE_DG_NAME].website.value)
+        validateUrl(formData[ROUTE_DG_NAME].website)
           .then((res) => {
             if (hasAllCompleted()) {
               disabledButton.value = false;
@@ -274,7 +248,6 @@ export default {
           })
           .catch((error) => {
             disabledButton.value = true;
-            console.log(error);
             error.inner.forEach((err) => {
               formError.value[err.path] = err.message;
             });
@@ -286,7 +259,7 @@ export default {
     watch(
       formData[ROUTE_DG_NAME],
       (now, prev) => {
-        if (formData[ROUTE_DG_NAME].website.value) {
+        if (formData[ROUTE_DG_NAME].website) {
           formError.value.website = '';
         }
       },
@@ -332,26 +305,6 @@ export default {
 
     const removeNotification = () => (apiError.value = null);
 
-    const saveData = async (attr, value, address = false) => {
-      try {
-        if (address) {
-          await saveProfileAddress(cognitoId.value, { [attr]: value });
-        } else {
-          await saveProfile(cognitoId.value, { [attr]: value });
-        }
-        // const key = Object.keys(data)[0];
-        if (value !== '') {
-          formData[router.currentRoute.value.name][attr].saved = true;
-        } else {
-          formData[router.currentRoute.value.name][attr].saved = false;
-        }
-        store.commit('setProfile', { [attr]: value });
-      } catch (error) {
-        apiError.value = `${'Ocurrio un error al intentar guardar ' + attr}`;
-        console.log(error);
-      }
-    };
-
     return {
       src,
       formData,
@@ -359,7 +312,6 @@ export default {
       firstStep,
       lastStep,
       goFordward,
-      saveData,
       goBack,
       finishAction,
       router,

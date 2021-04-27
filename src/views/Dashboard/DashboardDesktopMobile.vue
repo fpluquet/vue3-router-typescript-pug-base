@@ -38,7 +38,7 @@
         <div class="column is-12-mobile is-12-tablet has-text-centered">
           <Banner :name="'pago_facil_banner'" class="mobile-banner" />
         </div>
-        <div class="column is-12-mobile is-12-tablet has-text-centered">
+        <div class="column is-12-mobile is-12-tablet has-text-centered mb-4">
           <ProgressBar
             :accountType="accountType"
             :currentWizardStep="currentWizardStep"
@@ -158,23 +158,23 @@ export default {
     }
 
     function saveData() {
-      // const promises = Object.entries(
-      //   formData[router.currentRoute.value.name],
-      // ).map((element) =>
-      //   saveProfile(cognitoId.value, { [element[0]]: element[1] }),
-      // );
-      // try {
-      //   Promise.all(promises).then((res) =>
-      //     res.forEach((element) => {
-      //       store.commit('setProfile', {
-      //         [element[0]]: element[1],
-      //       });
-      //     }),
-      //   );
-      // } catch (error) {
-      //   apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
-      //   throw error;
-      // }
+      const promises = Object.entries(
+        formData[router.currentRoute.value.name],
+      ).map((element) =>
+        saveProfile(cognitoId.value, { [element[0]]: element[1] }),
+      );
+      try {
+        Promise.all(promises).then((res) =>
+          res.forEach((element) => {
+            store.commit('setProfile', {
+              [element[0]]: element[1],
+            });
+          }),
+        );
+      } catch (error) {
+        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+        throw error;
+      }
       return '';
     }
 
@@ -231,7 +231,7 @@ export default {
       if (hasAllCompleted()) {
         disabledButton.value = false;
       } else {
-        disabledButton.value = false;
+        disabledButton.value = true;
       }
     });
 
@@ -256,7 +256,7 @@ export default {
             if (hasAllCompleted()) {
               disabledButton.value = false;
             } else {
-              disabledButton.value = false;
+              disabledButton.value = true;
             }
           })
           .catch((error) => {

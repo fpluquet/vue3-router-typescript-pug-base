@@ -5,6 +5,7 @@ import { SECTION_DM_ID, SECTION_VB_ID, SECTION_DOC_ID } from '../utils/constants
 export default createStore({
   state: {
     profile: {},
+    currentStep:1,
     account: {
       cognitoId: null,
       type: null,

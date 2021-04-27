@@ -5,11 +5,11 @@
       flex: 1,
     }"
   >
-    <div
+    <!-- <div
       class="column is-10-desktop is-10-widescreen is-10-fullhd has-text-centered"
-    >
+    > -->
       <ProgressBar />
-    </div>
+    <!-- </div> -->
   </div>
   <div class="is-flex is-justify-content-center mb-4" v-if="apiError">
     <Notification

@@ -111,7 +111,7 @@
         </div>
         <ButtonColor
           :type="'submit'"
-          class="'button is-fullwidth mt-5'"
+           class="'button is-fullwidth mt-5'"
           :loading="loading"
           :accountType="accountType"
           >Crear Cuenta</ButtonColor

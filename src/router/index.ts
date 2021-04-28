@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
         component: ContinueRegister,
       },
       {
-        path: '/login',
+        path: '/login/:accountType(PERSONA|EMPRESA)',
         name: ROUTE_LOGIN,
         component: Login,
       },

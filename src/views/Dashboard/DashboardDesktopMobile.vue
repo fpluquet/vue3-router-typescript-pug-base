@@ -159,23 +159,23 @@ export default {
     }
 
     function saveData() {
-      // const promises = Object.entries(
-      //   formData[router.currentRoute.value.name],
-      // ).map((element) =>
-      //   saveProfile(cognitoId.value, { [element[0]]: element[1] }),
-      // );
-      // try {
-      //   Promise.all(promises).then((res) =>
-      //     res.forEach((element) => {
-      //       store.commit('setProfile', {
-      //         [element[0]]: element[1],
-      //       });
-      //     }),
-      //   );
-      // } catch (error) {
-      //   apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
-      //   throw error;
-      // }
+      const promises = Object.entries(
+        formData[router.currentRoute.value.name],
+      ).map((element) =>
+        saveProfile(cognitoId.value, { [element[0]]: element[1] }),
+      );
+      try {
+        Promise.all(promises).then((res) =>
+          res.forEach((element) => {
+            store.commit('setProfile', {
+              [element[0]]: element[1],
+            });
+          }),
+        );
+      } catch (error) {
+        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+        throw error;
+      }
       return '';
     }
 
@@ -231,7 +231,7 @@ export default {
       if (hasAllCompleted()) {
         disabledButton.value = false;
       } else {
-        disabledButton.value = false;
+        disabledButton.value = true;
       }
     });
 
@@ -256,11 +256,11 @@ export default {
             if (hasAllCompleted()) {
               disabledButton.value = false;
             } else {
-              disabledButton.value = false;
+              disabledButton.value = true;
             }
           })
           .catch((error) => {
-            disabledButton.value = false;
+            disabledButton.value = true;
             error.inner.forEach((err) => {
               formError.value[err.path] = err.message;
             });
@@ -297,19 +297,6 @@ export default {
         lastStep.value = false;
       }
     });
-
-    // // adding dynamic new route
-    // onMounted(() => {
-    //   console.log("mounted")
-    //   // if (props.accountType === EMPRESA) {
-    //     router.addRoute('Dashboard', {
-    //       path: 'documentacion',
-    //       name: ROUTE_DOC_NAME,
-    //       meta: { wizardStep: FOURTH_WIZARD_STEP },
-    //       component: Documentation,
-    //     });
-    //   // }
-    // });
 
     const finishAction = () => {
       console.log('finish');

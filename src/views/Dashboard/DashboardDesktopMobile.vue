@@ -6,9 +6,12 @@
     }"
   >
     <div
-      class="column is-10-desktop is-10-widescreen is-10-fullhd has-text-centered"
+      class="column is-6-desktop is-6-widescreen is-5-fullhd has-text-centered mb-4"
     >
-      <ProgressBar />
+      <ProgressBar
+        :accountType="accountType"
+        :currentWizardStep="currentWizardStep"
+      />
     </div>
   </div>
   <div class="is-flex is-justify-content-center mb-4" v-if="apiError">
@@ -35,8 +38,11 @@
         <div class="column is-12-mobile is-12-tablet has-text-centered">
           <Banner :name="'pago_facil_banner'" class="mobile-banner" />
         </div>
-        <div class="column is-12-mobile is-12-tablet has-text-centered">
-          <ProgressBar />
+        <div class="column is-12-mobile is-12-tablet has-text-centered mb-4">
+          <ProgressBar
+            :accountType="accountType"
+            :currentWizardStep="currentWizardStep"
+          />
         </div>
       </div>
       <!-- ---------- !-->
@@ -107,6 +113,7 @@ import {
   ROUTE_LOC_NAME,
   EMPRESA,
   PERSONA,
+  FOURTH_WIZARD_STEP,
 } from '@/utils/constants';
 
 export default {
@@ -152,23 +159,23 @@ export default {
     }
 
     function saveData() {
-      const promises = Object.entries(
-        formData[router.currentRoute.value.name],
-      ).map((element) =>
-        saveProfile(cognitoId.value, { [element[0]]: element[1] }),
-      );
-      try {
-        Promise.all(promises).then((res) =>
-          res.forEach((element) => {
-            store.commit('setProfile', {
-              [element[0]]: element[1],
-            });
-          }),
-        );
-      } catch (error) {
-        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
-        throw error;
-      }
+      // const promises = Object.entries(
+      //   formData[router.currentRoute.value.name],
+      // ).map((element) =>
+      //   saveProfile(cognitoId.value, { [element[0]]: element[1] }),
+      // );
+      // try {
+      //   Promise.all(promises).then((res) =>
+      //     res.forEach((element) => {
+      //       store.commit('setProfile', {
+      //         [element[0]]: element[1],
+      //       });
+      //     }),
+      //   );
+      // } catch (error) {
+      //   apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+      //   throw error;
+      // }
       return '';
     }
 
@@ -182,7 +189,6 @@ export default {
     // saving the data before close the windows.
     onMounted(() => (window.onbeforeunload = saveData));
     onUnmounted(() => {
-      console.log('unmounted');
       window.onbeforeunload = null;
     });
 
@@ -217,12 +223,15 @@ export default {
       () => router.currentRoute.value.params.cognitoId,
     );
     const nextRoute = computed(() => router.currentRoute.value.meta.next);
+    const currentWizardStep = computed(
+      () => router.currentRoute.value.meta.wizardStep,
+    );
 
     watchEffect(() => {
       if (hasAllCompleted()) {
         disabledButton.value = false;
       } else {
-        disabledButton.value = true;
+        disabledButton.value = false;
       }
     });
 
@@ -247,11 +256,11 @@ export default {
             if (hasAllCompleted()) {
               disabledButton.value = false;
             } else {
-              disabledButton.value = true;
+              disabledButton.value = false;
             }
           })
           .catch((error) => {
-            disabledButton.value = true;
+            disabledButton.value = false;
             error.inner.forEach((err) => {
               formError.value[err.path] = err.message;
             });
@@ -289,18 +298,23 @@ export default {
       }
     });
 
-    // adding dynamic new route
-    onMounted(() => {
-      if (props.accountType === EMPRESA) {
-        router.addRoute('Dashboard', {
-          path: 'documentacion',
-          name: ROUTE_DOC_NAME,
-          component: Documentation,
-        });
-      }
-    });
+    // // adding dynamic new route
+    // onMounted(() => {
+    //   console.log("mounted")
+    //   // if (props.accountType === EMPRESA) {
+    //     router.addRoute('Dashboard', {
+    //       path: 'documentacion',
+    //       name: ROUTE_DOC_NAME,
+    //       meta: { wizardStep: FOURTH_WIZARD_STEP },
+    //       component: Documentation,
+    //     });
+    //   // }
+    // });
 
-    const finishAction = () => console.log('finish');
+    const finishAction = () => {
+      console.log('finish');
+      router.push({ name: nextRoute.value });
+    };
 
     const goFordward = () => {
       router.push({ name: nextRoute.value });
@@ -323,6 +337,7 @@ export default {
       disabledButton,
       apiError,
       removeNotification,
+      currentWizardStep,
     };
   },
 };

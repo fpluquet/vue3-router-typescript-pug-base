@@ -197,7 +197,7 @@ export default {
     });
 
     const goBack = () => {
-      store.commit('setAccountType', { accountType: null });
+      // store.commit('setAccountType', { accountType: null });
       router.push({ name: 'select-account-type' });
     };
 

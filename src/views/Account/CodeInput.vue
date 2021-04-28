@@ -47,7 +47,7 @@ import * as services from '@/services/api/account.service';
 import ButtonColor from '@/components/ButtonColor.vue';
 import ButtonLink from '@/components/ButtonLink.vue';
 import { ClientError } from '@/utils/exceptions';
-import { INVALID_CODE, ROUTE_DG_NAME } from '@/utils/constants';
+import { INVALID_CODE, FIRST_WIZARD_STEP } from '@/utils/constants';
 import Notification from '@/components/Notification';
 
 export default {
@@ -116,8 +116,7 @@ export default {
         try {
           loading.value = true;
           await services.confirmCode(formData.value, cognitoId.value);
-          store.commit('setCognitoId', { cognitoId: cognitoId.value });
-
+          // store.commit('setCognitoId', { cognitoId: cognitoId.value });
           router.push({
             name: 'Auth',
             params: { cognitoId: cognitoId.value },

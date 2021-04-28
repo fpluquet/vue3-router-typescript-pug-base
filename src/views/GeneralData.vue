@@ -45,7 +45,6 @@
 
 <script>
 import { ref, computed } from 'vue';
-import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import { useRouter } from 'vue-router';
 
@@ -60,8 +59,6 @@ export default {
   components: { ButtonColor },
   setup(props) {
     const router = useRouter();
-    let messageError = ref('');
-    let loading = ref(false);
     const headingOptions = ['a', 'b', 'c'];
     const disabledButton = ref();
 

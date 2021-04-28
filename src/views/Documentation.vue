@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Title from "@/components/Title";
+import Title from '@/components/Title';
 export default {
   props: {
     title: String,

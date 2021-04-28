@@ -7,10 +7,24 @@ import ContinueRegister from '../views/Account/ContinueRegister.vue'
 import CodeInput from '../views/Account/CodeInput.vue'
 import SelectAccountType from '../views/Account/SelectAccountType.vue'
 import GeneralData from '../views/GeneralData.vue'
+import Documentation from '../views/Documentation.vue'
 import Localization from '../views/Localization.vue'
 import BiometricValidation from '../views/BiometricValidation.vue'
 import NotFound from '../views/NotFound.vue'
-import { ROUTE_DG_NAME, ROUTE_LOC_NAME, ROUTE_VB_NAME, ROUTE_DOC_NAME, SECOND_WIZARD_STEP, FIRST_WIZARD_STEP, THIRD_WIZARD_STEP } from '@/utils/constants';
+import Login from '../views/Login.vue'
+
+import {
+  ROUTE_DG_NAME,
+  ROUTE_LOC_NAME,
+  ROUTE_VB_NAME,
+  ROUTE_DOC_NAME,
+  ROUTE_LOGIN,
+  SECOND_WIZARD_STEP,
+  FIRST_WIZARD_STEP,
+  THIRD_WIZARD_STEP,
+  FOURTH_WIZARD_STEP,
+  EMPRESA,
+} from '@/utils/constants';
 
 
 
@@ -27,19 +41,24 @@ const routes: Array<RouteRecordRaw> = [
         component: SelectAccountType
       },
       {
-        path: '/account-section/create-account/:accountType(persona|empresa)',
+        path: 'account-section/create-account/:accountType(persona|empresa)',
         name: 'create-account',
         component: AccountForm,
       },
       {
-        path: '/account-section/code-input/:accountType(persona|empresa)/:cognitoId',
+        path: 'account-section/code-input/:accountType(PERSONA|EMPRESA)/:cognitoId',
         name: 'code-input',
         component: CodeInput,
       },
       {
-        path: '/account-section/continue-register',
+        path: 'account-section/continue-register',
         name: 'continue-register',
         component: ContinueRegister,
+      },
+      {
+        path: '/login',
+        name: ROUTE_LOGIN,
+        component: Login,
       },
     ]
   },
@@ -71,15 +90,23 @@ const routes: Array<RouteRecordRaw> = [
             meta: { next: ROUTE_DOC_NAME, wizardStep: THIRD_WIZARD_STEP },
             component: BiometricValidation,
           },
-          // {
-          //   path: 'documentacion',
-          //   name: ROUTE_DOC_NAME,
-          //   component: Documentation,
-          // },
+          {
+            path: 'documentacion',
+            name: ROUTE_DOC_NAME,
+            meta: { next: ROUTE_LOGIN, wizardStep: FOURTH_WIZARD_STEP },
+            component: Documentation,
+            beforeEnter: (to, from) => {
+              if (from.params.accountType === EMPRESA) { return true }
+              else {
+                router.push({ name: `${to.meta.next}` })
+              }
+            },
+          },
         ]
       },
     ]
   },
+
 
   {
     path: "/:catchAll(.*)",

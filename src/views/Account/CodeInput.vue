@@ -116,7 +116,7 @@ export default {
         try {
           loading.value = true;
           await services.confirmCode(formData.value, cognitoId.value);
-          store.commit('setCognitoId', { cognitoId: cognitoId.value });
+          // store.commit('setCognitoId', { cognitoId: cognitoId.value });
           router.push({
             name: 'Auth',
             params: { cognitoId: cognitoId.value },

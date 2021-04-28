@@ -10,10 +10,11 @@ export const SECTION_DOC_ID = 'documentacion';
 
 
 // ROUTE NAMES
-export const ROUTE_DG_NAME = 'generalData';
+export const ROUTE_DG_NAME = 'general-data';
 export const ROUTE_LOC_NAME = 'localization';
-export const ROUTE_VB_NAME = 'biometricValidation';
+export const ROUTE_VB_NAME = 'biometric-validation';
 export const ROUTE_DOC_NAME = 'documentation';
+export const ROUTE_LOGIN = 'login';
 
 
 // API CODES

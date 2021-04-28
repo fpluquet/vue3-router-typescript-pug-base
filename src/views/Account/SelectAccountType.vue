@@ -55,7 +55,7 @@ export default {
     const router = useRouter();
 
     const setAccountType = (type) => {
-      store.commit('setAccountType', { accountType: type });
+      // store.commit('setAccountType', { accountType: type });
       router.push({ name: 'create-account', params: { accountType: type } });
     };
 

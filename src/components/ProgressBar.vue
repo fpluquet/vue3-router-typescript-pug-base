@@ -23,10 +23,15 @@
               ></div>
             </div>
           </div>
-          <p class="text">Datos generales</p>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 1 ? '#343434' : '#848484' }"
+          >
+            Datos generales
+          </p>
         </li>
 
-        <li class="custom-li" id="step2">
+        <li class="custom-li">
           <div
             class="container-custom-button"
             :class="{
@@ -44,10 +49,15 @@
               ></div>
             </div>
           </div>
-          <p class="text">Localizacion</p>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 2 ? '#343434' : '#848484' }"
+          >
+            Localización
+          </p>
         </li>
 
-        <li class="custom-li" id="step3">
+        <li class="custom-li">
           <div
             class="container-custom-button"
             :class="{
@@ -65,7 +75,37 @@
               ></div>
             </div>
           </div>
-          <p class="text">Datos biometricos</p>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 3 ? '#343434' : '#848484' }"
+          >
+            Validación biométrica
+          </p>
+        </li>
+        <li v-if="accountType === EMPRESA" class="custom-li">
+          <div
+            class="container-custom-button"
+            :class="{
+              ['container-custom-button-completed-' + accountType]:
+                currentWizardStep >= 4,
+            }"
+          >
+            <div class="custom-button">
+              <div
+                class="custom-button-inside"
+                :class="{
+                  ['custom-button-inside-completed-' + accountType]:
+                    currentWizardStep > 4,
+                }"
+              ></div>
+            </div>
+          </div>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 4 ? '#343434' : '#848484' }"
+          >
+            eRUT
+          </p>
         </li>
       </ul>
     </div>
@@ -75,6 +115,7 @@
 <script>
 import { useStore } from 'vuex';
 import '@/assets/progressBar.scss';
+import { EMPRESA } from '@/utils/constants';
 
 export default {
   name: 'ProgressBar',
@@ -88,10 +129,12 @@ export default {
       1: { width: 'step1' },
       2: { width: 'step2' },
       3: { width: 'step3' },
+      4: { width: 'step4' },
     };
 
     return {
       className,
+      EMPRESA,
     };
   },
 };

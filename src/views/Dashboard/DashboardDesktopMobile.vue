@@ -6,7 +6,7 @@
     }"
   >
     <div
-      class="column is-6-desktop is-6-widescreen is-4-fullhd has-text-centered"
+      class="column is-6-desktop is-6-widescreen is-5-fullhd has-text-centered mb-4"
     >
       <ProgressBar
         :accountType="accountType"
@@ -113,6 +113,7 @@ import {
   ROUTE_LOC_NAME,
   EMPRESA,
   PERSONA,
+  FOURTH_WIZARD_STEP,
 } from '@/utils/constants';
 
 export default {
@@ -158,23 +159,23 @@ export default {
     }
 
     function saveData() {
-      const promises = Object.entries(
-        formData[router.currentRoute.value.name],
-      ).map((element) =>
-        saveProfile(cognitoId.value, { [element[0]]: element[1] }),
-      );
-      try {
-        Promise.all(promises).then((res) =>
-          res.forEach((element) => {
-            store.commit('setProfile', {
-              [element[0]]: element[1],
-            });
-          }),
-        );
-      } catch (error) {
-        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
-        throw error;
-      }
+      // const promises = Object.entries(
+      //   formData[router.currentRoute.value.name],
+      // ).map((element) =>
+      //   saveProfile(cognitoId.value, { [element[0]]: element[1] }),
+      // );
+      // try {
+      //   Promise.all(promises).then((res) =>
+      //     res.forEach((element) => {
+      //       store.commit('setProfile', {
+      //         [element[0]]: element[1],
+      //       });
+      //     }),
+      //   );
+      // } catch (error) {
+      //   apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+      //   throw error;
+      // }
       return '';
     }
 
@@ -188,7 +189,6 @@ export default {
     // saving the data before close the windows.
     onMounted(() => (window.onbeforeunload = saveData));
     onUnmounted(() => {
-      console.log('unmounted');
       window.onbeforeunload = null;
     });
 
@@ -231,7 +231,7 @@ export default {
       if (hasAllCompleted()) {
         disabledButton.value = false;
       } else {
-        disabledButton.value = true;
+        disabledButton.value = false;
       }
     });
 
@@ -256,11 +256,11 @@ export default {
             if (hasAllCompleted()) {
               disabledButton.value = false;
             } else {
-              disabledButton.value = true;
+              disabledButton.value = false;
             }
           })
           .catch((error) => {
-            disabledButton.value = true;
+            disabledButton.value = false;
             error.inner.forEach((err) => {
               formError.value[err.path] = err.message;
             });
@@ -298,18 +298,23 @@ export default {
       }
     });
 
-    // adding dynamic new route
-    onMounted(() => {
-      if (props.accountType === EMPRESA) {
-        router.addRoute('Dashboard', {
-          path: 'documentacion',
-          name: ROUTE_DOC_NAME,
-          component: Documentation,
-        });
-      }
-    });
+    // // adding dynamic new route
+    // onMounted(() => {
+    //   console.log("mounted")
+    //   // if (props.accountType === EMPRESA) {
+    //     router.addRoute('Dashboard', {
+    //       path: 'documentacion',
+    //       name: ROUTE_DOC_NAME,
+    //       meta: { wizardStep: FOURTH_WIZARD_STEP },
+    //       component: Documentation,
+    //     });
+    //   // }
+    // });
 
-    const finishAction = () => console.log('finish');
+    const finishAction = () => {
+      console.log('finish');
+      router.push({ name: nextRoute.value });
+    };
 
     const goFordward = () => {
       router.push({ name: nextRoute.value });

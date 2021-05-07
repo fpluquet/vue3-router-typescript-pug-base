@@ -97,7 +97,12 @@ import {
 } from 'vue';
 import lodash from 'lodash';
 import { useStore } from 'vuex';
-import { useRouter, onBeforeRouteUpdate, onBeforeEach } from 'vue-router';
+import {
+  useRouter,
+  onBeforeRouteUpdate,
+  beforeRouteLeave,
+  onBeforeRouteLeave,
+} from 'vue-router';
 import * as Yup from 'yup';
 import ButtonColor from '@/components/ButtonColor';
 import ProgressBar from '@/components/ProgressBar';
@@ -113,7 +118,6 @@ import {
   ROUTE_LOC_NAME,
   EMPRESA,
   PERSONA,
-  FOURTH_WIZARD_STEP,
 } from '@/utils/constants';
 
 export default {
@@ -165,15 +169,18 @@ export default {
         saveProfile(cognitoId.value, { [element[0]]: element[1] }),
       );
       try {
-        Promise.all(promises).then((res) =>
-          res.forEach((element) => {
+        Promise.all(promises).then((res) => {
+          console.log(res);
+        });
+        Object.entries(formData[router.currentRoute.value.name]).map(
+          (element) => {
             store.commit('setProfile', {
               [element[0]]: element[1],
             });
-          }),
+          },
         );
       } catch (error) {
-        apiError.value = `${'Ocurrio un error al intentar guardar uno de los campos'}`;
+        apiError.value = `${'Ocurrió un error al intentar guardar uno de los campos del formulario'}`;
         throw error;
       }
       return '';
@@ -187,17 +194,20 @@ export default {
     });
 
     // saving the data before close the windows.
-    onMounted(() => (window.onbeforeunload = saveData));
+    onMounted(() => {
+      window.onbeforeunload = saveData;
+    });
     onUnmounted(() => {
+      if (localStorage.getItem('vuex')) {
+        localStorage.removeItem('vuex');
+      }
       window.onbeforeunload = null;
     });
 
     // pupulating the data from profile
-    onMounted(() => {
-      const profile = store.state.profile;
-      mergeObjects(profile, formData[ROUTE_DG_NAME]);
-      mergeObjects(profile, formData[ROUTE_LOC_NAME]);
-    });
+    const profile = computed(() => store.state.profile);
+    mergeObjects(profile.value, formData[ROUTE_DG_NAME]);
+    mergeObjects(profile.value, formData[ROUTE_LOC_NAME]);
 
     const hasAllCompleted = () => {
       if (router.currentRoute.value.name === ROUTE_DG_NAME) {
@@ -237,7 +247,9 @@ export default {
 
     // validating url
     let schemaForm = Yup.object().shape({
-      website: Yup.string().url('Por favor ingresa una url válida'),
+      website: Yup.string()
+        .url('Por favor ingresa una url válida')
+        .nullable(),
     });
 
     const validateUrl = async (website) => {

@@ -1,20 +1,17 @@
 <template>
-  <div>
-    <div class="content-title has-text-centered">Bienvenido/a,</div>
-    <div
-      class="content-name has-text-centered mb-5"
-      :style="{ color: getColorByAccount(accountType) }"
+  <div class="content-title has-text-centered">Bienvenido/a,</div>
+  <div class="content-name has-text-centered">
+    <span :style="{ color: getColorByAccount(accountType) }" class="name mb-5"
+      >{{name}}</span
     >
-      {{ name }}
-    </div>
-    <ButtonColor
-      :class="'is-fullwidth mt-5'"
-      :accountType="accountType"
-      @click="goToPagoFacil"
-    >
-      INICIAR SESION
-    </ButtonColor>
   </div>
+  <ButtonColor
+    :class="'is-fullwidth mt-5'"
+    :accountType="accountType"
+    @click="goToPagoFacil"
+  >
+    INICIAR SESION
+  </ButtonColor>
 </template>
 
 <script>
@@ -58,6 +55,9 @@ export default {
   color: #707070;
 }
 .content-name {
+  word-wrap: break-word;
+}
+.name {
   font-weight: bold;
   font-size: 45px;
   line-height: 53px;

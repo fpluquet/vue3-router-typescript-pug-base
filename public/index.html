@@ -8,6 +8,7 @@
     <title>
       <%= htmlWebpackPlugin.options.title %>
     </title>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBI9lzAzHHxw27gnXIC08M8kUuLk7JB74s"></script>
   </head>
 
   <body>
@@ -18,9 +19,16 @@
         continue.</strong
       >
     </noscript>
+
     <div id="app" class="container-app"></div>
   </body>
 
+  <script>
+    // const result = new google.maps.places.Autocomplete(
+    //   document.getElementById('autocomplete'),
+    // ).then((res) => console.log(res));
+    // console.log(result);
+  </script>
   <style lang="scss">
     #app {
       height: 100vh;

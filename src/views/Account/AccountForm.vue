@@ -31,6 +31,11 @@
         </div>
         <div class="field">
           <div class="control">
+            <input ref="autocomplete" class="input" placeholder="dirección" />
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
             <input
               class="input"
               :type="inputType ? 'password' : 'text'"
@@ -111,7 +116,7 @@
         </div>
         <ButtonColor
           :type="'submit'"
-           class="'button is-fullwidth mt-5'"
+          class="'button is-fullwidth mt-5'"
           :loading="loading"
           :accountType="accountType"
           >Crear Cuenta</ButtonColor
@@ -125,7 +130,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import * as Yup from 'yup';
@@ -141,6 +146,7 @@ import * as services from '../../services/api/account.service';
 import { validateRut } from '@/utils/validations';
 import { ClientError } from '@/utils/exceptions';
 import { errorCodes } from '@/utils/errorCodes';
+import { decodeSelectedAddress } from '@/utils/maps';
 
 export default {
   name: 'AccountForm',
@@ -157,10 +163,23 @@ export default {
     const router = useRouter();
     const store = useStore();
     let inputType = ref(true);
+    let autocomplete = ref(null);
+    let result = ref(null);
 
     const accountType = computed(
       () => router.currentRoute.value.params.accountType,
     );
+
+    const a = computed(() => result);
+
+    onMounted(() => {
+      const res = new google.maps.places.Autocomplete(autocomplete.value);
+      res.addListener('place_changed', () => {
+        const place = res.getPlace();
+        console.log(place)
+        console.log(decodeSelectedAddress(place));
+      });
+    });
 
     //Validation inputs
     let schemaForm = Yup.object().shape({
@@ -280,6 +299,7 @@ export default {
       PERSONA,
       EMPRESA,
       messageError,
+      autocomplete,
     };
   },
 };

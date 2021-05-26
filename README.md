@@ -15,5 +15,10 @@ yarn serve
 yarn build
 ```
 
+
+
+### Figma designs
+https://www.figma.com/file/93obWd50tFIzox5l8uHoJL/PagoF%C3%A1cil_UI?node-id=809%3A0
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

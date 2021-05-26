@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import Splash from "../views/Splash.vue";
+import Splash from '../views/Splash.vue';
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     Splash,
   },

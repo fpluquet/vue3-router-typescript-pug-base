@@ -2,8 +2,9 @@
   <router-view />
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
-  background: #e5e5e5 !important;
+  display: flex;
+  flex: 1;
 }
 </style>

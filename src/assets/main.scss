@@ -1,2 +1,12 @@
 // Bulma Import
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+$family-sans-serif: 'Roboto';
+$weight-bold: 'bold';
+$primary: #3D90E0;
+$success: #35a96a;
+
 @import '~bulma';
+
+$tooltip-background-color: #88a080;
+@import '~bulma-tooltip';

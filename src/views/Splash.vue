@@ -1,133 +1,90 @@
 <template>
   <div class="splash">
-    <div class="content-splash">
-      <div class="img">
-        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
-      </div>
-      <div v-show="!accountType" class="crear-cuenta are-normal">
-        <Button @click="show" className="button is-fullwidth"
-          >Crear Cuenta
-          <fa
-            icon="chevron-down"
-            width="12"
-            type="fas"
-            class="fa-chevron-down pull-right"
-          ></fa
-        ></Button>
-        <Button
-          @click="setAccountType(PERSONA)"
-          className="button is-fullwidth persona"
-          :class="{ hide: showButton }"
-        >
-          Persona
-        </Button>
-        <Button
-          @click="setAccountType(EMPRESA)"
-          className="button is-fullwidth empresa"
-          :class="{ hide: showButton }"
-        >
-          Empresa
-        </Button>
-      </div>
-      <div v-show="accountType">
-        <AccountForm :accountType="accountType" />
+    <div class="columns is-centered">
+      <div
+        class="column is-10-mobile is-8-tablet is-6-desktop is-4-widescreen is-3-fullhd field mb-1 content-splash"
+      >
+        <div class="columns is-centered">
+          <div class="column img">
+            <Banner
+              :name="'pago_facil_banner'"
+              :style="{ width: 252, height: 62 }"
+            />
+          </div>
+        </div>
+        <div class="columns is-centered is-mobile">
+          <div
+            class="is-12-mobile is-10-tablet column is-10-fullhd field mb-1 custom-column"
+          >
+            <router-view></router-view>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import { PERSONA, EMPRESA } from "../utils/constants";
-import BasicLayout from "@/layouts/BasicLayout.vue";
-import AccountForm from "@/views/AccountForm";
-import Button from "@/components/Button";
-
+import Banner from '../components/Banner.vue';
 export default {
-  name: "crearCuenta",
+  name: 'crearCuenta',
   components: {
-    BasicLayout,
-    AccountForm,
-    Button,
-  },
-  setup() {
-    let showButton = ref(false);
-    let accountType = ref(null);
-
-    const show = () => (showButton.value = !showButton.value);
-    const setAccountType = (type) => {
-      console.log({type});
-      return (accountType.value = type);
-    };
-
-    return {
-      show,
-      showButton,
-      setAccountType,
-      EMPRESA,
-      PERSONA,
-      accountType,
-    };
+    Banner,
   },
 };
 </script>
 
 <style lang="scss" scoped>
+//desktop
+
 .content-splash {
-  padding: 60px 60px;
-  background: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 15px;
+  // height: 600px;
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 500px;
+  margin: auto;
+  z-index: 1;
+
+  // desktop
+  @media screen and (min-width: 769px) {
+    &.content-splash {
+      height: 500px;
+    }
+  }
+  // mobile
+  @media screen and (max-width: 768px) {
+    &.content-splash {
+      height: 500px;
+    }
+  }
 }
 .splash {
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  // width: 500px;
-  margin: auto;
   display: flex;
-  flex-direction: column;
   flex: 1;
+  min-width: 300px;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(180deg, #5e98d5 0%, rgba(94, 152, 213, 0) 100%);
+
+  .field {
+    margin-bottom: 0px;
+  }
+  .custom-column {
+    .column {
+      padding: 1px !important;
+    }
+  }
 
   .img {
-    margin-bottom: 20%;
+    margin-bottom: 50px;
     display: flex;
-  }
-  .crear-cuenta {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    flex: 1;
-  }
-
-  .fa-chevron-down {
-    margin-left: 12px;
-  }
-  .hide {
-    display: none;
-  }
-  .button {
-    background: #1d9add;
-    font-style: normal;
-    font-family: Roboto;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 16px;
-    text-align: center;
-    color: #ffffff;
-    &.persona {
-      background: #ededed;
-      color: #7a7a7a !important;
-      min-height: 36px;
-    }
-    &.empresa {
-      background: #ededed;
-      color: #7a7a7a !important;
-      min-height: 36px;
-    }
-  }
-  input.error {
-    color: #faa;
-    background: #ffeded;
   }
 }
 </style>

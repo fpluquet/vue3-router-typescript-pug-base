@@ -1,73 +1,51 @@
 <template>
-  <nav
-    class="navbar"
-    role="navigation"
-    aria-label="main navigation"
-    :style="{ background: '#e5e5e5', zIndex: '0' }"
-  >
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="@/res/pago_facil_banner.svg" width="252" height="62" />
-      </a>
-
-      <a
-        role="button"
-        class="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="nav-bar-pago-facil"
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+  <div class="columns is-flex is-relative is-hidden-mobile mt-0">
+    <div
+      class="column is-flex is-justify-content-center is-align-items-flex-end"
+    >
+      <Banner :name="'pago_facil_banner'" />
     </div>
-
-    <div id="nav-bar-pago-facil" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="custom-img-name">
-          <img
-            class="is-rounded custom-img"
-            width="32"
-            height="32"
-            src="@/assets/logo.png"
-          />
-          <span class="m-2 custom-text">{{ "Hola, persona" }}</span>
-        </a>
-        <a class="navbar-item">
-          <img src="@/assets/logo.png" alt="avatar" />
-        </a>
-      </div>
+    <div
+      :style="{
+        position: 'absolute',
+        top: '-10px',
+        right: '15px',
+        height: '100%',
+        display: 'flex',
+        'align-items': 'flex-end',
+      }"
+    >
+      <span v-show="Boolean(userEmail)" class="custom-text mr-1">{{
+        userEmail
+      }}</span>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import Banner from '../components/Banner.vue';
 export default {
-  name: "Menu",
-  setup() {},
+  name: 'Menu',
+  components: {
+    Banner,
+  },
+  setup() {
+    const store = useStore();
+    let userEmail = computed(() => {
+      return store.state.profile.email;
+    });
+    return { userEmail };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.custom-img {
-  background: skyblue;
-  border-radius: 50%;
-}
-
-.custom-img-name {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-}
 .custom-text {
-  font-style: normal;
-  font-weight: normal;
+  display: flex;
+  align-items: center;
   font-size: 14px;
   line-height: 27px;
-}
-.navbar-item img {
-  max-height: 3.25rem;
 }
 </style>

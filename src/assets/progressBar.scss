@@ -1,0 +1,212 @@
+.steps {
+  flex-direction: 'column';
+  display: flex;
+  position: relative;
+  justify-content: space-around;
+}
+.custom-li {
+  display: flex;
+  list-style-type: none;
+  float: left;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.custom-ul {
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
+}
+.custom-ul::after {
+  content: '';
+  background: #e4e4e4;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  border-radius: 20px;
+  z-index: 0;
+}
+
+.step-persona::before {
+  content: '';
+  background: #3d90e0;
+  display: flex;
+  width: 15%;
+  position: absolute;
+  left: 0px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+.step-empresa::before {
+  content: '';
+  background: #35a96a;
+  display: flex;
+  width: 15%;
+  position: absolute;
+  left: 0px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+.step1::before {
+  content: '';
+  width: 15%;
+}
+.step2::before {
+  content: '';
+  width: 49%;
+}
+.step3::before {
+  content: '';
+  width: 81%;
+}
+.step4::before {
+  content: '';
+  width: 100%;
+}
+
+.custom-button {
+  background: #e4e4e4;
+  box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  z-index: 2;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.custom-button-inside {
+  background: transparent;
+  border-radius: 50%;
+  z-index: 2;
+}
+.custom-button-inside-completed-persona {
+  background: #3d90e0;
+  box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.25);
+}
+
+.custom-button-inside-completed-empresa {
+  background: #35a96a;
+  box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.25);
+}
+
+.container-custom-button {
+  background: transparent;
+  border-radius: 50%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.container-custom-button-completed-persona {
+  background: #3d90e0;
+  box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.container-custom-button-completed-empresa {
+  background: #35a96a;
+  box-shadow: inset 0px 0px 9px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+//desktop
+@media screen and (min-width: 769px) {
+  &.custom-ul::after {
+    content: '';
+    height: 10px;
+    top: 24px;
+    left: 0px;
+  }
+  &.step-persona::before {
+    content: '';
+    height: 10px;
+    top: 24px;
+  }
+
+  &.step-empresa::before {
+    content: '';
+    height: 10px;
+    top: 24px;
+  }
+  .text {
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    color: #848484;
+  }
+  &.container-custom-button {
+    height: 57px;
+    width: 57px;
+  }
+  &.container-custom-button-completed-empresa {
+    height: 57px;
+    width: 57px;
+  }
+  &.container-custom-button-completed-persona {
+    height: 57px;
+    width: 57px;
+  }
+  &.custom-button {
+    height: 43px;
+    width: 43px;
+  }
+  & .custom-button-inside {
+    height: 31px;
+    width: 31px;
+  }
+}
+// mobile
+@media screen and (max-width: 768px) {
+  &.custom-ul::after {
+    content: '';
+    height: 5px;
+    top: 12px;
+    left: 0px;
+  }
+  &.step-persona::before {
+    content: '';
+    height: 5px;
+    top: 12px;
+  }
+
+  &.step-empresa::before {
+    content: '';
+    height: 5px;
+    top: 12px;
+  }
+  .text {
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: #848484;
+  }
+  &.container-custom-button {
+    height: 29px;
+    width: 29px;
+  }
+  &.container-custom-button-completed-empresa {
+    height: 29px;
+    width: 29px;
+  }
+  &.container-custom-button-completed-persona {
+    height: 29px;
+    width: 29px;
+  }
+  &.custom-button {
+    height: 21px;
+    width: 21px;
+  }
+  & .custom-button-inside {
+    height: 15px;
+    width: 15px;
+  }
+}

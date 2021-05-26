@@ -1,58 +1,143 @@
 <template>
-  <progress
-    class="progress is-small"
-    :class="accountType"
-    :value="percentaje"
-    max="100"
-  ></progress>
+  <div class="container">
+    <div class="steps">
+      <ul class="custom-ul">
+        <li
+          class="custom-li"
+          :class="[className[currentWizardStep].width, 'step-' + accountType]"
+        >
+          <div
+            class="container-custom-button"
+            :class="{
+              ['container-custom-button-completed-' + accountType]:
+                currentWizardStep >= 1,
+            }"
+          >
+            <div class="custom-button">
+              <div
+                class="custom-button-inside"
+                :class="{
+                  ['custom-button-inside-completed-' + accountType]:
+                    currentWizardStep > 1,
+                }"
+              ></div>
+            </div>
+          </div>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 1 ? '#343434' : '#848484' }"
+          >
+            Datos generales
+          </p>
+        </li>
+
+        <li class="custom-li">
+          <div
+            class="container-custom-button"
+            :class="{
+              ['container-custom-button-completed-' + accountType]:
+                currentWizardStep >= 2,
+            }"
+          >
+            <div class="custom-button">
+              <div
+                class="custom-button-inside"
+                :class="{
+                  ['custom-button-inside-completed-' + accountType]:
+                    currentWizardStep > 2,
+                }"
+              ></div>
+            </div>
+          </div>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 2 ? '#343434' : '#848484' }"
+          >
+            Localización
+          </p>
+        </li>
+
+        <li class="custom-li">
+          <div
+            class="container-custom-button"
+            :class="{
+              ['container-custom-button-completed-' + accountType]:
+                currentWizardStep >= 3,
+            }"
+          >
+            <div class="custom-button">
+              <div
+                class="custom-button-inside"
+                :class="{
+                  ['custom-button-inside-completed-' + accountType]:
+                    currentWizardStep > 3,
+                }"
+              ></div>
+            </div>
+          </div>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 3 ? '#343434' : '#848484' }"
+          >
+            Validación biométrica
+          </p>
+        </li>
+        <li v-if="accountType === EMPRESA" class="custom-li">
+          <div
+            class="container-custom-button"
+            :class="{
+              ['container-custom-button-completed-' + accountType]:
+                currentWizardStep >= 4,
+            }"
+          >
+            <div class="custom-button">
+              <div
+                class="custom-button-inside"
+                :class="{
+                  ['custom-button-inside-completed-' + accountType]:
+                    currentWizardStep > 4,
+                }"
+              ></div>
+            </div>
+          </div>
+          <p
+            class="text"
+            :style="{ color: currentWizardStep > 4 ? '#343434' : '#848484' }"
+          >
+            eRUT
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import '@/assets/progressBar.scss';
+import { EMPRESA } from '@/utils/constants';
+
 export default {
-  name: "ProgressBar",
+  name: 'ProgressBar',
   props: {
-    percentaje: String,
+    currentWizardStep: Number,
     accountType: String,
   },
-  setup(props) {},
+  setup() {
+    const store = useStore();
+    const className = {
+      1: { width: 'step1' },
+      2: { width: 'step2' },
+      3: { width: 'step3' },
+      4: { width: 'step4' },
+    };
+
+    return {
+      className,
+      EMPRESA,
+    };
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-.persona {
-  &::-webkit-progress-value {
-    background-color: #1d9add !important;
-  }
-  &::-moz-progress-bar {
-    background-color: #1d9add !important;
-  }
-  &::-ms-fill {
-    background-color: #1d9add !important;
-  }
-  &:indeterminate {
-    background-image: linear-gradient(
-      to right,
-      #1d9add 30%,
-      #1d9add 30%
-    ) !important;
-  }
-}
-.empresa {
-  &::-webkit-progress-value {
-    background-color: #19c37f !important;
-  }
-  &::-moz-progress-bar {
-    background-color: #19c37f !important;
-  }
-  &::-ms-fill {
-    background-color: #19c37f !important;
-  }
-  &:indeterminate {
-    background-image: linear-gradient(
-      to right,
-      #19c37f 30%,
-      #19c37f 30%
-    ) !important;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

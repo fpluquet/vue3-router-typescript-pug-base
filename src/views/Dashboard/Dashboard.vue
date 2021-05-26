@@ -1,43 +1,45 @@
 <template>
   <BasicLayout>
-    <template v-if="isDesktop">
-      <DashboardDesktop :accountType="type" />
-    </template>
-    <template v-else>
-      <DashboardMobile :accountType="type" />
-    </template>
+    <div class="show-desktop">
+      <DashboardDesktopMobile :accountType="accountType" />
+    </div>
   </BasicLayout>
 </template>
 
 <script>
-import BasicLayout from "../../layouts/BasicLayout.vue";
-import DashboardDesktop from "../Dashboard/DashboardDesktop";
-import DashboardMobile from "../Dashboard/DashboardMobile";
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import BasicLayout from '../../layouts/BasicLayout.vue';
+import DashboardDesktopMobile from '../Dashboard/DashboardDesktopMobile';
+import Banner from '../../components/Banner';
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { SECTION_DM_ID, PERSONA, EMPRESA } from '../../utils/constants';
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: {
     BasicLayout,
-    DashboardDesktop,
-    DashboardMobile,
+    DashboardDesktopMobile,
+    Banner,
   },
-  // props: {
-  //   accountType: String,
-  // },
-  setup(props) {
-    let type = ref(null);
-    let isDesktop = ref(null);
+  setup() {
+    const store = useStore();
     const router = useRouter();
-    onMounted(() => {
-      isDesktop.value = true;
-      type.value = router.currentRoute.value.params.accountType;
-    });
-    return { isDesktop, type };
+    const accountType = computed(
+      () => router.currentRoute.value.params.accountType,
+    );
+
+    return {
+      accountType,
+    };
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.show-desktop {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 </style>

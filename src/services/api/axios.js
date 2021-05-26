@@ -1,21 +1,20 @@
 import axios from 'axios';
-import { API_PORT, API_URL } from '../src/utils/constants';
-// const API_KEY = '123456';
-// const API_URL = 'http://78410e468830.ngrok.io';
-// const API_PORT = 80;
+import { ClientError } from '../../utils/exceptions';
 
+const API_URL = process.env.VUE_APP_API_URL;
+const API_PORT = process.env.VUE_APP_API_PORT;
 const API_URL_PORT = `${API_URL}:${API_PORT}`;
+
 const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  timeout: 50000,
-  validateStatus: status => status < 400,
+  timeout: 5000,
+  validateStatus: (status) => status < 400,
 });
 
-
-const axiosCall = async (axiosInst, url, { query, ...requestOptions }) =>
+const _axiosCall = async (axiosInst, url, { query, ...requestOptions }) =>
   axiosInst({
     method: requestOptions.method,
     url: encodeQueryParams(`${API_URL_PORT}${url}`, query).toString(),
@@ -25,14 +24,29 @@ const axiosCall = async (axiosInst, url, { query, ...requestOptions }) =>
 
 const apiCall = async (...args) => {
   try {
-    const response = await axiosCall(axiosInstance, ...args);
+    const response = await _axiosCall(axiosInstance, ...args);
     if (response.status >= 200 && response.status < 400) {
       return response;
     }
     return null;
   } catch (error) {
-    console.log(error)
-    throw error
+    if (error.response) {
+      if (error.response.data) {
+        if (error.response.data.message) {
+          throw new ClientError(
+            error.response.data.message,
+            error.response.data.errors,
+            error.response.code,
+          );
+        } else {
+          throw error;
+        }
+      } else {
+        throw new Error('Ocurrio un Error, por favor intenta nuevamente.');
+      }
+    } else {
+      throw new Error('Ocurrio un Error, por favor intenta nuevamente.');
+    }
   }
 };
 
@@ -47,21 +61,15 @@ const encodeQueryParams = (url, query) => {
   return encodeURL;
 };
 
-export const unAuthAxiosCall = (url, requestOptions) => {
-  return apiCall(url, requestOptions);
-};
+export const unAxiosCall = (url, requestOptions) =>
+  apiCall(url, requestOptions);
 
-export const authAxiosCall = async (url, requestOptions) => {
-  const token = await getToken();
-  return manualAuthAxiosCall(token, url, requestOptions);
-};
-
-export const manualAuthAxiosCall = async (token, url, requestOptions) => {
+export const authAxiosCall = async (cognitoId, url, requestOptions) => {
   return apiCall(url, {
     ...requestOptions,
     headers: {
       ...requestOptions.headers,
-      Authorization: `Bearer ${token}`,
+      'X-Cognito-Id': cognitoId,
     },
   });
 };

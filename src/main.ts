@@ -5,7 +5,7 @@ import store from './store'
 import { FontAwesomeIcon } from "@/plugins/font-awesome";
 require('@/assets/main.scss');
 
- 
+
 createApp(App)
   .use(store)
   .use(router)
